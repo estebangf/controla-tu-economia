@@ -7,6 +7,27 @@ import Avatar from "@material-ui/core/Avatar";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+const stateChangeTypes = [
+  '__autocomplete_unknown__',
+  '__autocomplete_mouseup__',
+  '__autocomplete_item_mouseenter__',
+  '__autocomplete_keydown_arrow_up__',
+  '__autocomplete_keydown_arrow_down__',
+  '__autocomplete_keydown_escape__',
+  '__autocomplete_keydown_enter__',
+  '__autocomplete_click_item__',
+  '__autocomplete_blur_input__',
+  '__autocomplete_change_input__',
+  '__autocomplete_keydown_space_button__',
+  '__autocomplete_click_button__',
+  '__autocomplete_blur_button__',
+  '__autocomplete_controlled_prop_updated_selected_item__',
+  '__autocomplete_touchend__',
+]
+const stateChangeTypesIs = (type, typeString) => {
+  return stateChangeTypes[type] === typeString || type === typeString
+}
+
 export class Autocomplete extends React.PureComponent {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -90,17 +111,28 @@ export class Autocomplete extends React.PureComponent {
       <Downshift
         style={{ position: "relative" }}
         onChange={(selection, functions) => onSelect(selection, functions)}
-        onStateChange={({ inputValue, selectedItem, type }) => {
+        onStateChange={(state) => {
+          console.log("onStateChange");
+          console.log(state);
+          console.log(state.inputValue);
+          console.log(state.selectedItem);
+          console.log(stateChangeTypes[state.type]);
+          console.log(value);
           if (
-            type === "__autocomplete_change_input__" ||
-            type === "__autocomplete_click_item__"
+            stateChangeTypesIs(state.type, "__autocomplete_change_input__") ||
+            stateChangeTypesIs(state.type, "__autocomplete_click_item__") ||
+            stateChangeTypesIs(state.type, "__autocomplete_click_button__")
           ) {
-            onChange({target: {value: inputValue}} || "");
-//            onChange(inputValue || "");
+            onChange({target: {value: state.inputValue}} || "");
           } else if (
-            type === "__autocomplete_keydown_enter__"
+            stateChangeTypesIs(state.type, "__autocomplete_keydown_space_button__") ||
+            stateChangeTypesIs(state.type, "__autocomplete_mouseup__")
           ) {
-            onChange({target: {value: selectedItem.primary}} || "");
+            onChange({target: {value: value}} || "");
+          } else if (
+            stateChangeTypesIs(state.type, "__autocomplete_keydown_enter__")
+          ) {
+            onChange({target: {value: state.selectedItem.primary}} || "");
           }
         }}
         itemToString={item => {
@@ -128,7 +160,6 @@ export class Autocomplete extends React.PureComponent {
               }),
               label: inputDetails.label,
               fullWidth: inputDetails.fullWidth,
-              
             })}
             <div {...getMenuProps()}>
               {isOpen && (

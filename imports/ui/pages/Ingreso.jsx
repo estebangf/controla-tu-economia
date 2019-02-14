@@ -59,11 +59,6 @@ class Ingreso extends Component {
       [name]: event.target.value
     })
   }
-  handleChangeAutocomplete = name => item => {
-    this.setState({
-      [name]: !!item ? item.value : ''
-    })
-  }
   handleChangeChecked = name => event => {
     this.setState({
       [name]: event.target.checked

@@ -59,11 +59,6 @@ class Gasto extends Component {
       [name]: event.target.value
     })
   }
-  handleChangeAutocomplete = name => item => {
-    this.setState({
-      [name]: !!item ? item.value : ''
-    })
-  }
   handleChangeChecked = name => event => {
     this.setState({
       [name]: event.target.checked
@@ -163,10 +158,6 @@ class Gasto extends Component {
     this.state.clear();
   };
 
-
-
-
-
   render() {
     const { 
       classes,
@@ -185,7 +176,7 @@ class Gasto extends Component {
         <Typography>{gastoExists ? "Editar Gasto" : "Nuevo Gasto"}</Typography>
 
         <Autocomplete
-          id="userAutocomplete"
+          id="detalleAutocomplete"
           items={[
             {
               primary: "Alex Mason",

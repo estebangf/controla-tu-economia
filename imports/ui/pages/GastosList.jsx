@@ -86,7 +86,7 @@ class GastosList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <h1>Ingresos</h1>
+        <h1>Gastos</h1>
         <List className={classes.root}>
           {this.renderGastos()}
         </List>
