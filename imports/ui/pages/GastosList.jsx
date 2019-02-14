@@ -23,7 +23,6 @@ class GastosList extends Component {
     };
   }
 
-
   renderIcon(gasto){
     if(gasto.esInsumo) {
       return <WorkIcon />
@@ -31,6 +30,7 @@ class GastosList extends Component {
       return <HomeIcon />
     }
   }
+  
   renderGastos() {
     const { gastos } = this.props;
 
@@ -66,7 +66,7 @@ class GastosList extends Component {
               secondary={!!gasto.descripcion ? gasto.descripcion : null}
             />
             <ListItemSecondaryAction>
-              <Typography>
+              <Typography style={styleFont} >
               {function(){
                 let importe = '$\u00A0'
                 for(let i=0; i<=9-gasto.importe.toFixed(2).toString().length; i++){
@@ -86,7 +86,9 @@ class GastosList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <h1>Gastos</h1>
+        <Typography variant="h4" className={classes.titulo}>Gastos</Typography>
+        <Link to={'/'}>Inicio</Link>
+
         <List className={classes.root}>
           {this.renderGastos()}
         </List>

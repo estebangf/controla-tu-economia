@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
+import { withStyles, Typography, ListItemAvatar, Avatar, List, ListItemText, ListItemSecondaryAction, ListItem } from '@material-ui/core';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const drawerWidth = 240;
 
@@ -22,10 +23,21 @@ class IngresosList extends Component {
     };
   }
 
+  renderIcon(ingreso){
+    if(ingreso.esPrestamo) {
+      return <AccountBalanceIcon />
+    } else {
+      return <AttachMoneyIcon />
+    }
+  }
+
   renderIngresos() {
     const { ingresos } = this.props;
 
     return ingresos.map(ingreso => {
+      const styleFont = {color: "#4385d6" };
+      const styleIcon = {background: '#4385d6'}
+
       return (
         <Link to={"/movimientos/ingresos/"+ingreso._id} style={{
           'text-decoration': 'none',
@@ -39,16 +51,22 @@ class IngresosList extends Component {
             button
           >
             <ListItemAvatar>
-              <Avatar>
-                <ImageIcon />
+              <Avatar style={styleIcon}>
+                {this.renderIcon(ingreso)}
               </Avatar>
             </ListItemAvatar>
             <ListItemText
+              primaryTypographyProps={{
+                style: styleFont
+              }}
+              secondaryTypographyProps={{
+                style: styleFont
+              }}
               primary={ingreso.detalle}
               secondary={!!ingreso.descripcion ? ingreso.descripcion : null}
             />
             <ListItemSecondaryAction>
-              <Typography>
+              <Typography style={styleFont} >
               {function(){
                 let importe = '$\u00A0'
                 for(let i=0; i<=9-ingreso.importe.toFixed(2).toString().length; i++){
@@ -68,7 +86,9 @@ class IngresosList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <h1>Ingresos</h1>
+        <Typography variant="h4" className={classes.titulo}>Ingresos</Typography>
+        <Link to={'/'}>Inicio</Link>
+        
         <List className={classes.root}>
           {this.renderIngresos()}
         </List>

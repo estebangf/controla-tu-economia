@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-const LinkGo = require('react-router-dom').Link
+import { Link } from 'react-router-dom';
 
-import { Link, withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -68,16 +68,12 @@ class Inicio extends Component {
     return (
       <div className={classes.root}>
           <div>
-            <h1>Control Económico!</h1>
-            <LinkGo to={'/movimientos/gastos'}>
-              <Link>Lista de Gastos</Link>
-            </LinkGo>
-            <LinkGo to={'/movimientos/gastos/nuevo'}>
-              <Link>Nuevo Gasto</Link>
-            </LinkGo>
-            <LinkGo to={'/movimientos/ingresos/nuevo'}>
-              <Link>Nuevo Ingreso</Link>
-            </LinkGo>
+            <Typography variant="h4" className={classes.titulo}>Control Económico!</Typography>
+            <Typography><Link to={'/movimientos/gastos'}>Lista de Gastos</Link></Typography>
+            <Typography><Link to={'/movimientos/gastos/nuevo'}>Nuevo Gasto</Link></Typography>
+            <Typography><Link to={'/movimientos/ingresos'}>Lista de Ingreso</Link></Typography>
+            <Typography><Link to={'/movimientos/ingresos/nuevo'}>Nuevo Ingreso</Link></Typography>
+            <Typography><Link to={'/movimientos/balance'}>Balance</Link></Typography>
           </div>
       </div>
     )

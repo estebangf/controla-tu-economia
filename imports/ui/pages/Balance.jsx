@@ -165,6 +165,7 @@ class Balance extends Component {
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
             <Typography variant="h4" className={classes.titulo}>Balance</Typography>
+            <Link to={'/'}>Inicio</Link>
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{

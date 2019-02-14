@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-const LinkGo = require('react-router-dom').Link
+import { Link } from 'react-router-dom';
 
-import { Link, withStyles, Typography, TextField, InputAdornment, Checkbox, FormControlLabel, Button } from '@material-ui/core';
+import { withStyles, Typography, TextField, InputAdornment, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 
 import Autocomplete from '../components/Autocomplete'
 import { Meteor } from 'meteor/meteor';
@@ -173,7 +173,8 @@ class Gasto extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography>{gastoExists ? "Editar Gasto" : "Nuevo Gasto"}</Typography>
+        <Typography variant="h4" className={classes.titulo}>{gastoExists ? "Editar Gasto" : "Nuevo Gasto"}</Typography>
+        <Link to={'/'}>Inicio</Link>
 
         <Autocomplete
           id="detalleAutocomplete"
