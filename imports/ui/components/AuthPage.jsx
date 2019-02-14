@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 const styles = {
 };
@@ -18,11 +19,20 @@ class AuthPage extends Component {
       content,
       link
     } = this.props;
-
+    
     return (
       <div>
-        {content}
-        {link}
+        {!!Meteor.userId() ?
+          <div>
+            <Typography variant="h5">Ya iniciaste sesion!</Typography>
+            <Typography variant="h3">¡Bienvenido!</Typography>
+          </div>
+        :
+          <div>
+            {content}
+            {link}
+          </div>
+        }
       </div>
     )
   }
