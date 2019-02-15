@@ -1,0 +1,36 @@
+{
+  "name": "Controla tu Economia",
+  "short_name": "CTE",
+  "icons": [
+    {
+      "src": "/icono196x196.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icono196x196.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/icono196x196.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icono196x196.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icono196x196.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/balance",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fafafa",
+  "theme_color": "#6387f5"
+}
