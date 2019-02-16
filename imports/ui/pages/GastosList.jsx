@@ -88,6 +88,9 @@ class GastosList extends Component {
       <div className={classes.root}>
         <Typography variant="h4" className={classes.titulo}>Gastos</Typography>
         <Link to={'/'}>Inicio</Link>
+        <Link className={classes.link} to={'/movimientos/gastos/nuevo'}>
+          Nuevo Gasto
+        </Link>
 
         <List className={classes.root}>
           {this.renderGastos()}

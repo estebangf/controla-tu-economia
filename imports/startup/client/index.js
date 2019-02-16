@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
+import { blue, red, orange, green } from '@material-ui/core/colors';
 
 import AppContainer from '/imports/ui/containers/AppContainer'
 
@@ -15,6 +15,26 @@ const theme = createMuiTheme({
       dark: '#19212b',
       contrastText: '#ffffffb3',
     },
+    gastos: {
+      buttonText: '#FFF',
+      backgroundColor: red[300],
+      buttonHover: red[700],
+    },
+    ingresos: {
+      buttonText: '#FFF',
+      backgroundColor: blue[400],
+      buttonHover: blue[700],
+    },
+    metas: {
+      buttonText: '#FFF',
+      backgroundColor: orange[400],
+      buttonHover: orange[700],
+    },
+    balance: {
+      buttonText: '#FFF',
+      backgroundColor: green[400],
+      buttonHover: green[700],
+    }
 //    transparent: '#00000000'
   },
   typography: { 
