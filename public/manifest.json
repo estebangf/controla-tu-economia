@@ -28,7 +28,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/balance",
+  "start_url": "/movimientos/balance",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fafafa",
