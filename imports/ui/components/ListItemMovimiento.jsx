@@ -20,6 +20,14 @@ const styles = theme => ({
       color: "#4d4d4d"
     },
   },
+  linkDefault: {
+    color: "#4d4d4d",
+    textDecoration: 'none',
+    '&:focus, &:hover, &:visited, &:link, &:active': {
+      'text-decoration': 'none',
+      color: "#4d4d4d"
+    },
+  },
   gastoFont: {
     paddingRight: 7.5,
     color: "#de6c6c"
@@ -67,7 +75,6 @@ class ListItemMovimiento extends Component {
 
 
   editar = (movimiento) => {
-    alert(movimiento.detalle)
     this.handleClose(this)
   }
   eliminar = (movimiento) => {
@@ -151,7 +158,9 @@ class ListItemMovimiento extends Component {
             disabled={true}
             onClick={() => this.handleClose(this)}
           >{movimiento.detalle + ' x ' + movimiento.importe.toFixed(2)}</MenuItem>
-          <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
+          <Link to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
+            <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
+          </Link>
           <MenuItem onClick={() => this.eliminar(movimiento)}>Eliminar</MenuItem>
           <MenuItem onClick={() => this.es(movimiento)}>
             {
