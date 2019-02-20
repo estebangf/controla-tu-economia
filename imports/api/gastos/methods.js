@@ -31,8 +31,7 @@ Meteor.methods({
     check(importe, Number);
     check(esInsumo, Boolean);
 
-//    if (!!this.userId) {
-    if (true) {
+    if (!!this.userId) {
       return Gastos.update(id, {
         $set: {
           detalle,
@@ -41,6 +40,15 @@ Meteor.methods({
           esInsumo,
         }
       });
+    } else {
+      throw new Meteor.Error('not-authorized');
+    }
+  },
+  'gasto.eliminar'(id) {
+    check(id, String);
+
+    if (!!this.userId) {
+      return Gastos.remove(id);
     } else {
       throw new Meteor.Error('not-authorized');
     }

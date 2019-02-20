@@ -8,6 +8,8 @@ import WorkIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
+import ListItemMovimiento from '../components/ListItemMovimiento';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -66,45 +68,7 @@ class Balance extends Component {
       const styleFont = {color: item.tipo == 'ingresos' ? "#4385d6" : "#de6c6c" };
       const styleIcon = {background: item.tipo == 'ingresos' ? '#4385d6' : '#de6c6c'}
       return (
-        <Link to={"/movimientos/"+item.tipo+"/"+item._id} style={{
-          'text-decoration': 'none',
-          '&:focus, &:hover, &:visited, &:link, &:active': {
-            'text-decoration': 'none',
-            color: "#4d4d4d"
-        },
-          color: "#4d4d4d"
-        }}>
-          <ListItem
-            button
-          >
-            <ListItemAvatar>
-              <Avatar style={styleIcon}>
-                {this.renderIcon(item)}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primaryTypographyProps={{
-                style: styleFont
-              }}
-              secondaryTypographyProps={{
-                style: styleFont
-              }}
-              primary={item.detalle}
-              secondary={!!item.descripcion ? item.descripcion : null}
-            />
-            <ListItemSecondaryAction>
-              <Typography style={styleFont} >
-              {function(){
-                let importe = '$\u00A0'
-                for(let i=0; i<=9-item.importe.toFixed(2).toString().length; i++){
-                  importe += '\u00A0\u00A0';
-                }
-                console.log(importe+item.importe.toFixed(2));
-                return importe+item.importe.toFixed(2)
-              }()}</Typography>
-            </ListItemSecondaryAction>
-          </ListItem>
-        </Link>
+        <ListItemMovimiento movimiento={item} />
       )
     })
   }
@@ -130,25 +94,25 @@ class Balance extends Component {
       console.log(ingresos[i].creado)
       console.log(gastos[g].creado)
       if (ingresos[i].creado.getTime() < gastos[g].creado.getTime()) {
-        items.push({...ingresos[i], tipo: "ingresos"})
+        items.push({...ingresos[i], tipo: "ingreso"})
         totales.ingresos += ingresos[i].importe
         totales.saldo += ingresos[i].importe
         i++
       } else {
-        items.push({...gastos[g], tipo: "gastos"})
+        items.push({...gastos[g], tipo: "gasto"})
         totales.gastos += gastos[g].importe
         totales.saldo -= gastos[g].importe
         g++
       }
     }
     while (i < ingresos.length) {
-      items.push({...ingresos[i], tipo: "ingresos"})
+      items.push({...ingresos[i], tipo: "ingreso"})
       totales.ingresos += ingresos[i].importe
       totales.saldo += ingresos[i].importe
       i++
     }
     while ( g < gastos.length) {
-      items.push({...gastos[g], tipo: "gastos"})
+      items.push({...gastos[g], tipo: "gasto"})
       totales.gastos += gastos[g].importe
       totales.saldo -= gastos[g].importe
       g++

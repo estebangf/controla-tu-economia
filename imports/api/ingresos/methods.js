@@ -31,8 +31,7 @@ Meteor.methods({
     check(importe, Number);
     check(esPrestamo, Boolean);
 
-//    if (!!this.userId) {
-    if (true) {
+    if (!!this.userId) {
       return Ingresos.update(id, {
         $set: {
           detalle,
@@ -41,6 +40,15 @@ Meteor.methods({
           esPrestamo,
         }
       });
+    } else {
+      throw new Meteor.Error('not-authorized');
+    }
+  },
+  'ingreso.eliminar'(id) {
+    check(id, String);
+
+    if (!!this.userId) {
+      return Ingresos.remove(id);
     } else {
       throw new Meteor.Error('not-authorized');
     }
@@ -61,7 +69,7 @@ Meteor.methods({
   //   }
   // },
 /*
-  'gastos.remove'(taskId) {
+  'ingresos.remove'(taskId) {
     check(taskId, String);
 
     const task = Ingresos.findOne(taskId);
@@ -72,7 +80,7 @@ Meteor.methods({
 
     Ingresos.remove(taskId);
   },
-  'gastos.setChecked'(taskId, setChecked) {
+  'ingresos.setChecked'(taskId, setChecked) {
     check(taskId, String);
     check(setChecked, Boolean);
 
@@ -84,7 +92,7 @@ Meteor.methods({
 
     Ingresos.update(taskId, { $set: { checked: setChecked } });
   },
-  'gastos.setPrivate'(taskId, setToPrivate) {
+  'ingresos.setPrivate'(taskId, setToPrivate) {
     check(taskId, String);
     check(setToPrivate, Boolean);
 
