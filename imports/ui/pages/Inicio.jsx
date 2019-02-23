@@ -9,7 +9,6 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: 'flex',
     padding: 15,
     textAlign: 'center',
   },
@@ -45,6 +44,16 @@ const styles = theme => ({
     backgroundColor: theme.palette.balance.backgroundColor,
     '&:hover': {
       backgroundColor: theme.palette.balance.buttonHover,
+    },
+    marginBottom: 15,
+    fontSize: 15,
+    padding: 15
+  },
+  btnGanancias: {
+    color: theme.palette.ganancias.buttonText,
+    backgroundColor: theme.palette.ganancias.backgroundColor,
+    '&:hover': {
+      backgroundColor: theme.palette.ganancias.buttonHover,
     },
     marginBottom: 15,
     fontSize: 15,
@@ -117,23 +126,24 @@ class Inicio extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-          <div>
-            <Typography variant="h4" className={classes.titulo}>Control Económico!</Typography>
-            <img className={classes.logoImgaen} src="/icono196x196.png" />
+        <Typography variant="h4" className={classes.titulo}>Control Económico!</Typography>
+        <img className={classes.logoImgaen} src="/icono196x196.png" />
 
-            <Link className={classes.link} to={'/movimientos/gastos'}>
-              <Button fullWidth="true" variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
-            </Link>
-            <Link className={classes.link} to={'/movimientos/ingresos'}>
-              <Button fullWidth="true" variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
-            </Link>
-            <Link className={classes.link} to={'/movimientos/metas'}>
-              <Button fullWidth="true" variant="contained" className={classes.btnMetas}>Metas</Button>
-            </Link>
-            <Link className={classes.link} to={'/movimientos/balance'}>
-              <Button fullWidth="true" variant="contained" className={classes.btnBalance}>Balance</Button>
-            </Link>
-          </div>
+        <Link className={classes.link} to={'/movimientos/gastos'}>
+          <Button fullWidth="true" variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
+        </Link>
+        <Link className={classes.link} to={'/movimientos/ingresos'}>
+          <Button fullWidth="true" variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
+        </Link>
+        <Link className={classes.link} to={'/movimientos/metas'}>
+          <Button fullWidth="true" variant="contained" className={classes.btnMetas}>Metas</Button>
+        </Link>
+        <Link className={classes.link} to={'/movimientos/balance'}>
+          <Button fullWidth="true" variant="contained" className={classes.btnBalance}>Balance</Button>
+        </Link>
+        <Link className={classes.link} to={'/movimientos/ganancias'}>
+          <Button fullWidth="true" variant="contained" className={classes.btnGanancias}>Ganancias</Button>
+        </Link>
       </div>
     )
   }

@@ -18,6 +18,7 @@ import IngresoContainer from '../containers/IngresoContainer';
 import GastosContainer from '../containers/GastosContainer';
 import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
+import GananciasContainer from '../containers/GananciasContainer';
 
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
@@ -180,6 +181,11 @@ class App extends Component {
           exact
           path="/movimientos/balance"
           render={() => <BalanceContainer />}
+        />,
+        <Route
+          exact
+          path="/movimientos/ganancias"
+          render={() => <GananciasContainer />}
         />,
       ]
     } else {
