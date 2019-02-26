@@ -38,20 +38,32 @@ class Ingreso extends Component {
 
   static getDerivedStateFromProps(props, state){
     const {
+      loading,
       ingresoExists,
       ingreso
     } = props;
-    
-    if (ingresoExists && (state.id == '' || state.id != ingreso._id)) {
-      return {
-        id: ingreso._id,
-        detalle: ingreso.detalle,
-        descripcion: ingreso.descripcion,
-        importe: ingreso.importe,
-        esPrestamo: ingreso.esPrestamo
+
+    if (!loading && ingresoExists) {
+      if (tate.id == '' || state.id != ingreso._id) {
+        return {
+          id: ingreso._id,
+          detalle: ingreso.detalle,
+          descripcion: ingreso.descripcion,
+          importe: ingreso.importe,
+          esPrestamo: ingreso.esPrestamo
+        }
+      } else {
+        return {
+          id: '',
+          detalle: '',
+          descripcion: '',
+          importe: 0.00,
+          esPrestamo: false
+        }
       }
+    } else {
+      return null
     }
-    return null
   }
 
   handleChange = name => event => {

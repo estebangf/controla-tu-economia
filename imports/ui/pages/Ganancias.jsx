@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import WorkIcon from '@material-ui/icons/Work';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 
@@ -189,7 +185,7 @@ class Ganancias extends Component {
               >
               <div
                 className={[classes.porcionGananciasQuesito, classes.quesito].join(' ')}
-                style={{background: valores.ganancias < 0 && 'red',
+                style={{background: valores.ganancias < 0 && '#b25858',
                   transform: 'rotate('+ (valores.gastos+valores.ganancias) * 360 + 'deg)'}}
               />
             </div>

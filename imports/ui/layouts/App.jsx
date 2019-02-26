@@ -103,14 +103,36 @@ class App extends Component {
       drawerOpen: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
+      cuentaId: undefined
     };
     
+    this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
 /*
     this.logout = this.logout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
 */
   }
 
+  static getDerivedStateFromProps(props, state){
+    const {
+      loading,
+      cuentasExists,
+      cuentas
+    } = props;
+
+    if (!loading && cuentasExists) {
+      if (!!!state.cuentaId) {
+        return {
+          cuentaId: cuentas[0]._id
+        }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
+  
   componentDidMount(){
     const self = this;
     function resize(){
@@ -119,6 +141,10 @@ class App extends Component {
     }
 
     window.onresize = resize;
+  }
+
+  seleccionarCuenta(cuentaId) {
+    this.setState({cuentaId});
   }
 /*
   logout() {
@@ -138,7 +164,7 @@ class App extends Component {
       <Route
         exact
         path="/"
-        render={() => <Inicio />}
+        render={() => <Inicio cuentas={this.props.cuentas} seleccionarCuenta={this.seleccionarCuenta} />}
       />,
       <Route
         exact
@@ -154,13 +180,15 @@ class App extends Component {
   }
 
   renderOnlinePages(){
-    const { loggued } = this.props
+    const { loggued } = this.props;
+    const { cuentaId } = this.state;
+
     if (!!loggued) {
       return [
         <Route
           exact
           path="/movimientos/gastos"
-          render={() => <GastosContainer />}
+          render={() => <GastosContainer cuentaId={cuentaId} />}
         />,
         <Route
           exact
@@ -170,7 +198,7 @@ class App extends Component {
         <Route
           exact
           path="/movimientos/ingresos"
-          render={() => <IngresosContainer />}
+          render={() => <IngresosContainer cuentaId={cuentaId} />}
         />,
         <Route
           exact
@@ -180,12 +208,12 @@ class App extends Component {
         <Route
           exact
           path="/movimientos/balance"
-          render={() => <BalanceContainer />}
+          render={() => <BalanceContainer cuentaId={cuentaId} />}
         />,
         <Route
           exact
           path="/movimientos/ganancias"
-          render={() => <GananciasContainer />}
+          render={() => <GananciasContainer cuentaId={cuentaId} />}
         />,
       ]
     } else {

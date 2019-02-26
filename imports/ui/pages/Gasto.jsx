@@ -38,20 +38,32 @@ class Gasto extends Component {
 
   static getDerivedStateFromProps(props, state){
     const {
+      loading,
       gastoExists,
       gasto
     } = props;
-    
-    if (gastoExists && (state.id == '' || state.id != gasto._id)) {
-      return {
-        id: gasto._id,
-        detalle: gasto.detalle,
-        descripcion: gasto.descripcion,
-        importe: gasto.importe,
-        esInsumo: gasto.esInsumo
+
+    if (!loading && gastoExists) {
+      if (state.id == '' || state.id != gasto._id) {
+        return {
+          id: gasto._id,
+          detalle: gasto.detalle,
+          descripcion: gasto.descripcion,
+          importe: gasto.importe,
+          esInsumo: gasto.esInsumo
+        }
+      } else {
+        return {
+          id: '',
+          detalle: '',
+          descripcion: '',
+          importe: 0.00,
+          esInsumo: false
+        }
       }
+    } else {
+      return null
     }
-    return null
   }
 
   handleChange = name => event => {

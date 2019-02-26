@@ -6,13 +6,13 @@ import Balance from '../pages/Balance.jsx';
 import { Ingresos } from '/imports/api/ingresos/ingresos';
 import { Gastos } from '/imports/api/gastos/gastos';
 
-export default withTracker(() => {
-  const publicHandleIngresos = Meteor.subscribe('ingresos');
+export default withTracker(({cuentaId}) => {
+  const publicHandleIngresos = Meteor.subscribe('ingresos', cuentaId);
   const loadingIngresos = !publicHandleIngresos.ready();
   const ingresos = Ingresos.find({}, { sort: { creado: 1 } }).fetch();
   const ingresosExists = !loadingIngresos && !!ingresos;
 
-  const publicHandleGastos = Meteor.subscribe('gastos');
+  const publicHandleGastos = Meteor.subscribe('gastos', cuentaId);
   const loadingGastos = !publicHandleGastos.ready();
   const gastos = Gastos.find({}, { sort: { creado: 1 } }).fetch();
   const gastosExists = !loadingGastos && !!gastos;

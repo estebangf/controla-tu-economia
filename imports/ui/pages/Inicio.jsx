@@ -123,27 +123,35 @@ class Inicio extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { 
+      classes,
+      cuentas,
+      seleccionarCuenta
+    } = this.props;
     return (
       <div className={classes.root}>
         <Typography variant="h4" className={classes.titulo}>Control Económico!</Typography>
         <img className={classes.logoImgaen} src="/icono196x196.png" />
 
         <Link className={classes.link} to={'/movimientos/gastos'}>
-          <Button fullWidth="true" variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
+          <Button fullWidth={true} variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
         </Link>
         <Link className={classes.link} to={'/movimientos/ingresos'}>
-          <Button fullWidth="true" variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
+          <Button fullWidth={true} variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
         </Link>
         <Link className={classes.link} to={'/movimientos/metas'}>
-          <Button fullWidth="true" variant="contained" className={classes.btnMetas}>Metas</Button>
+          <Button fullWidth={true} variant="contained" className={classes.btnMetas}>Metas</Button>
         </Link>
         <Link className={classes.link} to={'/movimientos/balance'}>
-          <Button fullWidth="true" variant="contained" className={classes.btnBalance}>Balance</Button>
+          <Button fullWidth={true} variant="contained" className={classes.btnBalance}>Balance</Button>
         </Link>
         <Link className={classes.link} to={'/movimientos/ganancias'}>
-          <Button fullWidth="true" variant="contained" className={classes.btnGanancias}>Ganancias</Button>
+          <Button fullWidth={true} variant="contained" className={classes.btnGanancias}>Ganancias</Button>
         </Link>
+        <Typography variant="h3" className={classes.titulo}>Cuentas</Typography>
+        {cuentas.map((cuenta) => {
+          return <Button fullWidth={true} onClick={() => seleccionarCuenta(cuenta._id)}>{cuenta.nombre}</Button>
+        })}
       </div>
     )
   }
