@@ -9,7 +9,7 @@ export default withTracker(() => {
   const publicHandle = Meteor.subscribe('cuentas');
   const loading = !publicHandle.ready();
   const cuentas = Cuentas.find({}).fetch();
-  const cuentasExists = !loading && !!cuentas;
+  const cuentasExists = !loading && !!cuentas.length;
 
   return {
     loading,

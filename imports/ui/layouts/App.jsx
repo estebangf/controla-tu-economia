@@ -126,7 +126,7 @@ class App extends Component {
     } = props;
 
     if (!loading && cuentasExists && !!loggued) {
-      if (!!!state.cuentaId) {
+      if (!!!state.cuentaId || (!!state.cuentaId && cuentas.map((c)=> {return c._id}).indexOf(state.cuentaId) == -1) ) {
         return {
           cuentaId: cuentas[0]._id
         }
