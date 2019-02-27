@@ -5,6 +5,7 @@ import { Gastos } from '../../api/gastos/gastos.js'
 import { Cuentas } from '../../api/cuentas/cuentas.js'
 
 
+/*
 // INICIO DE SISTEMA DE CUENTAS:
 const users = Meteor.users.find({}).fetch()
 users.forEach(user => {
@@ -29,3 +30,4 @@ users.forEach(user => {
     }, { multi: true });
   }
 });
+*/
