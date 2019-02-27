@@ -52,14 +52,14 @@ class Ingreso extends Component {
           importe: ingreso.importe,
           esPrestamo: ingreso.esPrestamo
         }
-      } else {
-        return {
-          id: '',
-          detalle: '',
-          descripcion: '',
-          importe: 0.00,
-          esPrestamo: false
-        }
+      }
+    } else {
+      return {
+        id: '',
+        detalle: '',
+        descripcion: '',
+        importe: 0.00,
+        esPrestamo: false
       }
     }
     return null

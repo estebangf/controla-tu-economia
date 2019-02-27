@@ -50,14 +50,14 @@ class Cuenta extends Component {
           cuentaVinculada: cuenta.cuentaVinculada,
           esVinculada: !!cuenta.cuentaVinculada
         }
-      } else {
-        return {
-          id: '',
-          nombre: '',
-          descripcion: '',
-          cuentaVinculada: '',
-          esVinculada: false
-        }
+      }
+    } else {
+      return {
+        id: '',
+        nombre: '',
+        descripcion: '',
+        cuentaVinculada: '',
+        esVinculada: false
       }
     }
     return null

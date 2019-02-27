@@ -43,6 +43,10 @@ class Gasto extends Component {
       gasto
     } = props;
 
+    console.log("props y state");
+    console.log(props);
+    console.log(state);
+    
     if (!loading && gastoExists) {
       if (state.id == '' || state.id != gasto._id) {
         return {
@@ -52,14 +56,14 @@ class Gasto extends Component {
           importe: gasto.importe,
           esInsumo: gasto.esInsumo
         }
-      } else {
-        return {
-          id: '',
-          detalle: '',
-          descripcion: '',
-          importe: 0.00,
-          esInsumo: false
-        }
+      }
+    } else {
+      return {
+        id: '',
+        detalle: '',
+        descripcion: '',
+        importe: 0.00,
+        esInsumo: false
       }
     }
     return null
