@@ -61,9 +61,8 @@ class Gasto extends Component {
           esInsumo: false
         }
       }
-    } else {
-      return null
     }
+    return null
   }
 
   handleChange = name => event => {

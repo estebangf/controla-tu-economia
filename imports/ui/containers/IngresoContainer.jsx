@@ -9,7 +9,7 @@ export default withTracker(({ match }) => {
   const publicHandle = Meteor.subscribe('ingreso',ingresoId);
   const loading = !publicHandle.ready();
 //  const ingreso = Ingresos.find({}, { sort: { createdAt: -1 } }).fetch();
-  const ingreso = Ingresos.findOne({});
+  const ingreso = Ingresos.findOne({_id: ingresoId});
   const ingresoExists = !loading && !!ingreso;
 
   return {

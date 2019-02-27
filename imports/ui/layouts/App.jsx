@@ -13,6 +13,10 @@ import JoinPage from '../pages/JoinPage'
 import NotFoundPage from '../pages/NotFoundPage';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import CuentaContainer from '../containers/CuentaContainer';
+import CuentasContainer from '../containers/CuentasContainer';
+
 import GastoContainer from '../containers/GastoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
 import GastosContainer from '../containers/GastosContainer';
@@ -117,10 +121,11 @@ class App extends Component {
     const {
       loading,
       cuentasExists,
-      cuentas
+      cuentas,
+      loggued
     } = props;
 
-    if (!loading && cuentasExists) {
+    if (!loading && cuentasExists && !!loggued) {
       if (!!!state.cuentaId) {
         return {
           cuentaId: cuentas[0]._id
@@ -160,11 +165,14 @@ class App extends Component {
 */
 
   renderOfflinePages(){
+    const {
+      cuentasExists
+    } = this.props
     return [
       <Route
         exact
         path="/"
-        render={() => <Inicio cuentas={this.props.cuentas} seleccionarCuenta={this.seleccionarCuenta} />}
+        render={() => <Inicio cuentasExists={cuentasExists}/>}
       />,
       <Route
         exact
@@ -180,46 +188,79 @@ class App extends Component {
   }
 
   renderOnlinePages(){
-    const { loggued } = this.props;
+    const { loggued, cuentas } = this.props;
     const { cuentaId } = this.state;
 
     if (!!loggued) {
-      return [
-        <Route
-          exact
-          path="/movimientos/gastos"
-          render={() => <GastosContainer cuentaId={cuentaId} />}
-        />,
-        <Route
-          exact
-          path="/movimientos/gastos/:id"
-          render={({match}) => <GastoContainer cuentaId={cuentaId} match={match} />}
-        />,
-        <Route
-          exact
-          path="/movimientos/ingresos"
-          render={() => <IngresosContainer cuentaId={cuentaId} />}
-        />,
-        <Route
-          exact
-          path="/movimientos/ingresos/:id"
-          render={({match}) => <IngresoContainer cuentaId={cuentaId} match={match} />}
-        />,
-        <Route
-          exact
-          path="/movimientos/balance"
-          render={() => <BalanceContainer cuentaId={cuentaId} />}
-        />,
-        <Route
-          exact
-          path="/movimientos/ganancias"
-          render={() => <GananciasContainer cuentaId={cuentaId} />}
-        />,
-      ]
+      if (!!cuentaId) {
+        return [
+          <Route
+            exact
+            path="/movimientos/gastos"
+            render={() => <GastosContainer cuentaId={cuentaId} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/gastos/:id"
+            render={({match}) => <GastoContainer cuentaId={cuentaId} match={match} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/ingresos"
+            render={() => <IngresosContainer cuentaId={cuentaId} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/ingresos/:id"
+            render={({match}) => <IngresoContainer cuentaId={cuentaId} match={match} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/balance"
+            render={() => <BalanceContainer cuentaId={cuentaId} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/ganancias"
+            render={() => <GananciasContainer cuentaId={cuentaId} />}
+          />,
+          <Route
+            exact
+            path="/cuentas/"
+            render={() => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+          />,
+          <Route
+            exact
+            path="/cuentas/:id"
+            render={({match}) => <CuentaContainer match={match} />}
+          />,
+        ]
+      } else {
+        return [
+          <Route
+            path="/movimientos/*"
+            render={({match}) => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+          />,
+          <Route
+            exact
+            path="/cuentas/"
+            render={() => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+          />,
+          <Route
+            exact
+            path="/cuentas/:id"
+            render={({match}) => <CuentaContainer match={match} />}
+          />,
+        ]
+      }
     } else {
       return [
         <Route
           path="/movimientos/*"
+          render={() => <SignInPage />}
+        />,
+        <Route
+          path="/cuentas/*"
           render={() => <SignInPage />}
         />,
       ]

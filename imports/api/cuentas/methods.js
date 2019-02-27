@@ -6,58 +6,43 @@ import { Cuentas } from './cuentas.js'
 
 Meteor.methods({
   'cuenta.nueva'(cuentaVinculada, nombre, descripcion) {
-    if (!!cuentaVinculada) {
-      check(cuentaVinculada, String);
+    check(nombre, String);
+    check(descripcion, String);
+   
+    if (!!this.userId) {
+      if (!!cuentaVinculada) {
+        check(cuentaVinculada, String);
 
-      const cuentaAVincular = Cuentas.findOne(cuentaVinculada);
+        const cuentaAVincular = Cuentas.findOne(cuentaVinculada);
 
-      if (!!cuentaAVincular) {
-        if (!!this.userId) {
-          return Cuentas.insert({
-            cuentaVinculada,
-            nombre: cuentaAVincular.nombre,
-            descripcion: cuentaAVincular.descripcion,
-            userId: this.userId,
-            creada: new Date()
-          });
-        } else {
-          throw new Meteor.Error('not-authorized');
+        if (!!!cuentaAVincular) {
+          throw new Meteor.Error('not-found');
         }
-      } else {
-        throw new Meteor.Error('not-found');
       }
-    } else {
       check(nombre, String);
       check(descripcion, String);
   
-      if (!!this.userId) {
-        return Cuentas.insert({
-          cuentaVinculada,
-          nombre,
-          descripcion,
-          userId: this.userId,
-          creada: new Date()
-        });
-      } else {
-        throw new Meteor.Error('not-authorized');
-      } 
+      return Cuentas.insert({
+        cuentaVinculada,
+        nombre,
+        descripcion,
+        userId: this.userId,
+        creada: new Date()
+      });
+    } else {
+      throw new Meteor.Error('not-authorized');
     }
   },
-/*
-  'cuenta.editar'(id, detalle, descripcion, importe, esInsumo) {
+  'cuenta.editar'(id, nombre, descripcion) {
     check(id, String);
-    check(detalle, String);
+    check(nombre, String);
     check(descripcion, String);
-    check(importe, Number);
-    check(esInsumo, Boolean);
 
     if (!!this.userId) {
       return Cuentas.update(id, {
         $set: {
-          detalle,
+          nombre,
           descripcion,
-          importe,
-          esInsumo,
         }
       });
     } else {

@@ -61,9 +61,8 @@ class Ingreso extends Component {
           esPrestamo: false
         }
       }
-    } else {
-      return null
     }
+    return null
   }
 
   handleChange = name => event => {

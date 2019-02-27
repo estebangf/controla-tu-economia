@@ -15,6 +15,9 @@ const theme = createMuiTheme({
       dark: '#19212b',
       contrastText: '#ffffffb3',
     },
+    cuentas:{
+
+    },
     gastos: {
       buttonText: '#FFF',
       backgroundColor: red[300],
