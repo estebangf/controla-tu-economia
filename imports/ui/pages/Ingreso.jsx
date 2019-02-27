@@ -80,7 +80,8 @@ class Ingreso extends Component {
   guardar(){
     const {
       ingresoExists,
-      ingreso
+      ingreso,
+      cuentaId
     } = this.props
     const { 
       detalle,
@@ -111,6 +112,7 @@ class Ingreso extends Component {
         descripcion,
         importe,
         esPrestamo,
+        cuentaId,
         (error, result) => {
           if (error){
             alert(error);

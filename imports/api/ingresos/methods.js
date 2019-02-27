@@ -5,11 +5,12 @@ import { check } from 'meteor/check';
 import { Ingresos } from './ingresos.js'
 
 Meteor.methods({
-  'ingreso.nuevo'(detalle, descripcion, importe, esPrestamo) {
+  'ingreso.nuevo'(detalle, descripcion, importe, esPrestamo, cuentaId) {
     check(detalle, String);
     check(descripcion, String);
     check(importe, Number);
     check(esPrestamo, Boolean);
+    check(cuentaId, String);
 
     if (!!this.userId) {
       return Ingresos.insert({
@@ -17,6 +18,7 @@ Meteor.methods({
         descripcion,
         importe,
         esPrestamo,
+        cuentaId,
         userId: this.userId,
         creado: new Date()
       });

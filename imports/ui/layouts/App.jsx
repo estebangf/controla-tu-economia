@@ -193,7 +193,7 @@ class App extends Component {
         <Route
           exact
           path="/movimientos/gastos/:id"
-          render={({match}) => <GastoContainer match={match} />}
+          render={({match}) => <GastoContainer cuentaId={cuentaId} match={match} />}
         />,
         <Route
           exact
@@ -203,7 +203,7 @@ class App extends Component {
         <Route
           exact
           path="/movimientos/ingresos/:id"
-          render={({match}) => <IngresoContainer match={match} />}
+          render={({match}) => <IngresoContainer cuentaId={cuentaId} match={match} />}
         />,
         <Route
           exact

@@ -80,7 +80,8 @@ class Gasto extends Component {
   guardar(){
     const {
       gastoExists,
-      gasto
+      gasto,
+      cuentaId
     } = this.props
     const { 
       detalle,
@@ -90,6 +91,8 @@ class Gasto extends Component {
     const importe = parseFloat(this.state.importe);
     const id = gasto._id;
 
+    console.log("cuentaId")
+    console.log(cuentaId)
     if(gastoExists) {
       Meteor.call('gasto.editar',
         id,
@@ -111,6 +114,7 @@ class Gasto extends Component {
         descripcion,
         importe,
         esInsumo,
+        cuentaId,
         (error, result) => {
           if (error){
             alert(error);
