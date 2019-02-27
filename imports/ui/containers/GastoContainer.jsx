@@ -12,10 +12,6 @@ export default withTracker(({ match }) => {
   const gasto = Gastos.findOne({});
   const gastoExists = !loading && !!gasto;
 
-  console.log("gasto");
-  console.log(gastoId);
-  console.log(gasto);
-
   return {
     loading,
     gastoExists,

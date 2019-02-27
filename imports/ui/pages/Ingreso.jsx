@@ -44,7 +44,7 @@ class Ingreso extends Component {
     } = props;
 
     if (!loading && ingresoExists) {
-      if (tate.id == '' || state.id != ingreso._id) {
+      if (state.id == '' || state.id != ingreso._id) {
         return {
           id: ingreso._id,
           detalle: ingreso.detalle,
