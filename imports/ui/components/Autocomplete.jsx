@@ -112,12 +112,6 @@ export class Autocomplete extends React.PureComponent {
         style={{ position: "relative" }}
         onChange={(selection, functions) => onSelect(selection, functions)}
         onStateChange={(state) => {
-          console.log("onStateChange");
-          console.log(state);
-          console.log(state.inputValue);
-          console.log(state.selectedItem);
-          console.log(stateChangeTypes[state.type]);
-          console.log(value);
           if (
             stateChangeTypesIs(state.type, "__autocomplete_change_input__") ||
             stateChangeTypesIs(state.type, "__autocomplete_click_item__") ||
