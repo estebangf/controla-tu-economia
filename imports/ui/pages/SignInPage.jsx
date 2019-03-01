@@ -4,12 +4,37 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import AuthPage from '../components/AuthPage';
+import { withStyles, Typography, TextField, Paper, Button, InputAdornment, IconButton } from '@material-ui/core';
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+const styles = theme => ({
+  titulo:{
+    textAlign: 'center',
+    marginBottom: 5
+  },
+  subtitulo:{
+    textAlign: 'center',
+    marginBottom: 15
+  },
+  textField:{
+    marginBottom: 50
+  },
+  btnSignin: {
+    float: 'right'
+  },
+  link:{
+    textDecoration: 'none'
+  }
+});
 
 class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      errors: {}
+      errors: {},
+      showPassword: false
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -43,62 +68,68 @@ class SignInPage extends Component {
     });
   }
 
+  handleClickShowPassword = () => {
+    this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
   render() {
-    const { errors } = this.state;
+    const { classes } = this.props;
+    const { errors, showPassword } = this.state;
     const errorMessages = Object.keys(errors).map(key => errors[key]);
     const errorClass = key => errors[key] && 'error';
 
     const content = (
       <div>
-        <h1>
-          {'signIn'}
-        </h1>
-        <p>
-          {'signInReason'}
-        </p>
+        <Typography variant="h4" className={classes.titulo}>Inicio de Sesion</Typography>
+        <Typography variant="subtitle1" gutterBottom className={classes.subtitulo}>Controla tu Economia</Typography>
         <form onSubmit={this.onSubmit}>
-          <div>
-            {errorMessages.map(msg => (
-              <div key={msg}>{msg}</div>
-            ))}
-          </div>
-          <div>
-            <input
-              type="email"
-              name="email"
-              ref={(c) => { this.email = c; }}
-              placeholder={'yourEmail'}
-            />
-            <span
-              title={'yourEmail'}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              name="password"
-              ref={(c) => { this.password = c; }}
-              placeholder={'password'}
-            />
-            <span
-              title={'password'}
-            />
-          </div>
-          <button type="submit">
-            {'signInButton'}
-          </button>
+          {errorMessages.map((msg, index) => (
+              <Typography key={"error"+index} variant="h6" className={classes.titulo}>{msg}</Typography>
+          ))}
+          <TextField
+            type="email"
+            name="email"
+            margin="normal"
+            variant="outlined"
+            fullWidth={true}
+            ref={(c) => { this.email = c; }}
+            label="E-Mmail"
+          />
+          <TextField
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            margin="normal"
+            variant="outlined"
+            fullWidth={true}
+            className={classes.textField}
+            ref={(c) => { this.password = c; }}
+            label="Contraseña"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={this.handleClickShowPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+          <Link to="/join" className={classes.link}>
+            <Button>
+              Crear cuenta
+            </Button>
+          </Link>
+          <Button variant="contained" color="primary" type="submit" className={classes.btnSignin}>
+            Iniciar sesion
+          </Button>
         </form>
       </div>
     );
 
-    const link = (
-      <Link to="/join">
-        {'needAccount'}
-      </Link>
-    );
-
-   // return this.renderRedirect() ||
-    return <AuthPage content={content} link={link} menuOpen={this.props.menuOpen} />;
+    return <AuthPage content={content} menuOpen={this.props.menuOpen} />;
   }
 }
 
@@ -106,4 +137,4 @@ SignInPage.propTypes = {
 
 };
 
-export default SignInPage;
+export default withStyles(styles)(SignInPage);
