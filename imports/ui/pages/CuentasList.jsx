@@ -23,14 +23,11 @@ class CuentasList extends Component {
   }
   
   renderCuentas() {
-    const { cuentas, cuentaId, seleccionarCuenta } = this.props;
-
-    console.log("cuentaId");
-    console.log(cuentaId);
+    const { cuentas, cuentaSeleccionada, seleccionarCuenta } = this.props;
     
     return cuentas.map(cuenta => {
       return (
-        <ListItemCuenta cuenta={cuenta} seleccionada={cuenta._id == cuentaId} seleccionarCuenta={seleccionarCuenta} />
+        <ListItemCuenta cuenta={cuenta} seleccionada={cuenta._id == cuentaSeleccionada._id} seleccionarCuenta={seleccionarCuenta} />
       )
     })
   }

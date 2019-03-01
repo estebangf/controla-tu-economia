@@ -126,7 +126,7 @@ class ListItemCuenta extends Component {
               <Radio className={classes.radioSelect}
                 color="prymary"
                 onClick={(e) => {e.preventDefault();
-                  seleccionarCuenta(cuenta._id)}}
+                  seleccionarCuenta(cuenta)}}
                 checked={seleccionada}
               />
             </ListItemSecondaryAction>

@@ -107,7 +107,7 @@ class App extends Component {
       drawerOpen: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
-      cuentaId: undefined
+      cuentaSeleccionada: undefined
     };
     
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
@@ -124,11 +124,16 @@ class App extends Component {
       cuentas,
       loggued
     } = props;
+    const {
+      cuentaSeleccionada
+    } = state;
 
     if (!loading && cuentasExists && !!loggued) {
-      if (!!!state.cuentaId || (!!state.cuentaId && cuentas.map((c)=> {return c._id}).indexOf(state.cuentaId) == -1) ) {
+      if (!!!cuentaSeleccionada || (!!cuentaSeleccionada && cuentas.map((c)=> {return c._id}).indexOf(cuentaSeleccionada._id) == -1) ) {
+        console.log("cuentas");
+        console.log(cuentas);
         return {
-          cuentaId: cuentas[0]._id
+          cuentaSeleccionada: cuentas[0]
         }
       } else {
         return null
@@ -148,8 +153,8 @@ class App extends Component {
     window.onresize = resize;
   }
 
-  seleccionarCuenta(cuentaId) {
-    this.setState({cuentaId});
+  seleccionarCuenta(cuentaSeleccionada) {
+    this.setState({cuentaSeleccionada});
   }
 /*
   logout() {
@@ -189,45 +194,45 @@ class App extends Component {
 
   renderOnlinePages(){
     const { loggued, cuentas } = this.props;
-    const { cuentaId } = this.state;
+    const { cuentaSeleccionada } = this.state;
 
     if (!!loggued) {
-      if (!!cuentaId) {
+      if (!!cuentaSeleccionada) {
         return [
           <Route
             exact
             path="/movimientos/gastos"
-            render={() => <GastosContainer cuentaId={cuentaId} />}
+            render={() => <GastosContainer cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/gastos/:id"
-            render={({match}) => <GastoContainer cuentaId={cuentaId} match={match} />}
+            render={({match}) => <GastoContainer cuentaSeleccionada={cuentaSeleccionada} match={match} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos"
-            render={() => <IngresosContainer cuentaId={cuentaId} />}
+            render={() => <IngresosContainer cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos/:id"
-            render={({match}) => <IngresoContainer cuentaId={cuentaId} match={match} />}
+            render={({match}) => <IngresoContainer cuentaSeleccionada={cuentaSeleccionada} match={match} />}
           />,
           <Route
             exact
             path="/movimientos/balance"
-            render={() => <BalanceContainer cuentaId={cuentaId} />}
+            render={() => <BalanceContainer cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/ganancias"
-            render={() => <GananciasContainer cuentaId={cuentaId} />}
+            render={() => <GananciasContainer cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
@@ -239,12 +244,12 @@ class App extends Component {
         return [
           <Route
             path="/movimientos/*"
-            render={({match}) => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={({match}) => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cuentaId={cuentaId} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact

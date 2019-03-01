@@ -6,7 +6,10 @@ import Ganancias from '../pages/Ganancias.jsx';
 import { Ingresos } from '/imports/api/ingresos/ingresos';
 import { Gastos } from '/imports/api/gastos/gastos';
 
-export default withTracker(({cuentaId}) => {
+export default withTracker(({cuentaSeleccionada}) => {
+  const cuentaId = !!cuentaSeleccionada ?
+    (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+  
   const publicHandleIngresos = Meteor.subscribe('ingresos', cuentaId);
   const loadingIngresos = !publicHandleIngresos.ready();
   const ingresos = Ingresos.find({ esPrestamo: false }, { sort: { creado: 1 } }).fetch();

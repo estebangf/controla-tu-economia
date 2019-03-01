@@ -4,7 +4,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Gastos } from '/imports/api/gastos/gastos'
 import Gasto from '../pages/Gasto.jsx';
 
-export default withTracker(({ match }) => {
+export default withTracker(({match, cuentaSeleccionada}) => {
+  const cuentaId = !!cuentaSeleccionada ?
+    (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+  
   const gastoId = match.params.id
   const publicHandle = Meteor.subscribe('gasto',gastoId);
   const loading = !publicHandle.ready();
@@ -13,6 +16,7 @@ export default withTracker(({ match }) => {
   const gastoExists = !loading && !!gasto;
 
   return {
+    cuentaId,
     loading,
     gastoExists,
     gasto: gastoExists ? gasto : {},

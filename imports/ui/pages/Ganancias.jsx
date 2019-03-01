@@ -106,7 +106,7 @@ const styles = theme => ({
     marginTop: 15,
     paddingLeft: 0,
     listStyleType: 'none',
-    height: 84,
+    height: 94,
     boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
     marginBottom: 20
   },
@@ -138,8 +138,14 @@ const styles = theme => ({
   osPercentage: {
     margin: 0,
     lineHeight: 1,
-    padding: '0 0 15px 10px',
+    padding: '0 0 10px 10px',
     fontSize: 25
+  },
+  osValores: {
+    margin: 0,
+    lineHeight: 1,
+    padding: '0 0 10px 0px',
+    fontSize: 10
   }
 });
 
@@ -163,7 +169,7 @@ class Ganancias extends Component {
     })
   }
 
-  renderGrafico(valores) {
+  renderGrafico(totales, porcentajes) {
     const { classes } = this.props;
     
     return (
@@ -176,26 +182,26 @@ class Ganancias extends Component {
               >
               <div
                 className={[classes.porcionGastosQuesito, classes.quesito].join(' ')}
-                style={{transform: 'rotate('+ (valores.gastos) * 360 + 'deg)',}}
+                style={{transform: 'rotate('+ (porcentajes.gastos) * 360 + 'deg)',}}
               />
             </div>
             <div 
               className={[classes.porcionGanancias, classes.recorte].join(' ')}
-              style={{transform: 'rotate('+ (valores.gastos) * 360 + 'deg)'}}
+              style={{transform: 'rotate('+ (porcentajes.gastos) * 360 + 'deg)'}}
               >
               <div
                 className={[classes.porcionGananciasQuesito, classes.quesito].join(' ')}
-                style={{background: valores.ganancias < 0 && '#b25858',
-                  transform: 'rotate('+ (valores.gastos+valores.ganancias) * 360 + 'deg)'}}
+                style={{background: porcentajes.ganancias < 0 && '#b25858',
+                  transform: 'rotate('+ (porcentajes.gastos+porcentajes.ganancias) * 360 + 'deg)'}}
               />
             </div>
             <div 
               className={[classes.porcionIngresos, classes.recorte].join(' ')}
-              style={{transform: 'rotate('+ (valores.gastos+valores.ganancias) * 360 + 'deg)'}}
+              style={{transform: 'rotate('+ (porcentajes.gastos+porcentajes.ganancias) * 360 + 'deg)'}}
               >
               <div
                 className={[classes.porcionIngresosQuesito, classes.quesito].join(' ')}
-                style={{transform: 'rotate('+ (valores.gastos+valores.ganancias+valores.ingresos) * 360 + 'deg)'}}
+                style={{transform: 'rotate('+ (porcentajes.gastos+porcentajes.ganancias+porcentajes.ingresos) * 360 + 'deg)'}}
               />
             </div>
             <p className={classes.centerDate}></p>
@@ -204,15 +210,18 @@ class Ganancias extends Component {
         <ul className={classes.listaDePorcentajes}>
           <li className={classes.itemListaDePorcentajes}>
             <p className={classes.indicadorIngresos}>Ingresos</p>
-            <p className={classes.osPercentage}>{!!valores.ingresos ? (valores.ingresos*100).toFixed(0) : 0}%</p>
+            <p className={classes.osPercentage}>{!!porcentajes.ingresos ? (porcentajes.ingresos*100).toFixed(0) : 0}%</p>
+            <p className={classes.osValores}>$ {!!totales.ingresos ? totales.ingresos.toFixed(0) : 0}</p>
           </li>
           <li className={classes.itemListaDePorcentajes}>
             <p className={classes.indicadorGanancias}>Ganancia</p>
-            <p className={classes.osPercentage}>{!!valores.ganancias ? (valores.ganancias*100).toFixed(0) : 0}%</p>
+            <p className={classes.osPercentage}>{!!porcentajes.ganancias ? (porcentajes.ganancias*100).toFixed(0) : 0}%</p>
+            <p className={classes.osValores}>$ {!!totales.ganancias ? totales.ganancias.toFixed(0) : 0}</p>
           </li>
           <li className={classes.itemListaDePorcentajes}>
             <p className={classes.indicadorGastos}>Gastos</p>
-            <p className={classes.osPercentage}>{!!valores.gastos ? (valores.gastos*100).toFixed(0) : 0}%</p>
+            <p className={classes.osPercentage}>{!!porcentajes.gastos ? (porcentajes.gastos*100).toFixed(0) : 0}%</p>
+            <p className={classes.osValores}>$ {!!totales.gastos ? totales.gastos.toFixed(0) : 0}</p>
           </li>
         </ul>
       </div>
@@ -275,7 +284,7 @@ class Ganancias extends Component {
           <ListSubheader className={classes.listaGrafico}>
             <Typography variant="h4" className={classes.titulo}>Ganancias</Typography>
             <Link to={'/'}>Inicio</Link>
-            {this.renderGrafico(porcentajes)}
+            {this.renderGrafico(totales, porcentajes)}
             <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>

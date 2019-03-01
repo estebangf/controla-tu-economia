@@ -4,7 +4,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Ingresos } from '/imports/api/ingresos/ingresos'
 import Ingreso from '../pages/Ingreso.jsx';
 
-export default withTracker(({ match }) => {
+export default withTracker(({match, cuentaSeleccionada}) => {
+  const cuentaId = !!cuentaSeleccionada ?
+    (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+  
   const ingresoId = match.params.id
   const publicHandle = Meteor.subscribe('ingreso',ingresoId);
   const loading = !publicHandle.ready();
@@ -13,6 +16,7 @@ export default withTracker(({ match }) => {
   const ingresoExists = !loading && !!ingreso;
 
   return {
+    cuentaId,
     loading,
     ingresoExists,
     ingreso: ingresoExists ? ingreso : {},

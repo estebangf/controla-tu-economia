@@ -12,11 +12,6 @@ export default withTracker(({ match }) => {
   const cuenta = Cuentas.findOne({_id: cuentaId});
   const cuentaExists = !loading && !!cuenta;
 
-  console.log("cuentaExists");
-  console.log(cuenta);
-  console.log(cuentaExists);
-  
-
   return {
     loading,
     cuentaExists,
