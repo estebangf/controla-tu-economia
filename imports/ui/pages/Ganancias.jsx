@@ -20,7 +20,7 @@ const styles = theme => ({
     padding: 30,
     paddingTop: 15,
     paddingBottom: 0,
-    background: "#FFF"
+//    background: "#FFF"
   },
   barraGrafico:{
     transition: 'width 0.5s',

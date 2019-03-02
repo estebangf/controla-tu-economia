@@ -5,10 +5,7 @@ import { check } from 'meteor/check';
 import { Cuentas } from './cuentas.js'
 
 Meteor.methods({
-  'cuenta.nueva'(cuentaVinculada, nombre, descripcion) {
-    check(nombre, String);
-    check(descripcion, String);
-   
+  'cuenta.nueva'(cuentaVinculada, nombre, descripcion) {   
     if (!!this.userId) {
       if (!!cuentaVinculada) {
         check(cuentaVinculada, String);
@@ -33,14 +30,24 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
   },
-  'cuenta.editar'(id, nombre, descripcion) {
-    check(id, String);
-    check(nombre, String);
-    check(descripcion, String);
-
+  'cuenta.editar'(id, cuentaVinculada, nombre, descripcion) {
     if (!!this.userId) {
+      if (!!cuentaVinculada) {
+        check(cuentaVinculada, String);
+
+        const cuentaAVincular = Cuentas.findOne(cuentaVinculada);
+
+        if (!!!cuentaAVincular) {
+          throw new Meteor.Error('not-found');
+        }
+      }
+      check(id, String);
+      check(nombre, String);
+      check(descripcion, String);
+      
       return Cuentas.update(id, {
         $set: {
+          cuentaVinculada,
           nombre,
           descripcion,
         }

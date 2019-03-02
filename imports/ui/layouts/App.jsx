@@ -34,7 +34,9 @@ const styles = theme => ({
   },
   rootApp: {
     minWidth: '100%',
-    minHeight: '100%'
+    minHeight: '100%',
+//    background: '#00000096',
+//    background: '#ffffff9c',
   },
   transition:{
     transition: 'all 200ms ease-out',

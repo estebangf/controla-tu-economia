@@ -59,10 +59,6 @@ class Cuenta extends Component {
   }
 
   handleChange = name => event => {
-    console.log("name");
-    console.log(name);
-    console.log(event.target.value);
-    
     this.setState({
       [name]: event.target.value
     })
@@ -88,13 +84,14 @@ class Cuenta extends Component {
     if(cuentaExists) {
       Meteor.call('cuenta.editar',
         id,
+        cuentaVinculada,
         nombre,
         descripcion,
         (error, result) => {
           if (error){
             alert(error);
           } else {
-            this.limpiar(result);
+            alert(result);
           }
         }
       )

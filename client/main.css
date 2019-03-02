@@ -14,8 +14,6 @@ html::-webkit-scrollbar-corner {
   display: none;
 }
 
-
-
 .fade-enter {
   overflow: hidden !important;
   opacity: 0.01;
