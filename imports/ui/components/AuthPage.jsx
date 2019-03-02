@@ -5,7 +5,7 @@ import { Typography, Paper } from '@material-ui/core';
 
 const styles = {
   root:{
-    backgroundImage: 'url("/fondo.jpg")',
+//    backgroundImage: 'url("/fondo.jpg")',
     width: '100%',
     height: '100%'
   },

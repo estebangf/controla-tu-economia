@@ -33,23 +33,33 @@ class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
       errors: {},
       showPassword: false
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
   onSubmit(event) {
     event.preventDefault();
-    const email = this.email.value;
-    const password = this.password.value;
+    const {
+      email,
+      password
+    } = this.state;
+
     const errors = {};
 
     if (!email) {
-      errors.email = 'emailRequired';
+      errors.email = 'Ingrese un email';
     }
     if (!password) {
-      errors.password = 'passwordRequired';
+      errors.password = 'Ingrese una contraseña';
     }
 
     this.setState({ errors });
@@ -74,7 +84,12 @@ class SignInPage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { errors, showPassword } = this.state;
+    const {
+      errors,
+      showPassword, 
+      email,
+      password
+    } = this.state;
     const errorMessages = Object.keys(errors).map(key => errors[key]);
     const errorClass = key => errors[key] && 'error';
 
@@ -91,8 +106,9 @@ class SignInPage extends Component {
             name="email"
             margin="normal"
             variant="outlined"
+            value={email}
             fullWidth={true}
-            ref={(c) => { this.email = c; }}
+            onChange={this.handleChange("email")}
             label="E-Mmail"
           />
           <TextField
@@ -100,9 +116,10 @@ class SignInPage extends Component {
             name="password"
             margin="normal"
             variant="outlined"
+            value={password}
             fullWidth={true}
             className={classes.textField}
-            ref={(c) => { this.password = c; }}
+            onChange={this.handleChange("password")}
             label="Contraseña"
             InputProps={{
               endAdornment: (

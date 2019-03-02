@@ -33,27 +33,40 @@ class JoinPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
+      confirm: '',
       errors: {},
       showPassword: false
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+
+
   onSubmit(event) {
     event.preventDefault();
-    const email = this.email.value;
-    const password = this.password.value;
-    const confirm = this.confirm.value;
+    const {
+      email,
+      password,
+      confirm
+    } = this.state;
+
     const errors = {};
 
-    if (!email) {
-      errors.email = 'emailRequired';
+    if (!!!email) {
+      errors.email = 'Ingrese un email';
     }
-    if (!password) {
-      errors.password = 'passwordRequired';
+    if (!!!password) {
+      errors.password = 'Ingrese una contraseña';
     }
     if (confirm !== password) {
-      errors.confirm = 'passwordConfirm';
+      errors.confirm = 'Las contraseñas deben coincidir';
     }
 
     this.setState({ errors });
@@ -80,13 +93,19 @@ class JoinPage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { errors, showPassword } = this.state;
+    const {
+      errors,
+      showPassword, 
+      email,
+      password,
+      confirm
+    } = this.state;
     const errorMessages = Object.keys(errors).map(key => errors[key]);
     const errorClass = key => errors[key] && 'error';
 
     const content = (
       <div>
-        <Typography variant="h4" className={classes.titulo}>Creacion de Cuenta</Typography>
+        <Typography variant="h4" className={classes.titulo}>Creacion  de Cuenta</Typography>
         <Typography variant="subtitle1" gutterBottom className={classes.subtitulo}>Controla tu Economia</Typography>
         <form onSubmit={this.onSubmit}>
           {errorMessages.map((msg, index) => (
@@ -98,7 +117,8 @@ class JoinPage extends Component {
             margin="normal"
             variant="outlined"
             fullWidth={true}
-            ref={(c) => { this.email = c; }}
+            value={email}
+            onChange={this.handleChange("email")}
             label="E-Mmail"
           />
           <TextField
@@ -107,16 +127,18 @@ class JoinPage extends Component {
             margin="normal"
             variant="outlined"
             fullWidth={true}
-            ref={(c) => { this.password = c; }}
+            value={password}
+            onChange={this.handleChange("password")}
             label="Contraseña"
           />
           <TextField
             type={showPassword ? 'text' : 'password'}
             name="confirm"
-            ref={(c) => { this.confirm = c; }}
+            onChange={this.handleChange("confirm")}
             margin="normal"
             variant="outlined"
             fullWidth={true}
+            value={confirm}
             className={classes.textField}
             label="Confirma contraseña"
             InputProps={{
