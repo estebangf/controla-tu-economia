@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader } from '@material-ui/core';
+import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
@@ -21,9 +21,14 @@ const styles = theme => ({
     paddingTop: 15
   },
   listaGrafico:{
-    padding: 30,
-    paddingTop: 15,
-    paddingBottom: 0,
+    backgroundRepeat: 'repeat',
+    backgroundPosition: 'top',
+    backgroundSize: 'auto',
+    backgroundImage: 'url(/fondo-trama.jpg)',
+    padding: 0,
+    paddingLeft: 10,
+    paddingRight: 10,
+    margin: 0,
 //    background: "#FFF"
   },
   barraGrafico:{
@@ -130,6 +135,18 @@ class Balance extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
+            <div style={{
+                margin: "0",
+                position: "absolute",
+                top: "0",
+                right: "0",
+                left: "0",
+                bottom: "0",
+                zIndex: "-1",
+                padding: "0px",
+                margin: "0px",
+                background: "#ffffffab"
+              }}></div>
             <Typography variant="h4" className={classes.titulo}>Balance</Typography>
             <Link to={'/'}>Inicio</Link>
             <ListItem>
@@ -177,7 +194,6 @@ class Balance extends Component {
                 <span className={classes.barraGrafico} style={{background: '#77c677', width: 200*porcentajes.saldo}} />
               </ListItemSecondaryAction>
             </ListItem>
-            <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(items)}

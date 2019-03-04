@@ -16,12 +16,26 @@ const styles = theme => ({
     textAlign: 'center',
     paddingTop: 15
   },
+
+  listaGrafico:{
+    backgroundRepeat: 'repeat',
+    backgroundPosition: 'top',
+    backgroundSize: 'auto',
+    backgroundImage: 'url(/fondo-trama.jpg)',
+    padding: 0,
+    paddingLeft: 10,
+    paddingRight: 10,
+    margin: 0,
+//    background: "#FFF"
+  },
+  /*
   listaGrafico:{
     padding: 30,
     paddingTop: 15,
     paddingBottom: 0,
 //    background: "#FFF"
-  },
+  },*/
+
   barraGrafico:{
     transition: 'width 0.5s',
     display: '-webkit-box',
@@ -33,8 +47,8 @@ const styles = theme => ({
   },
   donutChart: {
     position: 'relative',
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     margin: 'auto',
     borderRadius: '100%',
     transform: "rotateY(180deg)"
@@ -53,8 +67,8 @@ const styles = theme => ({
     left:0,
     bottom:0,
     right:0,
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     margin: 'auto',
     borderRadius: '50%',
     lineHeight: 35,
@@ -62,7 +76,7 @@ const styles = theme => ({
   },
   recorte: {
     borderRadius: '50%',
-    clip: 'rect(0px, 200px, 200px, 100px)',
+    clip: 'rect(0px, 100px, 100px, 50px)',
     height: '100%',
     position: 'absolute',
     width: '100%',
@@ -70,7 +84,7 @@ const styles = theme => ({
   },
   quesito: {
     borderRadius: '50%',
-    clip: 'rect(0px, 200px, 200px, 0px)',
+    clip: 'rect(0px, 100px, 100px, 0px)',
     height: '100%',
     position: 'absolute',
     width: '100%',
@@ -282,10 +296,21 @@ class Ganancias extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
+            <div style={{
+              margin: "0",
+              position: "absolute",
+              top: "0",
+              right: "0",
+              left: "0",
+              bottom: "0",
+              zIndex: "-1",
+              padding: "0px",
+              margin: "0px",
+              background: "#ffffffab"
+            }}></div>
             <Typography variant="h4" className={classes.titulo}>Ganancias</Typography>
             <Link to={'/'}>Inicio</Link>
             {this.renderGrafico(totales, porcentajes)}
-            <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(items)}
