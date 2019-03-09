@@ -23,6 +23,7 @@ import GastosContainer from '../containers/GastosContainer';
 import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
 import GananciasContainer from '../containers/GananciasContainer';
+import SeguimientosContainer from '../containers/SeguimientosContainer';
 
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
@@ -220,6 +221,11 @@ class App extends Component {
             exact
             path="/movimientos/ingresos/:id"
             render={({match}) => <IngresoContainer cuentaSeleccionada={cuentaSeleccionada} match={match} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/seguimientos"
+            render={() => <SeguimientosContainer cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact

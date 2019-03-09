@@ -24,7 +24,7 @@ const styles = theme => ({
     backgroundRepeat: 'repeat',
     backgroundPosition: 'top',
     backgroundSize: 'auto',
-    backgroundImage: 'url(/fondo-trama.jpg)',
+    backgroundImage: 'url(/fondo-trama.png)',
     padding: 0,
     paddingLeft: 10,
     paddingRight: 10,

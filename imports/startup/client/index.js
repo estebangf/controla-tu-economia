@@ -28,7 +28,7 @@ const theme = createMuiTheme({
       backgroundColor: blue[400],
       buttonHover: blue[700],
     },
-    metas: {
+    seguimientos: {
       buttonText: '#FFF',
       backgroundColor: orange[400],
       buttonHover: orange[700],

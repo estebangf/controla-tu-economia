@@ -69,11 +69,11 @@ const styles = theme => ({
     fontSize: 15,
     padding: 15
   },
-  btnMetas: {
-    color: theme.palette.metas.buttonText,
-    backgroundColor: theme.palette.metas.backgroundColor,
+  btnSeguimientos: {
+    color: theme.palette.seguimientos.buttonText,
+    backgroundColor: theme.palette.seguimientos.backgroundColor,
     '&:hover': {
-      backgroundColor: theme.palette.metas.buttonHover,
+      backgroundColor: theme.palette.seguimientos.buttonHover,
     },
     marginBottom: 15,
     fontSize: 15,
@@ -147,8 +147,8 @@ class Inicio extends Component {
         <Link className={classes.link} to={'/movimientos/ingresos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
         </Link>,
-        <Link className={classes.link} to={'/movimientos/metas'}>
-          <Button fullWidth={true} variant="contained" className={classes.btnMetas}>Metas</Button>
+        <Link className={classes.link} to={'/movimientos/seguimientos'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnSeguimientos}>Seguimientos</Button>
         </Link>,
         <Link className={classes.link} to={'/movimientos/balance'}>
           <Button fullWidth={true} variant="contained" className={classes.btnBalance}>Balance</Button>
