@@ -125,8 +125,8 @@ const styles = theme => ({
     marginBottom: 20
   },
   itemListaDePorcentajes:{
-    height: 85,
-    width: 105,
+    width: 85,
+    height: 75,
     margin: 10,
     float: 'left',
     border: 'none',
@@ -149,10 +149,11 @@ const styles = theme => ({
     backgroundImage: 'radial-gradient(#FFF, '+theme.palette.gastos.backgroundColor+')',
   },
   backgroundSeguimientos: {
-    height: 105,
-    width: 125,
+    width: 105,
+    height: 95,
     margin: 0,
-    fontSize: 20,
+    fontSize: 18,
+    paddingTop: 0,
     backgroundImage: 'radial-gradient(#FFF, '+theme.palette.seguimientos.backgroundColor+')',
   },
   osPercentage: {
@@ -169,7 +170,7 @@ const styles = theme => ({
   },
   paperFiltro: {
     padding: 10,
-    margin: '40px 20px 10px 20px'
+    margin: '30px 20px 10px 20px'
   }
 });
 
