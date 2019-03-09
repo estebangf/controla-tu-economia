@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader } from '@material-ui/core';
+import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper } from '@material-ui/core';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 import Autocomplete from '../components/Autocomplete';
@@ -122,16 +122,17 @@ const styles = theme => ({
     paddingLeft: 0,
     listStyleType: 'none',
     height: 90,
-    boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
     marginBottom: 20
   },
   itemListaDePorcentajes:{
-    height: 90,
+    height: 85,
+    width: 105,
+    margin: 10,
     float: 'left',
-    width: 90,
     border: 'none',
     textAlign: 'center',
     background: '#00000000',
+    boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
   },
   indicador: {
     padding: 0,
@@ -140,12 +141,18 @@ const styles = theme => ({
     lineHeight: 3,
   },
   backgroundIngresos: {
+    fontSize: 12.5,
     backgroundImage: 'radial-gradient(#FFF, '+theme.palette.ingresos.backgroundColor+')',
   },
   backgroundGastos: {
+    fontSize: 12.5,
     backgroundImage: 'radial-gradient(#FFF, '+theme.palette.gastos.backgroundColor+')',
   },
   backgroundSeguimientos: {
+    height: 105,
+    width: 125,
+    margin: 0,
+    fontSize: 20,
     backgroundImage: 'radial-gradient(#FFF, '+theme.palette.seguimientos.backgroundColor+')',
   },
   osPercentage: {
@@ -159,6 +166,10 @@ const styles = theme => ({
     lineHeight: 1,
     paddingBottom: 10,
     fontSize: 20
+  },
+  paperFiltro: {
+    padding: 10,
+    margin: '40px 20px 10px 20px'
   }
 });
 
@@ -301,38 +312,40 @@ class Seguimientos extends Component {
               Nuevo Seguimiento
             </Link>
             {this.renderGrafico(totales, porcentajes)}
-            <Autocomplete
-              id="filtro-detalle"
-              items={[
-                {
-                  primary: "Sueldo",
-                  secondary: undefined,
-                  data: { _id: "1", name: "Sueldo", email: "some@email.com" }
-                },
-                {
-                  primary: "Carton",
-                  secondary: undefined,
-                  data: { _id: "2", name: "Carton", email: "some@email.com" }
-                },
-                {
-                  primary: "Tomate",
-                  secondary: undefined,
-                  data: { _id: "3", name: "Tomate", email: "some@email.com" }
-                },
-              ]}
-              inputDetails={{
-                id: "detalle",
-                name: "detalle",
-                label: "Detalle",
-                placeholder: "Detalle",
-                fullWidth: true,
-    //            avatar: "circle"
-              }}
-              onSelect={this.onSelectDetalleFiltro}
-              onChange={this.handleChange("detalleFiltro")}
-              value={detalleFiltro}
-              disconect={detalleFiltro !== "new"}
-            />
+            <Paper className={classes.paperFiltro}>
+              <Autocomplete
+                id="filtro-detalle"
+                items={[
+                  {
+                    primary: "Sueldo",
+                    secondary: undefined,
+                    data: { _id: "1", name: "Sueldo", email: "some@email.com" }
+                  },
+                  {
+                    primary: "Carton",
+                    secondary: undefined,
+                    data: { _id: "2", name: "Carton", email: "some@email.com" }
+                  },
+                  {
+                    primary: "Tomate",
+                    secondary: undefined,
+                    data: { _id: "3", name: "Tomate", email: "some@email.com" }
+                  },
+                ]}
+                inputDetails={{
+                  id: "detalle",
+                  name: "detalle",
+                  label: "Detalle",
+                  placeholder: "Detalle",
+                  fullWidth: true,
+      //            avatar: "circle"
+                }}
+                onSelect={this.onSelectDetalleFiltro}
+                onChange={this.handleChange("detalleFiltro")}
+                value={detalleFiltro}
+                disconect={detalleFiltro !== "new"}
+              />
+            </Paper>
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(items)}

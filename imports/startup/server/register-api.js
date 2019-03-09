@@ -6,3 +6,6 @@ import '../../api/ingresos/server/publications.js';
 
 import '../../api/cuentas/cuentas.js';
 import '../../api/cuentas/server/publications.js';
+
+import '../../api/seguimientos/seguimientos.js';
+import '../../api/seguimientos/server/publications.js';
