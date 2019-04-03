@@ -38,8 +38,6 @@ class IngresosList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>Ingresos</Typography>
-        <Link to={'/'}>Inicio</Link>
         <Link className={classes.link} to={'/movimientos/ingresos/nuevo'}>
           Nuevo Ingreso
         </Link>

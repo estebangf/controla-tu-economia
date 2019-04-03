@@ -36,8 +36,6 @@ class GastosList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>Gastos</Typography>
-        <Link to={'/'}>Inicio</Link>
         <Link className={classes.link} to={'/movimientos/gastos/nuevo'}>
           Nuevo Gasto
         </Link>

@@ -36,15 +36,13 @@ class CuentasList extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>Cuentas</Typography>
-        <Link to={'/'}>Inicio</Link>
-        <Link className={classes.link} to={'/cuentas/nueva'}>
-          Nueva Cuenta
-        </Link>
-
         <List className={classes.root}>
           {this.renderCuentas()}
         </List>
+        
+        <Link className={classes.link} to={'/cuentas/nueva'}>
+          Nueva Cuenta
+        </Link>
       </div>
     )
   }
