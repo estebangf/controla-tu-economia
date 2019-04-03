@@ -5,7 +5,6 @@ import { Ingresos } from '/imports/api/ingresos/ingresos'
 import Ingreso from '../pages/Ingreso.jsx';
 
 export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
-  cambiarTitulo("Editar Ingreso");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
@@ -16,6 +15,11 @@ export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
   const ingreso = Ingresos.findOne({_id: ingresoId});
   const ingresoExists = !loading && !!ingreso;
 
+  if(ingresoExists){
+    cambiarTitulo("Editar Ingreso");
+  } else {
+    cambiarTitulo("Nuevo Ingreso");
+  }
   return {
     cuentaId,
     loading,

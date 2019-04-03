@@ -11,7 +11,8 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    padding: 25
+    padding: 25,
+    paddingTop: 15
   },
   actions:{
     paddingLeft: 15,
@@ -187,9 +188,6 @@ class Gasto extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>{gastoExists ? "Editar Gasto" : "Nuevo Gasto"}</Typography>
-        <Link to={'/'}>Inicio</Link>
-
         <Autocomplete
           id="detalleAutocomplete"
           items={[

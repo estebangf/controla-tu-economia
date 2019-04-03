@@ -11,7 +11,8 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    padding: 25
+    padding: 25,
+    paddingTop: 15
   },
   actions:{
     paddingLeft: 15,
@@ -180,9 +181,6 @@ class Ingreso extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>{ingresoExists ? "Editar Ingreso" : "Nuevo Ingreso"}</Typography>
-        <Link to={'/'}>Inicio</Link>
-        
         <Autocomplete
           id="userAutocomplete"
           items={[

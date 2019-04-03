@@ -5,7 +5,6 @@ import { Gastos } from '/imports/api/gastos/gastos'
 import Gasto from '../pages/Gasto.jsx';
 
 export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
-  cambiarTitulo("Editar Gasto");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
@@ -15,6 +14,13 @@ export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
 //  const gasto = Gastos.find({}, { sort: { createdAt: -1 } }).fetch();
   const gasto = Gastos.findOne({_id: gastoId});
   const gastoExists = !loading && !!gasto;
+
+
+  if(gastoExists){
+    cambiarTitulo("Editar Gasto");
+  } else {
+    cambiarTitulo("Nuevo Gasto");
+  }
 
   return {
     cuentaId,

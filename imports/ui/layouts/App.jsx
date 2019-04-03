@@ -153,7 +153,8 @@ class App extends Component {
   }
 
   cambiarTitulo(titulo) {
-    this.setState({titulo});
+    if(this.state.titulo != titulo)
+      this.setState({titulo});
   }
 /*
   logout() {
