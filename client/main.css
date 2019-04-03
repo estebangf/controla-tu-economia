@@ -14,30 +14,10 @@ html::-webkit-scrollbar-corner {
   display: none;
 }
 
-.fade-enter {
-  overflow: hidden !important;
-  opacity: 0.01;
-  transform: translateX(-100%);
+body {
+  background-color: #fff !important;
+  background: #fff
 }
-.fade-enter-active {
-  overflow: hidden !important;
-  opacity: 1;
-  transform: translateX(0);
-  transition: all 100ms;
-}
-.fade-exit {
-  overflow: hidden !important;
-  opacity: 1;
-  transform: translateX(0);
-}
-.fade-exit-active {
-  overflow: hidden !important;
-  opacity: 0.01;
-  transform: translateX(100%);
-  transition: all 100ms;
-}
-
-
 
 #content::-webkit-scrollbar {
   width: 4px !important;

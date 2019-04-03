@@ -4,7 +4,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Ingresos } from '/imports/api/ingresos/ingresos'
 import Ingreso from '../pages/Ingreso.jsx';
 
-export default withTracker(({match, cuentaSeleccionada}) => {
+export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
+  cambiarTitulo("Editar Ingreso");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   

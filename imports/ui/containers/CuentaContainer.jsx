@@ -4,7 +4,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Cuentas } from '/imports/api/cuentas/cuentas'
 import Cuenta from '../pages/Cuenta.jsx';
 
-export default withTracker(({ match }) => {
+export default withTracker(({ match, cambiarTitulo}) => {
+  cambiarTitulo("Editar Cuenta");
   const cuentaId = match.params.id
   const publicHandle = Meteor.subscribe('cuenta',cuentaId);
   const loading = !publicHandle.ready();

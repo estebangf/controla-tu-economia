@@ -4,7 +4,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import GastosList from '../pages/GastosList.jsx';
 import { Gastos } from '/imports/api/gastos/gastos';
 
-export default withTracker(({cuentaSeleccionada}) => {
+export default withTracker(({cuentaSeleccionada, cambiarTitulo}) => {
+  cambiarTitulo("Gastos");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   

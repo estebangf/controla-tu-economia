@@ -5,7 +5,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Inicio from '../pages/Inicio'
+import InicioContainer from '../containers/InicioContainer'
 
 import SignInPage from '../pages/SignInPage'
 import JoinPage from '../pages/JoinPage'
@@ -13,6 +13,8 @@ import JoinPage from '../pages/JoinPage'
 import NotFoundPage from '../pages/NotFoundPage';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import AppBarCustom from '../components/AppBarCustom';
 
 import CuentaContainer from '../containers/CuentaContainer';
 import CuentasContainer from '../containers/CuentasContainer';
@@ -38,6 +40,7 @@ const styles = theme => ({
     minHeight: '100%',
 //    background: '#00000096',
 //    background: '#ffffff9c',
+    paddingTop: 64
   },
   transition:{
     transition: 'all 200ms ease-out',
@@ -57,10 +60,6 @@ const styles = theme => ({
 //    marginTop: 64,
     overflowY: 'auto',
     overflowX: 'hidden'
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
   },
   drawer: {
     width: drawerWidth,
@@ -110,10 +109,12 @@ class App extends Component {
       drawerOpen: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
-      cuentaSeleccionada: undefined
+      cuentaSeleccionada: undefined,
+      titulo: "Controla tu Economía"
     };
     
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
+    this.cambiarTitulo = this.cambiarTitulo.bind(this);
 /*
     this.logout = this.logout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
@@ -146,18 +147,13 @@ class App extends Component {
     }
   }
   
-  componentDidMount(){
-    const self = this;
-    function resize(){
-      self.setState({heightSchroleable: window.innerHeight})
-      console.log(self.state.heightSchroleable);
-    }
-
-    window.onresize = resize;
-  }
 
   seleccionarCuenta(cuentaSeleccionada) {
     this.setState({cuentaSeleccionada});
+  }
+
+  cambiarTitulo(titulo) {
+    this.setState({titulo});
   }
 /*
   logout() {
@@ -180,17 +176,17 @@ class App extends Component {
       <Route
         exact
         path="/"
-        render={() => <Inicio cuentasExists={cuentasExists}/>}
+        render={() => <InicioContainer cambiarTitulo={this.cambiarTitulo} cuentasExists={cuentasExists}/>}
       />,
       <Route
         exact
         path="/signin"
-        render={() => <SignInPage />}
+        render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
       />,
       <Route
         exact
         path="/join"
-        render={() => <JoinPage />}
+        render={() => <JoinPage cambiarTitulo={this.cambiarTitulo} />}
       />,
     ]
   }
@@ -205,64 +201,64 @@ class App extends Component {
           <Route
             exact
             path="/movimientos/gastos"
-            render={() => <GastosContainer cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <GastosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/gastos/:id"
-            render={({match}) => <GastoContainer cuentaSeleccionada={cuentaSeleccionada} match={match} />}
+            render={({match}) => <GastoContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} match={match} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos"
-            render={() => <IngresosContainer cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <IngresosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos/:id"
-            render={({match}) => <IngresoContainer cuentaSeleccionada={cuentaSeleccionada} match={match} />}
+            render={({match}) => <IngresoContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} match={match} />}
           />,
           <Route
             exact
             path="/movimientos/seguimientos"
-            render={() => <SeguimientosContainer cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <SeguimientosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/balance"
-            render={() => <BalanceContainer cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <BalanceContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/movimientos/ganancias"
-            render={() => <GananciasContainer cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <GananciasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
             path="/cuentas/:id"
-            render={({match}) => <CuentaContainer match={match} />}
+            render={({match}) => <CuentaContainer cambiarTitulo={this.cambiarTitulo} match={match} />}
           />,
         ]
       } else {
         return [
           <Route
             path="/movimientos/*"
-            render={({match}) => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={({match}) => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
             path="/cuentas/:id"
-            render={({match}) => <CuentaContainer match={match} />}
+            render={({match}) => <CuentaContainer cambiarTitulo={this.cambiarTitulo} match={match} />}
           />,
         ]
       }
@@ -270,11 +266,11 @@ class App extends Component {
       return [
         <Route
           path="/movimientos/*"
-          render={() => <SignInPage />}
+          render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
         />,
         <Route
           path="/cuentas/*"
-          render={() => <SignInPage />}
+          render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
         />,
       ]
     }
@@ -285,7 +281,7 @@ class App extends Component {
     return (
       <Route
         path="/*"
-        render={() => <NotFoundPage />}
+        render={() => <NotFoundPage cambiarTitulo={this.cambiarTitulo} />}
       />
     )
   }
@@ -300,35 +296,26 @@ class App extends Component {
     const {
       showConnectionIssue,
       drawerOpen,
-      heightSchroleable
+      heightSchroleable,
+      titulo
     } = this.state;
 
     return (
       <div className={classes.rootApp}>
+        <AppBarCustom titulo={titulo} />
 {/*
         <AppMenuCustom />
-        <AppBarCustom />
         <HeaderApp />
         <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>
         <Menu toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen}/>
         <ConnectionNotification mensaje={"Hay problemas en la coneccion"} open={showConnectionIssue && !connected}/>
 */} 
-        <div className={classes.transition}>
-          <TransitionGroup>
-            <CSSTransition
-              key={location.key}
-              classNames="fade"
-              timeout={100}
-            >
-              <div className={classes.schroleable} style={{height: heightSchroleable}} id="content">
-                <Switch location={location} >
-                  {this.renderOfflinePages()}
-                  {this.renderOnlinePages()}
-                  {this.renderNotFoundPage()}
-                </Switch>
-              </div>
-            </CSSTransition>
-          </TransitionGroup>
+        <div className={classes.schroleable} id="content">
+          <Switch location={location} >
+            {this.renderOfflinePages()}
+            {this.renderOnlinePages()}
+            {this.renderNotFoundPage()}
+          </Switch>
         </div>
       </div>
     );

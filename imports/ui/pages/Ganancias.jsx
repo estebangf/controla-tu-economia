@@ -18,10 +18,7 @@ const styles = theme => ({
   },
 
   listaGrafico:{
-    backgroundRepeat: 'repeat',
-    backgroundPosition: 'top',
-    backgroundSize: 'auto',
-    backgroundImage: 'url(/fondo-trama.png)',
+    background: '#FFF',
     padding: 0,
     paddingLeft: 10,
     paddingRight: 10,
@@ -296,20 +293,6 @@ class Ganancias extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
-            <div style={{
-              margin: "0",
-              position: "absolute",
-              top: "0",
-              right: "0",
-              left: "0",
-              bottom: "0",
-              zIndex: "-1",
-              padding: "0px",
-              margin: "0px",
-              background: "#ffffffab"
-            }}></div>
-            <Typography variant="h4" className={classes.titulo}>Ganancias</Typography>
-            <Link to={'/'}>Inicio</Link>
             {this.renderGrafico(totales, porcentajes)}
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>

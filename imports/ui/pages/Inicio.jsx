@@ -166,7 +166,6 @@ class Inicio extends Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>Control Económico!</Typography>
         <img className={classes.logoImgaen} src="/icono196x196.png" />
 
         <Typography variant="h5" className={classes.titulo}>Cuentas</Typography>

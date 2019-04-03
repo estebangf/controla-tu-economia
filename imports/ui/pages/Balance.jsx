@@ -21,10 +21,7 @@ const styles = theme => ({
     paddingTop: 15
   },
   listaGrafico:{
-    backgroundRepeat: 'repeat',
-    backgroundPosition: 'top',
-    backgroundSize: 'auto',
-    backgroundImage: 'url(/fondo-trama.png)',
+    background: '#fff',
     padding: 0,
     paddingLeft: 10,
     paddingRight: 10,
@@ -135,20 +132,6 @@ class Balance extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
-            <div style={{
-                margin: "0",
-                position: "absolute",
-                top: "0",
-                right: "0",
-                left: "0",
-                bottom: "0",
-                zIndex: "-1",
-                padding: "0px",
-                margin: "0px",
-                background: "#ffffffab"
-              }}></div>
-            <Typography variant="h4" className={classes.titulo}>Balance</Typography>
-            <Link to={'/'}>Inicio</Link>
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
@@ -194,6 +177,7 @@ class Balance extends Component {
                 <span className={classes.barraGrafico} style={{background: '#77c677', width: 200*porcentajes.saldo}} />
               </ListItemSecondaryAction>
             </ListItem>
+            <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(items)}

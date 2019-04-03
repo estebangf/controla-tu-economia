@@ -15,6 +15,9 @@ const theme = createMuiTheme({
       dark: '#19212b',
       contrastText: '#ffffffb3',
     },
+    appBar:{
+      backgroundColor: "#fff"
+    },
     cuentas:{
 
     },

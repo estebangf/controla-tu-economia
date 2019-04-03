@@ -6,7 +6,8 @@ import Ganancias from '../pages/Ganancias.jsx';
 import { Ingresos } from '/imports/api/ingresos/ingresos';
 import { Gastos } from '/imports/api/gastos/gastos';
 
-export default withTracker(({cuentaSeleccionada}) => {
+export default withTracker(({cuentaSeleccionada, cambiarTitulo}) => {
+  cambiarTitulo("Ganancias");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   

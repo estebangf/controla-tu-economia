@@ -6,7 +6,8 @@ import Seguimientos from '../pages/Seguimientos.jsx';
 import { Ingresos } from '/imports/api/ingresos/ingresos';
 import { Gastos } from '/imports/api/gastos/gastos';
 
-export default withTracker(({cuentaSeleccionada}) => {
+export default withTracker(({cuentaSeleccionada, cambiarTitulo}) => {
+  cambiarTitulo("Seguimientos");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
