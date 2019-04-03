@@ -56,7 +56,7 @@ const styles = theme => ({
     transform: "rotate(-90deg)"
   },
   centerDate: {
-    background: '#faf9e2',
+    background: '#fff',
     position: 'absolute',
     textAlign: 'center',
     fontSize: 28,

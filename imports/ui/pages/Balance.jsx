@@ -165,16 +165,16 @@ class Balance extends Component {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  style: { color: "#3ab33a" }
+                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a" }
                 }}
                 secondaryTypographyProps={{
-                  style: { color: "#3ab33a" }
+                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a" }
                 }}
                 primary={totales.saldo.toFixed(2)}
-                secondary="Saldo"
+                secondary={porcentajes.saldo < 0 ? 'Deuda' : "Saldo"}
               />
               <ListItemSecondaryAction>
-                <span className={classes.barraGrafico} style={{background: '#77c677', width: 200*porcentajes.saldo}} />
+                <span className={classes.barraGrafico} style={{background: porcentajes.saldo < 0 ? '#b94d4d' : '#77c677', width:  porcentajes.saldo < 0 ? 200*porcentajes.saldo*-1 : 200*porcentajes.saldo}} />
               </ListItemSecondaryAction>
             </ListItem>
             <Divider />
