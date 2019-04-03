@@ -165,9 +165,9 @@ const styles = theme => ({
     paddingBottom: 10,
     fontSize: 20
   },
-  paperFiltro: {
+  filtro: {
     padding: 10,
-    margin: '30px 20px 10px 20px'
+    margin: '30px 15px 10px 15px'
   }
 });
 
@@ -296,7 +296,7 @@ class Seguimientos extends Component {
               Nuevo Seguimiento
             </Link>
             {this.renderGrafico(totales, porcentajes)}
-            <Paper className={classes.paperFiltro}>
+            <div className={classes.filtro}>
               <Autocomplete
                 id="filtro-detalle"
                 items={[
@@ -322,14 +322,15 @@ class Seguimientos extends Component {
                   label: "Detalle",
                   placeholder: "Detalle",
                   fullWidth: true,
-      //            avatar: "circle"
+                  variant:"outlined"
+                  //            avatar: "circle"
                 }}
                 onSelect={this.onSelectDetalleFiltro}
                 onChange={this.handleChange("detalleFiltro")}
                 value={detalleFiltro}
                 disconect={detalleFiltro !== "new"}
               />
-            </Paper>
+            </div>
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(items)}

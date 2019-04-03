@@ -147,6 +147,7 @@ class Inicio extends Component {
         <Link className={classes.link} to={'/movimientos/ingresos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
         </Link>,
+        <Typography variant="h5" className={classes.titulo}>Estados</Typography>,
         <Link className={classes.link} to={'/movimientos/seguimientos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnSeguimientos}>Seguimientos</Button>
         </Link>,

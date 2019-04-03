@@ -44,12 +44,13 @@ export class Autocomplete extends React.PureComponent {
   };
 
   renderInput(props) {
-    const { InputProps, label, fullWidth} = props
+    const { InputProps, label, fullWidth, variant} = props
     return (
       <TextField
         InputProps={InputProps}
         label={label}
         fullWidth={fullWidth}
+        variant={variant}
       />
     )
   }
@@ -105,7 +106,7 @@ export class Autocomplete extends React.PureComponent {
       value,
       items,
       inputDetails,
-      disconect
+      disconect,
     } = this.props;
     return (
       <Downshift
@@ -154,6 +155,7 @@ export class Autocomplete extends React.PureComponent {
               }),
               label: inputDetails.label,
               fullWidth: inputDetails.fullWidth,
+              variant: !!inputDetails.variant ? inputDetails.variant : ""
             })}
             <div {...getMenuProps()}>
               {isOpen && (
