@@ -155,7 +155,7 @@ export class Autocomplete extends React.PureComponent {
               }),
               label: inputDetails.label,
               fullWidth: inputDetails.fullWidth,
-              variant: !!inputDetails.variant ? inputDetails.variant : ""
+              variant: !!inputDetails.variant ? inputDetails.variant : "standard"
             })}
             <div {...getMenuProps()}>
               {isOpen && (
