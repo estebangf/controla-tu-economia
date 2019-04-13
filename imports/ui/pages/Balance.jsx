@@ -47,8 +47,8 @@ class Balance extends Component {
       showConnectionIssue: false,
       drawerOpen: false
     };
-  }
 
+  }
   renderIcon(item){
     if(item.tipo == 'ingresos') {
       if(item.esPrestamo) {
@@ -94,9 +94,6 @@ class Balance extends Component {
       saldo: 0
     }
     while (i < ingresos.length && g < gastos.length) {
-      console.log("COMPARACION")
-      console.log(ingresos[i].creado)
-      console.log(gastos[g].creado)
       if (ingresos[i].creado.getTime() < gastos[g].creado.getTime()) {
         items.push({...ingresos[i], tipo: "ingreso"})
         totales.ingresos += ingresos[i].importe

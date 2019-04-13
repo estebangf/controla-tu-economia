@@ -14,6 +14,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import Fechas from '../components/Fechas';
 import AppBarCustom from '../components/AppBarCustom';
 
 import CuentaContainer from '../containers/CuentaContainer';
@@ -110,16 +111,25 @@ class App extends Component {
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
       cuentaSeleccionada: undefined,
-      titulo: "Controla tu Economía"
+      titulo: "Controla tu Economía",
+      desde: (new Date(((new Date()).setDate(1)))),
+      hasta: (new Date())
     };
     
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
     this.cambiarTitulo = this.cambiarTitulo.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this)
 /*
     this.logout = this.logout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
 */
   }
+
+
+  handleDateChange(name, date){
+      this.setState({ [name]: date });
+  };
+
 
   static getDerivedStateFromProps(props, state){
     const {
@@ -194,7 +204,16 @@ class App extends Component {
 
   renderOnlinePages(){
     const { loggued, cuentas } = this.props;
-    const { cuentaSeleccionada } = this.state;
+    const { cuentaSeleccionada, desde, hasta } = this.state;
+    const cambiarTitulo = this.cambiarTitulo
+    const pase = {
+      cambiarTitulo,
+      cuentaSeleccionada
+    }
+    const fechas = {
+      desde,
+      hasta
+    }
 
     if (!!loggued) {
       if (!!cuentaSeleccionada) {
@@ -202,59 +221,59 @@ class App extends Component {
           <Route
             exact
             path="/movimientos/gastos"
-            render={() => <GastosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <GastosContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
             path="/movimientos/gastos/:id"
-            render={({match}) => <GastoContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} match={match} />}
+            render={({match}) => <GastoContainer match={match} {...pase} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos"
-            render={() => <IngresosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <IngresosContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
             path="/movimientos/ingresos/:id"
-            render={({match}) => <IngresoContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} match={match} />}
+            render={({match}) => <IngresoContainer match={match} {...pase} />}
           />,
           <Route
             exact
             path="/movimientos/seguimientos"
-            render={() => <SeguimientosContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <SeguimientosContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
             path="/movimientos/balance"
-            render={() => <BalanceContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <BalanceContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
             path="/movimientos/ganancias"
-            render={() => <GananciasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} />}
+            render={() => <GananciasContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta} {...pase} />}
           />,
           <Route
             exact
             path="/cuentas/:id"
-            render={({match}) => <CuentaContainer cambiarTitulo={this.cambiarTitulo} match={match} />}
+            render={({match}) => <CuentaContainer match={match} {...pase} />}
           />,
         ]
       } else {
         return [
           <Route
             path="/movimientos/*"
-            render={({match}) => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={({match}) => <CuentasContainer {...pase} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
             path="/cuentas/"
-            render={() => <CuentasContainer cambiarTitulo={this.cambiarTitulo} cuentaSeleccionada={cuentaSeleccionada} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={() => <CuentasContainer {...pase} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
           />,
           <Route
             exact
@@ -298,8 +317,11 @@ class App extends Component {
       showConnectionIssue,
       drawerOpen,
       heightSchroleable,
-      titulo
-    } = this.state;
+      titulo,
+      desde,
+      hasta
+    } = this.state
+
 
     return (
       <div className={classes.rootApp}>
@@ -318,6 +340,36 @@ class App extends Component {
             {this.renderNotFoundPage()}
           </Switch>
         </div>
+        <Fechas
+          id={'desde'}
+          fecha={desde}
+          adornmentPosition="end"
+          autoOk={true}
+          keyboard={true}
+          disableFuture={true}
+          variant="outlined"
+          label="Desde"
+          maxDate={new Date()}
+          maxDateMessage={"Fecha mayor a hoy"}
+          invalidDateMessage={"Ej: 01/01/2019"}
+          handleDateChange={this.handleDateChange}
+          inputRoot={classes.inputFechaRoot}
+        />
+        <Fechas
+          id={'hasta'}
+          fecha={hasta}
+          adornmentPosition="end"
+          autoOk={true}
+          keyboard={true}
+          disableFuture={true}
+          variant="outlined"
+          label="Hasta"
+          maxDate={new Date()}
+          maxDateMessage={"Fecha mayor a hoy"}
+          invalidDateMessage={"Ej: 01/01/2019"}
+          handleDateChange={this.handleDateChange}
+          inputRoot={classes.inputFechaRoot}
+        />
       </div>
     );
   }
