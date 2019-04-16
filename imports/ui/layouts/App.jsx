@@ -113,7 +113,11 @@ class App extends Component {
       cuentaSeleccionada: undefined,
       titulo: "Controla tu Economía",
       desde: (new Date(((new Date()).setDate(1)))),
-      hasta: (new Date())
+      hasta: (new Date((new Date(
+        (new Date()).setMonth(
+        (new Date()).getMonth()+1)
+        )).setDate(0)))
+      
     };
     
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
@@ -361,11 +365,9 @@ class App extends Component {
           adornmentPosition="end"
           autoOk={true}
           keyboard={true}
-          disableFuture={true}
+          disableFuture={false}
           variant="outlined"
           label="Hasta"
-          maxDate={new Date()}
-          maxDateMessage={"Fecha mayor a hoy"}
           invalidDateMessage={"Ej: 01/01/2019"}
           handleDateChange={this.handleDateChange}
           inputRoot={classes.inputFechaRoot}
