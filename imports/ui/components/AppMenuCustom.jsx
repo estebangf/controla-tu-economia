@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
@@ -12,7 +12,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const styles = theme => ({
   root: {
@@ -30,25 +30,35 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#FFF',
   },
   divider: {
-    backgroundColor: '#ffffff1f',
+    backgroundColor: '#00000042',
+  },
+  logoImgaen: {
+    ...theme.mixins.toolbar,
+    height: 0,
+    verticalAlign: 'middle',
+    padding: 8,
+    paddingLeft: 0
   },
   listaMedia: {
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: '#ebebeb',
     position: 'relative',
     display: 'block',
     overflowX: 'hidden',
     overflowY: 'auto',
   },
   listItemText:{
-    color: theme.palette.secondary.contrastText,
+    color: '#505050',
   },
   listaFooter:{
     flex: '0 0 auto'
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    ...theme.mixins.toolbar,
+    margin: 'auto',
+  },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -67,7 +77,7 @@ class AppMenuCustom extends Component {
 
     return (
       <SwipeableDrawer
-        open={open}
+        open={!open}
         className={classes.drawer}
         classes={{
           paper: classes.drawerPaper,
@@ -75,17 +85,14 @@ class AppMenuCustom extends Component {
         onOpen={handleMenu}
         onClose={handleMenu}
         anchor="left" >
-        <List className={classes.toolbar}>
-          {['Titulo'].map((text, index) => (
-            <ListItem button key={text+index} >
-              <ListItemIcon className={classes.listItemText}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primaryTypographyProps={{className: classes.listItemText}} primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <div className={classes.toolbar}>
+          <Typography className={classes.listItemText}>
+            <img className={classes.logoImgaen} src="/icono196x196.png" />
+            Controla tu Economia
+          </Typography>
+        </div>
         <Divider className={classes.divider}/>
         <List
-          id="listaMedia"
           className={classes.listaMedia}
           subheader={<ListSubheader className={classes.listItemText}>Lista grande</ListSubheader>}
           >

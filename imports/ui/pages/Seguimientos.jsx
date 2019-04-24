@@ -26,8 +26,7 @@ const styles = theme => ({
     margin: 0,
     top: 50,
     position: "sticky",
-    paddingTop: 10,
-    paddingBottom: 10
+    paddingTop: 5,
 //    background: "#FFF"
   },
   /*

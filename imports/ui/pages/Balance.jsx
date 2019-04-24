@@ -7,6 +7,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 
@@ -15,6 +17,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   rootList: {
     paddingTop: 0,
+    paddingBottom: 55
   },
   titulo: {
     textAlign: 'center',
@@ -28,7 +31,7 @@ const styles = theme => ({
     margin: 0,
     top: 50,
     position: "sticky",
-    paddingTop: 10
+    paddingTop: 14
 //    background: "#FFF"
   },
   barraGrafico:{
@@ -39,6 +42,12 @@ const styles = theme => ({
   },
   listaItems:{
     paddingRight: 10
+  },
+  fab: {
+    margin: theme.spacing.unit,
+    position: 'fixed',
+    bottom: theme.spacing.unit * 1,
+    right: theme.spacing.unit * 1,
   },
 });
 
@@ -183,6 +192,9 @@ class Balance extends Component {
             {this.renderItems(items)}
           </List>
         </List>
+        <Fab color="primary" aria-label="Add" className={classes.fab}>
+          <AddIcon />
+        </Fab>
       </div>
     )
   }
