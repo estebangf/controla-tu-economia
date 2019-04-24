@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { AppBar, Toolbar, Typography, withStyles} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import DateRange from '@material-ui/icons/DateRange';
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
   appBar: {
     top: -1,
     background: theme.palette.appBar.backgroundColor,
@@ -14,7 +20,16 @@ const styles = theme => ({
     boxShadow: 'none'
   },
   titulo: {
-    color: "#000"
+    color: "#000",
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 15,
+  },
+  botonFechas: {
+    position: "absolute",
+    right: 0
   }
 });
 
@@ -45,16 +60,22 @@ class AppBarCustom extends Component {
 
 
   render() {
-    const { classes, titulo } = this.props;
+    const { classes, titulo, handleMenu, handleRangoFechas } = this.props;
     const { schrolled } = this.state;
 
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : ''].join(' ')}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={classes.titulo}>
+            <IconButton onClick={handleMenu} className={classes.menuButton} color="primary" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="primary" noWrap className={classes.titulo}>
               {titulo}
             </Typography>
+            <IconButton onClick={handleRangoFechas} className={classes.botonFechas} color="primary" aria-label="Fechas">
+              <DateRange />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </div>

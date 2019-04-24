@@ -23,6 +23,10 @@ const styles = theme => ({
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
+    top: 50,
+    position: "sticky",
+    paddingTop: 10,
+    paddingBottom: 7.5
 //    background: "#FFF"
   },
   /*

@@ -14,8 +14,9 @@ import NotFoundPage from '../pages/NotFoundPage';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Fechas from '../components/Fechas';
 import AppBarCustom from '../components/AppBarCustom';
+import AppMenuCustom from '../components/AppMenuCustom';
+import RangoFechas from '../components/RangoFechas';
 
 import CuentaContainer from '../containers/CuentaContainer';
 import CuentasContainer from '../containers/CuentasContainer';
@@ -46,21 +47,6 @@ const styles = theme => ({
   transition:{
     transition: 'all 200ms ease-out',
     opacity: 1,
-  },
-  schroleable:{
-    minHeight: '100%',
-//    position: 'absolute',
-//    top: 64,
-//    paddingTop: 64,
-//document.getElementById("top-bar").offsetHeight
-//    left: 0,
-//    right: 0,
-//    bottom: 0,
-//    transform: 'translate3d(0, 0, 0)',
-//    marginLeft: 240,
-//    marginTop: 64,
-    overflowY: 'auto',
-    overflowX: 'hidden'
   },
   drawer: {
     width: drawerWidth,
@@ -107,7 +93,8 @@ class App extends Component {
     super(props);
     this.state = {
       showConnectionIssue: false,
-      drawerOpen: false,
+      openMenu: false,
+      openRangoFechas: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
       cuentaSeleccionada: undefined,
@@ -123,10 +110,24 @@ class App extends Component {
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
     this.cambiarTitulo = this.cambiarTitulo.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleMenu = this.handleMenu.bind(this)
+    this.handleRangoFechas = this.handleRangoFechas.bind(this)
+    
 /*
     this.logout = this.logout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
-*/
+  */
+  }
+
+  handleMenu() {
+    this.setState({
+      openMenu: !this.state.openMenu
+    })
+  }
+  handleRangoFechas() {
+    this.setState({
+      openRangoFechas: !this.state.openRangoFechas
+    })
   }
 
 
@@ -177,7 +178,7 @@ class App extends Component {
 
   toggleDrawer(open) {
     this.setState({
-      drawerOpen: open
+      openMenu: open
     });
   };
 
@@ -319,7 +320,8 @@ class App extends Component {
     } = this.props;
     const {
       showConnectionIssue,
-      drawerOpen,
+      openMenu,
+      openRangoFechas,
       heightSchroleable,
       titulo,
       desde,
@@ -329,9 +331,16 @@ class App extends Component {
 
     return (
       <div className={classes.rootApp}>
-        <AppBarCustom titulo={titulo} />
+        <AppBarCustom titulo={titulo} handleMenu={this.handleMenu} handleRangoFechas={this.handleRangoFechas} />
+        <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} />
+        <RangoFechas
+          open={openRangoFechas}
+          handleRangoFechas={this.handleRangoFechas}
+          desde={desde}
+          hasta={hasta}
+          handleDateChange={this.handleDateChange}
+        />
 {/*
-        <AppMenuCustom />
         <HeaderApp />
         <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>
         <Menu toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen}/>
@@ -344,34 +353,6 @@ class App extends Component {
             {this.renderNotFoundPage()}
           </Switch>
         </div>
-        <Fechas
-          id={'desde'}
-          fecha={desde}
-          adornmentPosition="end"
-          autoOk={true}
-          keyboard={true}
-          disableFuture={true}
-          variant="outlined"
-          label="Desde"
-          maxDate={new Date()}
-          maxDateMessage={"Fecha mayor a hoy"}
-          invalidDateMessage={"Ej: 01/01/2019"}
-          handleDateChange={this.handleDateChange}
-          inputRoot={classes.inputFechaRoot}
-        />
-        <Fechas
-          id={'hasta'}
-          fecha={hasta}
-          adornmentPosition="end"
-          autoOk={true}
-          keyboard={true}
-          disableFuture={false}
-          variant="outlined"
-          label="Hasta"
-          invalidDateMessage={"Ej: 01/01/2019"}
-          handleDateChange={this.handleDateChange}
-          inputRoot={classes.inputFechaRoot}
-        />
       </div>
     );
   }

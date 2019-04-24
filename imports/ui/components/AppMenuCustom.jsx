@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 
-import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -63,15 +63,17 @@ const styles = theme => ({
 
 class AppMenuCustom extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, open, handleMenu } = this.props;
 
     return (
-      <Drawer
+      <SwipeableDrawer
+        open={open}
         className={classes.drawer}
-        variant="permanent"
         classes={{
           paper: classes.drawerPaper,
         }}
+        onOpen={handleMenu}
+        onClose={handleMenu}
         anchor="left" >
         <List className={classes.toolbar}>
           {['Titulo'].map((text, index) => (
@@ -103,7 +105,7 @@ class AppMenuCustom extends Component {
             </ListItem>
           ))}
         </List>
-      </Drawer>
+      </SwipeableDrawer>
     );
   }
 }

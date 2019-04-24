@@ -24,6 +24,10 @@ const styles = theme => ({
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
+    top: 50,
+    position: "sticky",
+    paddingTop: 10,
+    paddingBottom: 10
 //    background: "#FFF"
   },
   /*
@@ -292,9 +296,6 @@ class Seguimientos extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
-            <Link className={classes.link} to={'/movimientos/seguimientos/nuevo'}>
-              Nuevo Seguimiento
-            </Link>
             {this.renderGrafico(totales, porcentajes)}
             <div className={classes.filtro}>
               <Autocomplete
