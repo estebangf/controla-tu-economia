@@ -33,9 +33,8 @@ users.forEach(user => {
 });
 */
 
-
+/*
 // INGRESOS Y GASTOS A MOVIMIENTOS POSITIVOS Y NEGATIVOS
-
 const ingresos = Ingresos.find({}).fetch();
 ingresos.forEach(ingreso => {
   Movimientos.insert({
@@ -63,3 +62,4 @@ gastos.forEach(gasto => {
     fecha: gasto.creado
   });
 })
+*/
