@@ -61,80 +61,40 @@ class Balance extends Component {
     };
 
   }
-  renderIcon(item){
-    if(item.tipo == 'ingresos') {
-      if(item.esPrestamo) {
-        return <AccountBalanceIcon />
-      } else {
-        return <AttachMoneyIcon />
-      }
-    } else {
-      if(item.esInsumo) {
-        return <WorkIcon />
-      } else {
-        return <HomeIcon />
-      }
-    }
-  }
 
-  renderItems(items) {
-    return items.map(item => {
-      const styleFont = {color: item.tipo == 'ingresos' ? "#4385d6" : "#de6c6c" };
-      const styleIcon = {background: item.tipo == 'ingresos' ? '#4385d6' : '#de6c6c'}
+  renderItems(movimientos) {
+    return movimientos.map(mov => {
+      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
       return (
-        <ListItemMovimiento movimiento={item} />
+        <ListItemMovimiento movimiento={movimiento} />
       )
     })
   }
 
   render() {
     const {
-      loadingIngresos,
-      loadingGastos,
       classes,
-      ingresos,
-      gastos
+      movimientos,
     } = this.props;
-
-    let items = [];
-    let i = 0;
-    let g = 0;
 
     let totales = {
       ingresos: 0,
-      gastos: 0,
+      egresos: 0,
       saldo: 0
     }
-    while (i < ingresos.length && g < gastos.length) {
-      if (ingresos[i].creado.getTime() < gastos[g].creado.getTime()) {
-        items.push({...ingresos[i], tipo: "ingreso"})
-        totales.ingresos += ingresos[i].importe
-        totales.saldo += ingresos[i].importe
-        i++
+    movimientos.forEach(movimiento => {
+      if (movimiento.importe >= 0) {
+        totales.ingresos += movimiento.importe
       } else {
-        items.push({...gastos[g], tipo: "gasto"})
-        totales.gastos += gastos[g].importe
-        totales.saldo -= gastos[g].importe
-        g++
+        totales.egresos += Math.abs(movimiento.importe)
       }
-    }
-    while (i < ingresos.length) {
-      items.push({...ingresos[i], tipo: "ingreso"})
-      totales.ingresos += ingresos[i].importe
-      totales.saldo += ingresos[i].importe
-      i++
-    }
-    while ( g < gastos.length) {
-      items.push({...gastos[g], tipo: "gasto"})
-      totales.gastos += gastos[g].importe
-      totales.saldo -= gastos[g].importe
-      g++
-    }
-    let mayorIngreso = totales.ingresos > totales.gastos
+      totales.saldo += movimiento.importe
+    });
+    let mayorIngreso = totales.ingresos > totales.egresos
     let porcentajes= {
-      gastos: !mayorIngreso && totales.gastos !=0 ? 1 : totales.gastos/totales.ingresos,
-      ingresos: mayorIngreso && totales.ingresos !=0 ? 1 : totales.ingresos/totales.gastos,
-      saldo: mayorIngreso !=0 ? totales.saldo/totales.ingresos : totales.saldo/totales.gastos
+      egresos: !mayorIngreso && totales.egresos !=0 ? 1 : totales.egresos/totales.ingresos,
+      ingresos: mayorIngreso && totales.ingresos !=0 ? 1 : totales.ingresos/totales.egresos,
+      saldo: mayorIngreso !=0 ? totales.saldo/totales.ingresos : totales.saldo/totales.egresos
     }
 
     return (
@@ -149,11 +109,11 @@ class Balance extends Component {
                 secondaryTypographyProps={{
                   style: { color: "#de6c6c" }
                 }}
-                primary={totales.gastos.toFixed(2)}
-                secondary="Gastos"
+                primary={totales.egresos.toFixed(2)}
+                secondary="Egresos"
               />
               <ListItemSecondaryAction>
-                <span className={classes.barraGrafico} style={{background: '#de6c6c', width: 200*porcentajes.gastos}} />
+                <span className={classes.barraGrafico} style={{background: '#de6c6c', width: 200*porcentajes.egresos}} />
               </ListItemSecondaryAction>
             </ListItem>
             <ListItem>
@@ -189,7 +149,7 @@ class Balance extends Component {
             <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
-            {this.renderItems(items)}
+            {this.renderItems(movimientos)}
           </List>
         </List>
         <Fab color="primary" aria-label="Add" className={classes.fab}>

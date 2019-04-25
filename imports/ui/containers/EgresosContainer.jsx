@@ -1,26 +1,26 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import Balance from '../pages/Balance.jsx';
-
+import MovimientosList from '../pages/MovimientosList.jsx';
 import { Movimientos } from '/imports/api/movimientos/movimientos';
 
 export default withTracker(({cuentaSeleccionada, cambiarTitulo, desde, hasta}) => {
-  cambiarTitulo("Balance");
+  cambiarTitulo("Egresos");
   const cuentaId = !!cuentaSeleccionada ?
     (!!cuentaSeleccionada.cuentaVinculada ?
       cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
-  const publicHandleMovimientos = Meteor.subscribe(
-    'movimientos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
-  const loadingMovimientos = !publicHandleMovimientos.ready();
+  const publicHandle = Meteor.subscribe(
+    'movimientos.egresos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
+  const loading = !publicHandle.ready();
+//  const movimientos = Movimientos.find({}, { sort: { createdAt: -1 } }).fetch();
   const movimientos = Movimientos.find({}, { sort: { fecha: 1 } }).fetch();
-  const movimientosExists = !loadingMovimientos && !!movimientos;
+  const movimientosExists = !loading && !!movimientos;
 
   return {
-    cuentaId,
-    loadingMovimientos,
+    loading,
     movimientosExists,
     movimientos: movimientosExists ? movimientos : [],
+    pagina: "egresos"
   };
-})(Balance);
+})(MovimientosList);

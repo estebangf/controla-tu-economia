@@ -3,30 +3,23 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Ganancias from '../pages/Ganancias.jsx';
 
-import { Ingresos } from '/imports/api/ingresos/ingresos';
-import { Gastos } from '/imports/api/gastos/gastos';
+import { Movimientos } from '/imports/api/movimientos/movimientos';
 
 export default withTracker(({cuentaSeleccionada, cambiarTitulo, desde, hasta}) => {
   cambiarTitulo("Ganancias");
   const cuentaId = !!cuentaSeleccionada ?
-    (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+    (!!cuentaSeleccionada.cuentaVinculada ?
+      cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
-  const publicHandleIngresos = Meteor.subscribe('ingresos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
-  const loadingIngresos = !publicHandleIngresos.ready();
-  const ingresos = Ingresos.find({ esPrestamo: false }, { sort: { creado: 1 } }).fetch();
-  const ingresosExists = !loadingIngresos && !!ingresos;
-
-  const publicHandleGastos = Meteor.subscribe('gastos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
-  const loadingGastos = !publicHandleGastos.ready();
-  const gastos = Gastos.find({ esInsumo: true }, { sort: { creado: 1 } }).fetch();
-  const gastosExists = !loadingGastos && !!gastos;
+  const publicHandleMovimientos = Meteor.subscribe(
+    'movimientos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
+  const loadingMovimientos = !publicHandleMovimientos.ready();
+  const movimientos = Movimientos.find({ variaLaGanancia: true }, { sort: { fecha: 1 } }).fetch();
+  const movimientosExists = !loadingMovimientos && !!movimientos;
 
   return {
-    loadingIngresos,
-    ingresosExists,
-    ingresos: ingresosExists ? ingresos : [],
-    loadingGastos,
-    gastosExists,
-    gastos: gastosExists ? gastos : [],
+    loadingMovimientos,
+    movimientosExists,
+    movimientos: movimientosExists ? movimientos : [],
   };
 })(Ganancias);

@@ -13,8 +13,7 @@ const styles = theme => ({
   },
 });
 
-
-class IngresosList extends Component {
+class MovimientosList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,35 +22,35 @@ class IngresosList extends Component {
     };
   }
 
-  renderIngresos() {
-    const { ingresos } = this.props;
+  renderMovimientos() {
+    const { movimientos } = this.props;
 
-    return ingresos.map(ingreso => {
-
+    return movimientos.map(mov => {
+      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
       return (
-        <ListItemMovimiento movimiento={{...ingreso, tipo: "ingreso"}} />
+        <ListItemMovimiento movimiento={movimiento} />
       )
     })
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, pagina } = this.props;
     return (
       <div className={classes.root}>
-        <Link className={classes.link} to={'/movimientos/ingresos/nuevo'}>
-          Nuevo Ingreso
+        <Link className={classes.link} to={'/movimientos/'+pagina+'/nuevo'}>
+          Nuevo Movimiento
         </Link>
         
         <List className={classes.root}>
-          {this.renderIngresos()}
+          {this.renderMovimientos()}
         </List>
       </div>
     )
   }
 };
 
-IngresosList.propTypes = {
+MovimientosList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(IngresosList);
+export default withStyles(styles)(MovimientosList);

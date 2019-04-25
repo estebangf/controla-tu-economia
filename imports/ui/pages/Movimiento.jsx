@@ -23,8 +23,7 @@ const styles = theme => ({
   }
 });
 
-
-class Gasto extends Component {
+class Movimiento extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +31,7 @@ class Gasto extends Component {
       detalle: '',
       descripcion: '',
       importe: 0.00,
-      esInsumo: false,
+      variaLaGanancia: props.esIngreso,
       clear: undefined
     };
   }
@@ -40,22 +39,18 @@ class Gasto extends Component {
   static getDerivedStateFromProps(props, state){
     const {
       loading,
-      gastoExists,
-      gasto
+      movimientoExists,
+      movimiento
     } = props;
 
-    console.log("props y state");
-    console.log(props);
-    console.log(state);
-
-    if (!loading && gastoExists) {
-      if (state.id == '' || state.id != gasto._id) {
+    if (!loading && movimientoExists) {
+      if (state.id == '' || state.id != movimiento._id) {
         return {
-          id: gasto._id,
-          detalle: gasto.detalle,
-          descripcion: gasto.descripcion,
-          importe: gasto.importe,
-          esInsumo: gasto.esInsumo
+          id: movimiento._id,
+          detalle: movimiento.detalle,
+          descripcion: movimiento.descripcion,
+          importe: Math.abs(movimiento.importe),
+          variaLaGanancia: movimiento.variaLaGanancia
         }
       } else {
         return null
@@ -78,27 +73,27 @@ class Gasto extends Component {
 
   guardar(){
     const {
-      gastoExists,
-      gasto,
-      cuentaId
+      movimientoExists,
+      movimiento,
+      cuentaId,
+      esIngreso
     } = this.props
     const { 
       detalle,
       descripcion,
-      esInsumo
+      variaLaGanancia
     } = this.state;
-    const importe = parseFloat(this.state.importe);
-    const id = gasto._id;
+    const imp = Math.abs(parseFloat(this.state.importe));
+    const importe = esIngreso ? imp : 0-imp;
+    const id = movimiento._id;
 
-    console.log("cuentaId")
-    console.log(cuentaId)
-    if(gastoExists) {
-      Meteor.call('gasto.editar',
+    if(movimientoExists) {
+      Meteor.call('movimiento.editar',
         id,
         detalle,
         descripcion,
         importe,
-        esInsumo,
+        variaLaGanancia,
         (error, result) => {
           if (error){
             alert(error);
@@ -108,11 +103,11 @@ class Gasto extends Component {
         }
       )
     } else {
-      Meteor.call('gasto.nuevo',
+      Meteor.call('movimiento.nuevo',
         detalle,
         descripcion,
         importe,
-        esInsumo,
+        variaLaGanancia,
         cuentaId,
         (error, result) => {
           if (error){
@@ -126,25 +121,25 @@ class Gasto extends Component {
   }
   limpiar(){
     const {
-      gastoExists,
-      gasto
+      movimientoExists,
+      movimiento,
+      esIngreso
     } = this.props
 
-    if(gastoExists) {
+    if(movimientoExists) {
       this.setState({
-        detalle: gasto.detalle,
-        descripcion: gasto.descripcion,
-        importe: gasto.importe,
-        esInsumo: gasto.esInsumo
+        detalle: movimiento.detalle,
+        descripcion: movimiento.descripcion,
+        importe: Math.abs(movimiento.importe),
+        variaLaGanancia: movimiento.variaLaGanancia
       });
     } else {
       this.setState({
         detalle: '',
         descripcion: '',
         importe: 0.00,
-        esInsumo: false
+        variaLaGanancia: esIngreso
       });
-      !!this.state.clear ? this.state.clear() : undefined;
     }
   }
 
@@ -177,19 +172,20 @@ class Gasto extends Component {
     const { 
       classes,
       loading,
-      gastoExists
+      movimientoExists,
+      esIngreso
     } = this.props;
     const { 
       detalle,
       descripcion,
       importe,
-      esInsumo
+      variaLaGanancia
     } = this.state;
 
     return (
       <div className={classes.root}>
         <Autocomplete
-          id="detalleAutocomplete"
+          id="userAutocomplete"
           items={[
             {
               primary: "Alex Mason",
@@ -247,19 +243,25 @@ class Gasto extends Component {
         <FormControlLabel
           control={
             <Checkbox
-            checked={esInsumo}
-            onChange={this.handleChangeChecked('esInsumo')}
+            checked={variaLaGanancia}
+            onChange={this.handleChangeChecked('variaLaGanancia')}
             color="primary"
           />
           }
-          label={"¿Es insumo de trabajo? " + (esInsumo ? "Si" : "No")}
+          label=
+          {
+            esIngreso  ?
+              (variaLaGanancia ? "No marcado como prestamo" : "Marcado como prestamo")
+              :
+              (variaLaGanancia ? "Marcado como insumo" : "No marcado como insumo")
+          }
         />
         <div className={classes.actions}>
           <Button fullWidth={true} variant="contained" onClick={() => this.guardar()} color="primary" className={classes.button}>
             Guardar
           </Button>
           <Button fullWidth={true} color="secondary" onClick={() => this.limpiar()} className={classes.button}>
-            {gastoExists ? "Volver a cargar" : "Limpiar"}
+            {movimientoExists ? "Volver a cargar" : "Limpiar"}
           </Button>
         </div>
       </div>
@@ -267,8 +269,8 @@ class Gasto extends Component {
   }
 };
 
-Gasto.propTypes = {
+Movimiento.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Gasto);
+export default withStyles(styles)(Movimiento);

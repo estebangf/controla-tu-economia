@@ -28,7 +28,7 @@ const styles = theme => ({
       color: "#4d4d4d"
     },
   },
-  gastoFont: {
+  egresoFont: {
     paddingRight: 7.5,
     color: "#de6c6c"
   },
@@ -36,7 +36,7 @@ const styles = theme => ({
     paddingRight: 7.5,
     color: "#4385d6"
   },
-  gastoIcono: {background: '#de6c6c' },
+  egresoIcono: {background: '#de6c6c' },
   ingresoIcono: {background: '#4385d6' }
 });
 
@@ -58,17 +58,17 @@ class ListItemMovimiento extends Component {
   }
 
   renderIcon(movimiento){
-    if (movimiento.tipo == "gasto") {
-      if(movimiento.esInsumo) {
+    if (movimiento.tipo == "egreso") {
+      if(movimiento.variaLaGanancia) {
         return <WorkIcon />
       } else {
         return <HomeIcon />
       }
     } else if (movimiento.tipo == "ingreso") {
-      if(movimiento.esPrestamo) {
-        return <AccountBalanceIcon />
-      } else {
+      if(movimiento.variaLaGanancia) {
         return <AttachMoneyIcon />
+      } else {
+        return <AccountBalanceIcon />
       }
     }
   }
@@ -78,7 +78,7 @@ class ListItemMovimiento extends Component {
     this.handleClose(this)
   }
   eliminar = (movimiento) => {
-    Meteor.call(movimiento.tipo+'.eliminar',
+    Meteor.call('movimiento.eliminar',
       movimiento._id,
       (error, result) => {
         if (error){
@@ -90,13 +90,13 @@ class ListItemMovimiento extends Component {
     )
     this.handleClose(this)
   }
-  es = (movimiento) => {
-    Meteor.call(movimiento.tipo+'.editar',
+  variaLaGanancia = (movimiento) => {
+    Meteor.call('movimiento.editar',
       movimiento._id,
       movimiento.detalle,
       movimiento.descripcion,
       movimiento.importe,
-      !(movimiento.esInsumo || !!movimiento.esPrestamo) || !(!!movimiento.esInsumo || movimiento.esPrestamo),
+      !movimiento.variaLaGanancia,
       (error, result) => {
         if (error){
           console.log(error);
@@ -144,10 +144,10 @@ class ListItemMovimiento extends Component {
               <Typography className={classes[movimiento.tipo+"Font"]} >
               {function(){
                 let importe = '$\u00A0'
-                for(let i=0; i<=9-movimiento.importe.toFixed(2).toString().length; i++){
+                for(let i=0; i<=9-Math.abs(movimiento.importe.toFixed(2)).toString().length; i++){
                   importe += '\u00A0\u00A0';
                 }
-                return importe+movimiento.importe.toFixed(2)
+                return importe+Math.abs(movimiento.importe.toFixed(2))
               }()}</Typography>
             </ListItemSecondaryAction>
           </ListItem>
@@ -157,16 +157,17 @@ class ListItemMovimiento extends Component {
             key={"option"}
             disabled={true}
             onClick={() => this.handleClose(this)}
-          >{movimiento.detalle + ' x ' + movimiento.importe.toFixed(2)}</MenuItem>
+          >{movimiento.detalle + ' x ' + Math.abs(movimiento.importe.toFixed(2))}</MenuItem>
           <Link to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
             <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
           </Link>
           <MenuItem onClick={() => this.eliminar(movimiento)}>Eliminar</MenuItem>
-          <MenuItem onClick={() => this.es(movimiento)}>
+          <MenuItem onClick={() => this.variaLaGanancia(movimiento)}>
             {
-              movimiento.tipo == "gasto" ? (movimiento.esInsumo ? "No es insumo" : "Es insumo")
-              :
-              movimiento.tipo == "ingreso" && (movimiento.esPrestamo ? "No es prestamo" : "Es prestamo")
+              movimiento.tipo == "egreso" ?
+                (movimiento.variaLaGanancia ? "Desmarcar como insumo" : "Marcar como insumo")
+                :
+                (movimiento.variaLaGanancia ? "Marcar como prestamo" : "Desmarcar como prestamo")
             }
           </MenuItem>
         </Menu>

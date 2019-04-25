@@ -21,9 +21,9 @@ import RangoFechas from '../components/RangoFechas';
 import CuentaContainer from '../containers/CuentaContainer';
 import CuentasContainer from '../containers/CuentasContainer';
 
-import GastoContainer from '../containers/GastoContainer';
+import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
-import GastosContainer from '../containers/GastosContainer';
+import EgresosContainer from '../containers/EgresosContainer';
 import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
 import GananciasContainer from '../containers/GananciasContainer';
@@ -225,13 +225,13 @@ class App extends Component {
         return [
           <Route
             exact
-            path="/movimientos/gastos"
-            render={() => <GastosContainer {...pase} {...fechas} />}
+            path="/movimientos/egresos"
+            render={() => <EgresosContainer {...pase} {...fechas} />}
           />,
           <Route
             exact
-            path="/movimientos/gastos/:id"
-            render={({match}) => <GastoContainer match={match} {...pase} />}
+            path="/movimientos/egresos/:id"
+            render={({match}) => <EgresoContainer match={match} {...pase} />}
           />,
           <Route
             exact

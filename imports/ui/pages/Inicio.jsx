@@ -30,10 +30,10 @@ const styles = theme => ({
     padding: 15
   },
   btnGastos: {
-    color: theme.palette.gastos.buttonText,
-    backgroundColor: theme.palette.gastos.backgroundColor,
+    color: theme.palette.egresos.buttonText,
+    backgroundColor: theme.palette.egresos.backgroundColor,
     '&:hover': {
-      backgroundColor: theme.palette.gastos.buttonHover,
+      backgroundColor: theme.palette.egresos.buttonHover,
     },
     marginBottom: 15,
     fontSize: 15,
@@ -141,7 +141,7 @@ class Inicio extends Component {
     if(cuentasExists) {
       return ([
         <Typography variant="h5" className={classes.titulo}>Movimientos</Typography>,
-        <Link className={classes.link} to={'/movimientos/gastos'}>
+        <Link className={classes.link} to={'/movimientos/egresos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
         </Link>,
         <Link className={classes.link} to={'/movimientos/ingresos'}>

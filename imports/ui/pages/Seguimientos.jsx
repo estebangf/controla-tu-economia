@@ -111,7 +111,7 @@ const styles = theme => ({
     transform: 'rotate(0deg)',
   },
   porcionGastosQuesito: {
-    backgroundColor: theme.palette.gastos.backgroundColor,
+    backgroundColor: theme.palette.egresos.backgroundColor,
     transform: 'rotate(0deg)',
   },
   listaDePorcentajes: {
@@ -146,7 +146,7 @@ const styles = theme => ({
   },
   backgroundGastos: {
     fontSize: 12.5,
-    backgroundImage: 'radial-gradient(#FFF, '+theme.palette.gastos.backgroundColor+')',
+    backgroundImage: 'radial-gradient(#FFF, '+theme.palette.egresos.backgroundColor+')',
   },
   backgroundSeguimientos: {
     width: 105,
@@ -194,12 +194,11 @@ class Seguimientos extends Component {
     
   }
 
-  renderItems(items) {
-    return items.map(item => {
-      const styleFont = {color: item.tipo == 'ingresos' ? "#4385d6" : "#de6c6c" };
-      const styleIcon = {background: item.tipo == 'ingresos' ? '#4385d6' : '#de6c6c'}
+  renderItems(movimientos) {
+    return movimientos.map(mov => {
+      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
       return (
-        <ListItemMovimiento movimiento={item} />
+        <ListItemMovimiento movimiento={movimiento} />
       )
     })
   }
@@ -211,18 +210,18 @@ class Seguimientos extends Component {
       <ul className={classes.listaDePorcentajes}>
         <li className={[classes.itemListaDePorcentajes, classes.backgroundIngresos].join(' ')}>
           <p className={classes.indicador}>Ingresos</p>
-          <p className={classes.osValores}>$ {!!totales.ingresosFiltrados ? totales.ingresosFiltrados.toFixed(0) : 0}</p>
+          <p className={classes.osValores}>$ {!!totales.ingresos ? totales.ingresos.toFixed(0) : 0}</p>
           <p className={classes.osPercentage}>{!!porcentajes.ingresos ? (porcentajes.ingresos*100).toFixed(0) : 0}%</p>
         </li>
         <li className={[classes.itemListaDePorcentajes, classes.backgroundSeguimientos].join(' ')}>
           <p className={classes.indicador}>Total</p>
-          <p className={classes.osValores}>$ {!!totales.seguimientosFiltrados ? totales.seguimientosFiltrados.toFixed(0) : 0}</p>
-          <p className={classes.osPercentage}>{!!porcentajes.seguimientos ? (porcentajes.seguimientos*100).toFixed(0) : 0}%</p>
+          <p className={classes.osValores}>$ {!!totales.saldo ? totales.saldo.toFixed(0) : 0}</p>
+          <p className={classes.osPercentage}>{!!porcentajes.saldo ? (porcentajes.saldo*100).toFixed(0) : 0}%</p>
         </li>
         <li className={[classes.itemListaDePorcentajes, classes.backgroundGastos].join(' ')}>
-          <p className={classes.indicador}>Gastos</p>
-          <p className={classes.osValores}>$ {!!totales.gastosFiltrados ? totales.gastosFiltrados.toFixed(0) : 0}</p>
-          <p className={classes.osPercentage}>{!!porcentajes.gastos ? (porcentajes.gastos*100).toFixed(0) : 0}%</p>
+          <p className={classes.indicador}>Egresos</p>
+          <p className={classes.osValores}>$ {!!totales.egresos ? totales.egresos.toFixed(0) : 0}</p>
+          <p className={classes.osPercentage}>{!!porcentajes.egresos ? (porcentajes.egresos*100).toFixed(0) : 0}%</p>
         </li>
       </ul>
     )
@@ -230,65 +229,36 @@ class Seguimientos extends Component {
   render() {
     const {
       classes,
-      ingresos,
-      gastos
+      movimientos,
     } = this.props;
 
     const {
       detalleFiltro
     } = this.state;
-    console.log(ingresos);
-    console.log(gastos);
 
-    const ingresosFiltrados = ingresos.filter((ingreso) => {
-      return ingreso.detalle.toLowerCase() == (!!detalleFiltro ? detalleFiltro.toLowerCase() : '');
+    const movimientosFiltrados = movimientos.filter((movimiento) => {
+      return movimiento.detalle.toLowerCase().includes((!!detalleFiltro ? detalleFiltro.toLowerCase() : ''));
     })
-    const gastosFiltrados = gastos.filter((gasto) => {
-      console.log("filtro: "+(!!detalleFiltro ? detalleFiltro.toLowerCase() : ''));
-      console.log(gasto.detalle.toLowerCase());
-      console.log(gasto.detalle.toLowerCase() == (!!detalleFiltro ? detalleFiltro.toLowerCase() : ''));
-      
-      return gasto.detalle.toLowerCase() == (!!detalleFiltro ? detalleFiltro.toLowerCase() : '');
-    })
-    let items = [];
-    let i = 0;
-    let g = 0;
 
     let totales = {
-      ingresosFiltrados: 0,
-      gastosFiltrados: 0,
-      seguimientosFiltrados: 0
+      ingresos: 0,
+      egresos: 0,
+      saldo: 0
     }
-    while (i < ingresosFiltrados.length && g < gastosFiltrados.length) {
-      if (ingresosFiltrados[i].creado.getTime() < gastosFiltrados[g].creado.getTime()) {
-        items.push({...ingresosFiltrados[i], tipo: "ingreso"})
-        totales.ingresosFiltrados += ingresosFiltrados[i].importe
-        totales.seguimientosFiltrados += ingresosFiltrados[i].importe
-        i++
+    movimientosFiltrados.forEach(movimiento => {
+      if (movimiento.importe >= 0) {
+        totales.ingresos += movimiento.importe
       } else {
-        items.push({...gastosFiltrados[g], tipo: "gasto"})
-        totales.gastosFiltrados += gastosFiltrados[g].importe
-        totales.seguimientosFiltrados -= gastosFiltrados[g].importe
-        g++
+        totales.egresos += Math.abs(movimiento.importe)
       }
-    }
-    while (i < ingresosFiltrados.length) {
-      items.push({...ingresosFiltrados[i], tipo: "ingreso"})
-      totales.ingresosFiltrados += ingresosFiltrados[i].importe
-      totales.seguimientosFiltrados += ingresosFiltrados[i].importe
-      i++
-    }
-    while ( g < gastosFiltrados.length) {
-      items.push({...gastosFiltrados[g], tipo: "gasto"})
-      totales.gastosFiltrados += gastosFiltrados[g].importe
-      totales.seguimientosFiltrados -= gastosFiltrados[g].importe
-      g++
-    }
-    let total = totales.ingresosFiltrados + totales.gastosFiltrados + totales.seguimientosFiltrados
+      totales.saldo += movimiento.importe
+    })
+    
+    let total = totales.ingresos + totales.egresos + totales.saldo
     let porcentajes= {
-      gastosFiltrados: totales.gastosFiltrados/total,
-      ingresosFiltrados: totales.ingresosFiltrados/total,
-      seguimientos: totales.seguimientosFiltrados/total
+      egresos: totales.egresos/total,
+      ingresos: totales.ingresos/total,
+      saldo: totales.saldo/total
     }
 
     return (
@@ -333,7 +303,7 @@ class Seguimientos extends Component {
             </div>
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
-            {this.renderItems(items)}
+            {this.renderItems(movimientosFiltrados)}
           </List>
         </List>
       </div>

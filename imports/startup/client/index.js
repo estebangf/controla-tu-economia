@@ -21,7 +21,7 @@ const theme = createMuiTheme({
     cuentas:{
 
     },
-    gastos: {
+    egresos: {
       buttonText: '#FFF',
       backgroundColor: red[300],
       buttonHover: red[700],

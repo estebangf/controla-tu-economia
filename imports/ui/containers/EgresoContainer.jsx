@@ -9,22 +9,22 @@ export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
     (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
   
   const movimientoId = match.params.id
-  const publicHandle = Meteor.subscribe('movimientos.ingreso',movimientoId);
+  const publicHandle = Meteor.subscribe('movimientos.egreso', movimientoId);
   const loading = !publicHandle.ready();
 //  const movimiento = Movimientos.find({}, { sort: { createdAt: -1 } }).fetch();
   const movimiento = Movimientos.findOne({_id: movimientoId});
   const movimientoExists = !loading && !!movimiento;
 
   if(movimientoExists){
-    cambiarTitulo("Editar Ingreso");
+    cambiarTitulo("Editar Egreso");
   } else {
-    cambiarTitulo("Nuevo Ingreso");
+    cambiarTitulo("Nuevo Egreso");
   }
   return {
     cuentaId,
     loading,
     movimientoExists,
     movimiento: movimientoExists ? movimiento : {},
-    esIngreso: true
+    esIngreso: false
   };
 })(Movimiento);
