@@ -41,7 +41,7 @@ const styles = theme => ({
     minWidth: '100%',
     minHeight: '100%',
 //    background: '#00000096',
-//    background: '#ffffff9c',
+   background: '#ffffff9c',
     paddingTop: 64
   },
   transition:{
@@ -104,15 +104,15 @@ class App extends Component {
         (new Date()).setMonth(
         (new Date()).getMonth()+1)
         )).setDate(0)))
-      
+
     };
-    
+
     this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
     this.cambiarTitulo = this.cambiarTitulo.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleMenu = this.handleMenu.bind(this)
     this.handleRangoFechas = this.handleRangoFechas.bind(this)
-    
+
 /*
     this.logout = this.logout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
@@ -161,7 +161,7 @@ class App extends Component {
       return null
     }
   }
-  
+
 
   seleccionarCuenta(cuentaSeleccionada) {
     this.setState({cuentaSeleccionada});
@@ -299,7 +299,7 @@ class App extends Component {
         />,
       ]
     }
-    
+
   }
 
   renderNotFoundPage(){
@@ -345,7 +345,7 @@ class App extends Component {
         <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>
         <Menu toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen}/>
         <ConnectionNotification mensaje={"Hay problemas en la coneccion"} open={showConnectionIssue && !connected}/>
-*/} 
+*/}
         <div className={classes.schroleable} id="content">
           <Switch location={location} >
             {this.renderOfflinePages()}

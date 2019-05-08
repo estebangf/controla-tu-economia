@@ -13,7 +13,9 @@ html::-webkit-scrollbar-button {
 html::-webkit-scrollbar-corner {
   display: none;
 }
-
+html {
+  background: #ffffff9c
+}
 body {
   background-color: #fff !important;
   background: #fff
@@ -36,4 +38,3 @@ body {
 #content::-webkit-scrollbar-corner {
   display: none !important;
 }
-
