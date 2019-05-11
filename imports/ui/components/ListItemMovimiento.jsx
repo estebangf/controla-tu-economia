@@ -48,7 +48,7 @@ class ListItemMovimiento extends Component {
       menuVisible: false
     };
   }
-  
+
   handleClick = event => {
     event.preventDefault();
     this.setState({anchorEl: event.currentTarget});
@@ -111,68 +111,103 @@ class ListItemMovimiento extends Component {
 
 
   render() {
-    const { 
+    const {
       classes,
-      movimiento
+      movimiento,
+      esSaldoInicial
     } = this.props;
     const {
       anchorEl
     } = this.state;
 
-    return (
-      <div>
-        <Link onContextMenu={this.handleClick} to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
-          <ListItem
-            button
-          >
-            <ListItemAvatar>
-              <Avatar className={classes[movimiento.tipo+"Icono"]}>
-                {this.renderIcon(movimiento)}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primaryTypographyProps={{
-                className: classes[movimiento.tipo+"Font"]
-              }}
-              secondaryTypographyProps={{
-                className: classes[movimiento.tipo+"Font"]
-              }}
-              primary={movimiento.detalle}
-              secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
-            />
-            <ListItemSecondaryAction>
-              <Typography className={classes[movimiento.tipo+"Font"]} >
-              {function(){
-                let importe = '$\u00A0'
-                for(let i=0; i<=9-Math.abs(movimiento.importe.toFixed(2)).toString().length; i++){
-                  importe += '\u00A0\u00A0';
-                }
-                return importe+Math.abs(movimiento.importe.toFixed(2))
-              }()}</Typography>
-            </ListItemSecondaryAction>
-          </ListItem>
-        </Link>
-        <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => this.handleClose(this)}>
-          <MenuItem
-            key={"option"}
-            disabled={true}
-            onClick={() => this.handleClose(this)}
-          >{movimiento.detalle + ' x ' + Math.abs(movimiento.importe.toFixed(2))}</MenuItem>
-          <Link to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
-            <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
+    if (movimiento.esSaldoInicial) {
+      return (
+        <ListItem
+          button
+        >
+          <ListItemAvatar>
+            <Avatar className={classes[movimiento.tipo+"Icono"]}>
+              {this.renderIcon(movimiento)}
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primaryTypographyProps={{
+              className: classes[movimiento.tipo+"Font"]
+            }}
+            secondaryTypographyProps={{
+              className: classes[movimiento.tipo+"Font"]
+            }}
+            primary={movimiento.detalle}
+            secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
+          />
+          <ListItemSecondaryAction>
+            <Typography className={classes[movimiento.tipo+"Font"]} >
+            {function(){
+              let importe = '$\u00A0'
+              for(let i=0; i<=9-Math.abs(movimiento.importe.toFixed(2)).toString().length; i++){
+                importe += '\u00A0\u00A0';
+              }
+              return importe+Math.abs(movimiento.importe.toFixed(2))
+            }()}</Typography>
+          </ListItemSecondaryAction>
+        </ListItem>
+      );
+    } else {
+      return (
+        <div>
+          <Link onContextMenu={this.handleClick} to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
+            <ListItem
+              button
+            >
+              <ListItemAvatar>
+                <Avatar className={classes[movimiento.tipo+"Icono"]}>
+                  {this.renderIcon(movimiento)}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primaryTypographyProps={{
+                  className: classes[movimiento.tipo+"Font"]
+                }}
+                secondaryTypographyProps={{
+                  className: classes[movimiento.tipo+"Font"]
+                }}
+                primary={movimiento.detalle}
+                secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
+              />
+              <ListItemSecondaryAction>
+                <Typography className={classes[movimiento.tipo+"Font"]} >
+                {function(){
+                  let importe = '$\u00A0'
+                  for(let i=0; i<=9-Math.abs(movimiento.importe.toFixed(2)).toString().length; i++){
+                    importe += '\u00A0\u00A0';
+                  }
+                  return importe+Math.abs(movimiento.importe.toFixed(2))
+                }()}</Typography>
+              </ListItemSecondaryAction>
+            </ListItem>
           </Link>
-          <MenuItem onClick={() => this.eliminar(movimiento)}>Eliminar</MenuItem>
-          <MenuItem onClick={() => this.variaLaGanancia(movimiento)}>
-            {
-              movimiento.tipo == "egreso" ?
-                (movimiento.variaLaGanancia ? "Desmarcar como insumo" : "Marcar como insumo")
-                :
-                (movimiento.variaLaGanancia ? "Marcar como prestamo" : "Desmarcar como prestamo")
-            }
-          </MenuItem>
-        </Menu>
-      </div>
-    );
+          <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => this.handleClose(this)}>
+            <MenuItem
+              key={"option"}
+              disabled={true}
+              onClick={() => this.handleClose(this)}
+            >{movimiento.detalle + ' x ' + Math.abs(movimiento.importe.toFixed(2))}</MenuItem>
+            <Link to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
+              <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
+            </Link>
+            <MenuItem onClick={() => this.eliminar(movimiento)}>Eliminar</MenuItem>
+            <MenuItem onClick={() => this.variaLaGanancia(movimiento)}>
+              {
+                movimiento.tipo == "egreso" ?
+                  (movimiento.variaLaGanancia ? "Desmarcar como insumo" : "Marcar como insumo")
+                  :
+                  (movimiento.variaLaGanancia ? "Marcar como prestamo" : "Desmarcar como prestamo")
+              }
+            </MenuItem>
+          </Menu>
+        </div>
+      );
+    }
   }
 }
 

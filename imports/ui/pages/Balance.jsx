@@ -64,16 +64,7 @@ class Balance extends Component {
   }
 
   renderItems(movimientos) {
-    const {saldoInicial} = this.state
-    const movimientosToRender = [
-      {
-        detalle: "Saldo Inicial",
-        descripcion: "Saldo anterior a hoy",
-        importe: saldoInicial
-      },
-      ...movimientos
-    ]
-    return movimientosToRender.map(mov => {
+    return movimientos.map(mov => {
       const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
       return (
         <ListItemMovimiento movimiento={movimiento} />
@@ -111,7 +102,7 @@ class Balance extends Component {
     } = this.props;
 
     const self = this
-    
+
     if ((desde !== prevProps.desde) || (cuentaId !== prevProps.cuentaId)) {
       Meteor.call('movimiento.saldoInicial',
         cuentaId,
@@ -133,14 +124,27 @@ class Balance extends Component {
   render() {
     const {
       classes,
-      movimientos,
     } = this.props;
+    const {
+      saldoInicial
+    } = this.state
 
     let totales = {
       ingresos: 0,
       egresos: 0,
       saldo: 0
     }
+    const movimientos = [
+      {
+        detalle: "Saldo Inicial",
+        descripcion: "Saldo anterior a hoy",
+        importe: saldoInicial,
+        variaLaGanancia:  saldoInicial < 0 ? false : true,
+        esSaldoInicial: true
+      },
+      ...this.props.movimientos
+    ]
+
     movimientos.forEach(movimiento => {
       if (movimiento.importe >= 0) {
         totales.ingresos += movimiento.importe
