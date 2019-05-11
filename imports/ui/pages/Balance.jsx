@@ -57,18 +57,77 @@ class Balance extends Component {
     super(props);
     this.state = {
       showConnectionIssue: false,
-      drawerOpen: false
+      drawerOpen: false,
+      saldoInicial: 0
     };
 
   }
 
   renderItems(movimientos) {
-    return movimientos.map(mov => {
+    const {saldoInicial} = this.state
+    const movimientosToRender = [
+      {
+        detalle: "Saldo Inicial",
+        descripcion: "Saldo anterior a hoy",
+        importe: saldoInicial
+      },
+      ...movimientos
+    ]
+    return movimientosToRender.map(mov => {
       const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )
     })
+  }
+
+  componentDidMount(){
+    const {
+      cuentaId,
+      desde
+    } = this.props;
+
+    const self = this
+    Meteor.call('movimiento.saldoInicial',
+      cuentaId,
+      desde,
+      (error, result) => {
+        if (error){
+          console.log(error);
+        } else {
+          console.log(result)
+          self.setState({
+            saldoInicial: result
+          })
+        }
+      }
+    )
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      cuentaId,
+      desde
+    } = this.props;
+
+    const self = this
+    
+    if ((desde !== prevProps.desde) || (cuentaId !== prevProps.cuentaId)) {
+      Meteor.call('movimiento.saldoInicial',
+        cuentaId,
+        desde,
+        (error, result) => {
+          if (error){
+            console.log(error);
+          } else {
+            console.log(result)
+            self.setState({
+              saldoInicial: result
+            })
+          }
+        }
+      )
+    }
   }
 
   render() {

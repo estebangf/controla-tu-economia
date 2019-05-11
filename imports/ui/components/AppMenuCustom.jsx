@@ -46,8 +46,8 @@ const categorias = [
         icon: ListIcon
       },
       {
-        text: "Lista Gastos",
-        link: "/movimientos/gastos",
+        text: "Lista Egresos",
+        link: "/movimientos/egresos",
         icon: ListIcon
       },
       {
@@ -57,7 +57,7 @@ const categorias = [
       },
       {
         text: "Nuevo Gasto",
-        link: "/movimientos/gastos/nuevo",
+        link: "/movimientos/egresos/nuevo",
         icon: AddIcon
       }
     ]

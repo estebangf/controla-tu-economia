@@ -14,6 +14,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import Alerta from '../components/Alerta';
 import AppBarCustom from '../components/AppBarCustom';
 import AppMenuCustom from '../components/AppMenuCustom';
 import RangoFechas from '../components/RangoFechas';
@@ -32,6 +33,25 @@ import SeguimientosContainer from '../containers/SeguimientosContainer';
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
 
+
+const TODAY_M = new Date()
+TODAY_M.setHours(0)
+TODAY_M.setMinutes(0)
+TODAY_M.setSeconds(0)
+TODAY_M.setMilliseconds(0)
+
+const TODAY_N = new Date()
+TODAY_N.setHours(23)
+TODAY_N.setMinutes(59)
+TODAY_N.setSeconds(59)
+TODAY_N.setMilliseconds(99)
+
+const END_MONTH = new Date(TODAY_N)
+END_MONTH.setMonth(TODAY_N.getMonth()+1)
+END_MONTH.setDate(0)
+
+const START_MONTH = new Date(TODAY_M)
+START_MONTH.setDate(1)
 
 const styles = theme => ({
   root: {
@@ -93,17 +113,16 @@ class App extends Component {
     super(props);
     this.state = {
       showConnectionIssue: false,
+      openAlerta: false,
+      mensajeAlerta: '',
       openMenu: false,
       openRangoFechas: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
       cuentaSeleccionada: undefined,
       titulo: "Controla tu Economía",
-      desde: (new Date(((new Date()).setDate(1)))),
-      hasta: (new Date((new Date(
-        (new Date()).setMonth(
-        (new Date()).getMonth()+1)
-        )).setDate(0)))
+      desde: START_MONTH,
+      hasta: END_MONTH
 
     };
 
@@ -111,6 +130,7 @@ class App extends Component {
     this.cambiarTitulo = this.cambiarTitulo.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleMenu = this.handleMenu.bind(this)
+    this.handleAlerta = this.handleAlerta.bind(this)
     this.handleRangoFechas = this.handleRangoFechas.bind(this)
 
 /*
@@ -118,6 +138,13 @@ class App extends Component {
     this.toggleDrawer = this.toggleDrawer.bind(this);
   */
   }
+
+  handleAlerta = (mensaje) => {
+    this.setState(state => ({
+      openAlerta: !state.openAlerta,
+      mensajeAlerta: mensaje
+    }));
+  };
 
   handleMenu() {
     this.setState({
@@ -132,7 +159,19 @@ class App extends Component {
 
 
   handleDateChange(name, date){
-      this.setState({ [name]: date });
+    const fecha = new Date(date)
+    if (name == "desde") {
+      fecha.setHours(0)
+      fecha.setMinutes(0)
+      fecha.setSeconds(0)
+      fecha.setMilliseconds(0)
+    } else {
+      fecha.setHours(23)
+      fecha.setMinutes(59)
+      fecha.setSeconds(59)
+      fecha.setMilliseconds(99)
+    }
+    this.setState({ [name]: fecha });
   };
 
 
@@ -211,13 +250,15 @@ class App extends Component {
     const { loggued, cuentas } = this.props;
     const { cuentaSeleccionada, desde, hasta } = this.state;
     const cambiarTitulo = this.cambiarTitulo
-    const pase = {
-      cambiarTitulo,
-      cuentaSeleccionada
-    }
     const fechas = {
       desde,
       hasta
+    }
+    const pase = {
+      handleAlerta: this.handleAlerta,
+      cambiarTitulo,
+      cuentaSeleccionada,
+      ...fechas
     }
 
     if (!!loggued) {
@@ -226,7 +267,7 @@ class App extends Component {
           <Route
             exact
             path="/movimientos/egresos"
-            render={() => <EgresosContainer {...pase} {...fechas} />}
+            render={() => <EgresosContainer {...pase} />}
           />,
           <Route
             exact
@@ -236,7 +277,7 @@ class App extends Component {
           <Route
             exact
             path="/movimientos/ingresos"
-            render={() => <IngresosContainer {...pase} {...fechas} />}
+            render={() => <IngresosContainer {...pase} />}
           />,
           <Route
             exact
@@ -246,17 +287,17 @@ class App extends Component {
           <Route
             exact
             path="/movimientos/seguimientos"
-            render={() => <SeguimientosContainer {...pase} {...fechas} />}
+            render={() => <SeguimientosContainer {...pase} />}
           />,
           <Route
             exact
             path="/movimientos/balance"
-            render={() => <BalanceContainer {...pase} {...fechas} />}
+            render={() => <BalanceContainer {...pase} />}
           />,
           <Route
             exact
             path="/movimientos/ganancias"
-            render={() => <GananciasContainer {...pase} {...fechas} />}
+            render={() => <GananciasContainer {...pase} />}
           />,
           <Route
             exact
@@ -363,6 +404,16 @@ class App extends Component {
       classes,
     } = this.props;
 
+    const {
+      openAlerta,
+      mensajeAlerta
+    } = this.state
+
+    const alerta = {
+      open: openAlerta,
+      mensaje: mensajeAlerta
+    };
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -373,6 +424,7 @@ class App extends Component {
             )}
           />
         </BrowserRouter>
+        <Alerta alerta={alerta} handleClose={() => this.handleAlerta("")} />
       </div>
     );
   }

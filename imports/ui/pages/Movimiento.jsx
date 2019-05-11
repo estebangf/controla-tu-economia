@@ -70,7 +70,6 @@ class Movimiento extends Component {
       [name]: event.target.checked
     })
   }
-
   guardar(){
     const {
       movimientoExists,
@@ -78,7 +77,7 @@ class Movimiento extends Component {
       cuentaId,
       esIngreso
     } = this.props
-    const { 
+    const {
       detalle,
       descripcion,
       variaLaGanancia
@@ -86,6 +85,8 @@ class Movimiento extends Component {
     const imp = Math.abs(parseFloat(this.state.importe));
     const importe = esIngreso ? imp : 0-imp;
     const id = movimiento._id;
+
+    const self = this;
 
     if(movimientoExists) {
       Meteor.call('movimiento.editar',
@@ -96,9 +97,10 @@ class Movimiento extends Component {
         variaLaGanancia,
         (error, result) => {
           if (error){
-            alert(error);
+            console.log(error);
           } else {
-            alert(result)
+            console.log(result)
+            self.props.handleAlerta("Movimiento editado")
           }
         }
       )
@@ -111,9 +113,10 @@ class Movimiento extends Component {
         cuentaId,
         (error, result) => {
           if (error){
-            alert(error);
+            console.log(error);
           } else {
-            alert(result)
+            console.log(result)
+            self.props.handleAlerta("Movimiento creado")
           }
         }
       )
@@ -163,19 +166,19 @@ class Movimiento extends Component {
     }
 */
   };
-  
+
   clearSelection = () => {
     this.state.clear();
   };
 
   render() {
-    const { 
+    const {
       classes,
       loading,
       movimientoExists,
       esIngreso
     } = this.props;
-    const { 
+    const {
       detalle,
       descripcion,
       importe,
@@ -216,9 +219,9 @@ class Movimiento extends Component {
           value={detalle}
           disconect={detalle !== "new"}
         />
-        
+
         <TextField
-          InputLabelProps={{ shrink: !!descripcion && descripcion != '' }} 
+          InputLabelProps={{ shrink: !!descripcion && descripcion != '' }}
           id="descripcion"
           fullWidth={true}
           label="Descripcion"

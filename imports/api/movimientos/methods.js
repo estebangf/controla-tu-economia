@@ -56,6 +56,21 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
   },
+  'movimiento.saldoInicial'(cuentaId, hasta){
+    check(cuentaId, String);
+    check(hasta, Date);
+    const movimientos = Movimientos.find({cuentaId: cuentaId,
+      "$and": [
+        { creado: { "$lt": new Date(hasta) }}
+      ]
+    }).fetch()
+    var saldoInicial = 0;
+    movimientos.forEach(movimiento => {
+      saldoInicial += movimiento.importe
+    })
+
+    return saldoInicial;
+  },
   // borrarVista(idVista) {
   //   check(idVista, String);
   //
