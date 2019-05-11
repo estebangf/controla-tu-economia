@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu } from '@material-ui/core';
 
+import HelpIcon from '@material-ui/icons/Help';
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
@@ -58,17 +59,21 @@ class ListItemMovimiento extends Component {
   }
 
   renderIcon(movimiento){
-    if (movimiento.tipo == "egreso") {
-      if(movimiento.variaLaGanancia) {
-        return <WorkIcon />
-      } else {
-        return <HomeIcon />
-      }
-    } else if (movimiento.tipo == "ingreso") {
-      if(movimiento.variaLaGanancia) {
-        return <AttachMoneyIcon />
-      } else {
-        return <AccountBalanceIcon />
+    if (movimiento.esSaldoInicial) {
+      return <HelpIcon />
+    } else {
+      if (movimiento.tipo == "egreso") {
+        if(movimiento.variaLaGanancia) {
+          return <WorkIcon />
+        } else {
+          return <HomeIcon />
+        }
+      } else if (movimiento.tipo == "ingreso") {
+        if(movimiento.variaLaGanancia) {
+          return <AttachMoneyIcon />
+        } else {
+          return <AccountBalanceIcon />
+        }
       }
     }
   }

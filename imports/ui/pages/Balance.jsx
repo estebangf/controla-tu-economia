@@ -137,7 +137,7 @@ class Balance extends Component {
     const movimientos = [
       {
         detalle: "Saldo Inicial",
-        descripcion: "Saldo anterior a hoy",
+        descripcion: "Saldo anterior a este periodo",
         importe: saldoInicial,
         variaLaGanancia:  saldoInicial < 0 ? false : true,
         esSaldoInicial: true
