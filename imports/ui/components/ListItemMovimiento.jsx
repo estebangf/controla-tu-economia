@@ -188,6 +188,7 @@ class ListItemMovimiento extends Component {
                   }
                   return importe+Math.abs(movimiento.importe.toFixed(2))
                 }()}</Typography>
+                <Typography className={classes[movimiento.tipo+"Font"]} style={{textAlign: "right"}}>{movimiento.fecha.toLocaleDateString()}</Typography>
               </ListItemSecondaryAction>
             </ListItem>
           </Link>
