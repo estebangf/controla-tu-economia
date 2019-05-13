@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper } from '@material-ui/core';
+import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper, Menu, MenuItem } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 
@@ -49,6 +50,28 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 1,
     right: theme.spacing.unit * 1,
   },
+  menu:{
+    bottom: 70,
+    background: 'transparent',
+    boxShadow: 'none',
+    top: 'auto !important',
+  },
+  menuItem: {
+    marginLeft: 8,
+    marginRight: 8,
+    // margin: 0px 8px;
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 0,
+    paddingRight: 0,
+    height: '100%'
+  },
+  fabChildEgreso: {
+    background: "#de6c6c"
+  },
+  fabChildIngreso: {
+    background: "#4385d6"
+  }
 });
 
 
@@ -58,7 +81,9 @@ class Balance extends Component {
     this.state = {
       showConnectionIssue: false,
       drawerOpen: false,
-      saldoInicial: 0
+      saldoInicial: 0,
+      openAddButton: false,
+      anchorEl: null,
     };
 
   }
@@ -121,14 +146,35 @@ class Balance extends Component {
     }
   }
 
+  handleOpenAdd = () => {
+    this.setState(state => ({
+      openAddButton: !state.openAddButton
+    }))
+  }
+
+  handleClick = event => {
+    this.setState({
+      openAddButton: true,
+      anchorEl: event.currentTarget
+    });
+  };
+  handleClose = () => {
+    this.setState({
+      openAddButton: false,
+      anchorEl: null
+    });
+  };
+
   render() {
     const {
       classes,
     } = this.props;
     const {
-      saldoInicial
+      saldoInicial,
+      openAddButton,
+      anchorEl
     } = this.state
-
+    const IconMenu = openAddButton ? CloseIcon : AddIcon
     let totales = {
       ingresos: 0,
       egresos: 0,
@@ -215,9 +261,39 @@ class Balance extends Component {
             {this.renderItems(movimientos)}
           </List>
         </List>
-        <Fab color="primary" aria-label="Add" className={classes.fab}>
-          <AddIcon />
+        <Fab
+          className={classes.fab}
+          onClick={this.handleClick}>
+          <IconMenu
+            aria-owns={anchorEl ? 'simple-menu' : undefined}
+            aria-haspopup="true" />
         </Fab>
+        <Menu
+          PopoverClasses={{
+            paper: classes.menu
+          }}
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+          <MenuItem style={{display: "none"}} className={classes.menuItem}>
+          </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={this.handleClose}>
+            <Link className={classes.link} to={"/movimientos/egresos/nuevo"}>
+              <Fab color="secondary" className={classes.fabChildEgreso} size="small">
+                <AddIcon />
+              </Fab>
+            </Link>
+          </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={this.handleClose}>
+            <Link className={classes.link} to={"/movimientos/ingresos/nuevo"}>
+              <Fab color="primary" className={classes.fabChildIngreso} size="small">
+                <AddIcon />
+              </Fab>
+            </Link>
+          </MenuItem>
+        </Menu>
       </div>
     )
   }

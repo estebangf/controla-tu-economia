@@ -10,11 +10,7 @@ import AppContainer from '/imports/ui/containers/AppContainer'
 const theme = createMuiTheme({
   palette: {
     primary: blue,
-    secondary: {
-      main: '#262f3d',
-      dark: '#19212b',
-      contrastText: '#ffffffb3',
-    },
+    secondary: red,
     appBar:{
       backgroundColor: "#fff"
     },
@@ -48,7 +44,7 @@ const theme = createMuiTheme({
     }
 //    transparent: '#00000000'
   },
-  typography: { 
+  typography: {
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -72,7 +68,7 @@ function DarkTheme() {
     .then()
     .catch(error => console.log('ServiceWorker registration failed: ', err));
   });
-  
+
   return (
     <MuiThemeProvider theme={theme}>
       <AppContainer />
