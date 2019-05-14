@@ -246,7 +246,7 @@ class Movimiento extends Component {
         <FormControlLabel
           control={
             <Checkbox
-            checked={variaLaGanancia}
+            checked={!variaLaGanancia}
             onChange={this.handleChangeChecked('variaLaGanancia')}
             color="primary"
           />
@@ -254,9 +254,9 @@ class Movimiento extends Component {
           label=
           {
             esIngreso  ?
-              (variaLaGanancia ? "No marcado como prestamo" : "Marcado como prestamo")
+              (!variaLaGanancia ? "Es un prestamo" : "No es un prestamo")
               :
-              (variaLaGanancia ? "Marcado como insumo" : "No marcado como insumo")
+              (variaLaGanancia ? "Es un insumo" : "No es insumo")
           }
         />
         <div className={classes.actions}>
