@@ -66,8 +66,10 @@ class Movimiento extends Component {
     })
   }
   handleChangeChecked = name => event => {
+    const { esIngreso, variaLaGanancia } = this.props
+    const checked = esIngreso ? !event.target.checked : event.target.checked
     this.setState({
-      [name]: event.target.checked
+      [name]: checked
     })
   }
   guardar(){
@@ -246,7 +248,7 @@ class Movimiento extends Component {
         <FormControlLabel
           control={
             <Checkbox
-            checked={!variaLaGanancia}
+            checked={esIngreso ? !variaLaGanancia : variaLaGanancia}
             onChange={this.handleChangeChecked('variaLaGanancia')}
             color="primary"
           />

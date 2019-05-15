@@ -46,6 +46,7 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing.unit,
+    background: "#FFF",
     position: 'fixed',
     bottom: theme.spacing.unit * 1,
     right: theme.spacing.unit * 1,
@@ -64,7 +65,11 @@ const styles = theme => ({
     paddingBottom: 5,
     paddingLeft: 0,
     paddingRight: 0,
-    height: '100%'
+    boxShadow: 'none',
+    height: '100%',
+    '&:hover': {
+      boxShadow: 'none'
+    },
   },
   fabChildEgreso: {
     background: "#de6c6c"
