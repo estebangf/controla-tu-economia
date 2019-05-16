@@ -185,12 +185,12 @@ class Ganancias extends Component {
 
   renderGrafico(totales, porcentajes) {
     const { classes } = this.props;
-    
+
     return (
       <div>
         <div className={classes.donutChart}>
           <div className={classes.contenedorGrafico}>
-            <div 
+            <div
               className={[classes.porcionGastos, classes.recorte].join(' ')}
               style={{transform: 'rotate('+ 0 * 360 + 'deg)'}}
               >
@@ -199,7 +199,7 @@ class Ganancias extends Component {
                 style={{transform: 'rotate('+ (porcentajes.egresos) * 360 + 'deg)',}}
               />
             </div>
-            <div 
+            <div
               className={[classes.porcionGanancias, classes.recorte].join(' ')}
               style={{transform: 'rotate('+ (porcentajes.egresos) * 360 + 'deg)'}}
               >
@@ -209,7 +209,7 @@ class Ganancias extends Component {
                   transform: 'rotate('+ (porcentajes.egresos+porcentajes.ganancias) * 360 + 'deg)'}}
               />
             </div>
-            <div 
+            <div
               className={[classes.porcionIngresos, classes.recorte].join(' ')}
               style={{transform: 'rotate('+ (porcentajes.egresos+porcentajes.ganancias) * 360 + 'deg)'}}
               >
@@ -261,8 +261,8 @@ class Ganancias extends Component {
       }
       totales.ganancias += movimiento.importe
     });
-    
-    let total = totales.ingresos + totales.egresos
+
+    let total = totales.ingresos + totales.egresos + Math.abs(totales.ganancias)
     let porcentajes= {
       egresos: totales.egresos/total,
       ingresos: totales.ingresos/total,
