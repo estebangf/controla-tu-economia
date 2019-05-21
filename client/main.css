@@ -1,3 +1,4 @@
+/*
 html::-webkit-scrollbar {
   display: none;
 }
@@ -38,3 +39,4 @@ body {
 #content::-webkit-scrollbar-corner {
   display: none !important;
 }
+*/

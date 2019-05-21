@@ -56,13 +56,58 @@ START_MONTH.setDate(1)
 const styles = theme => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.up('lg')]: {
+      /* margin: 400px, */
+      boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 5px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
+      /* margin-top: 140px, */
+      /* max-height: calc(100% - 100px), */
+      position: 'fixed',
+      /* margin-bottom: 0, */
+      left: 400,
+      right: 400,
+      bottom: 50,
+      top: 164,
+    },
+  },
+  fondo: {
+    [theme.breakpoints.up('lg')]: {
+      position: 'fixed',
+      backgroundColor: '#006e96',
+      content: '',
+      height: 250,
+      top: 0,
+      width: '100%',
+      zIndex: 0,
+      left: 0,
+      right: 0
+    }
+  },
+  fondoSuperior: {
+    [theme.breakpoints.up('lg')]: {
+      position: 'fixed',
+      backgroundColor: '#006e96',
+      height: 100,
+      top: 0,
+      width: '100%',
+      zIndex: 99999999999,
+      left: 0,
+      right: 0
+    },
   },
   rootApp: {
+    [theme.breakpoints.up('lg')]: {
+      // padding: 50,
+      // paddingTop: 25,
+      // paddingBottom: 0
+      overflow: 'auto',
+      paddingTop: 0,
+    },
     minWidth: '100%',
     minHeight: '100%',
 //    background: '#00000096',
-   background: '#ffffff9c',
-    paddingTop: 64
+    background: '#ffffff',
+    paddingTop: 64,
+    zIndex: 1
   },
   transition:{
     transition: 'all 200ms ease-out',
@@ -416,6 +461,8 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
+        <div className={classes.fondo} />
+        <div className={classes.fondoSuperior} />
         <CssBaseline />
         <BrowserRouter>
           <Route

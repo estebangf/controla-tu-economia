@@ -32,7 +32,10 @@ const styles = theme => ({
     margin: 0,
     top: 50,
     position: "sticky",
-    paddingTop: 14
+    paddingTop: 14,
+    [theme.breakpoints.up('lg')]: {
+      top: 0,
+    }
 //    background: "#FFF"
   },
   barraGrafico:{
@@ -50,8 +53,15 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 1,
     right: theme.spacing.unit * 1,
+    [theme.breakpoints.up('lg')]: {
+      bottom: theme.spacing.unit * 1 + 50,
+      right: theme.spacing.unit * 1 + 410,
+    },
   },
   menu:{
+    [theme.breakpoints.up('lg')]: {
+      bottom: 70 + 50,
+    },
     bottom: 70,
     background: 'transparent',
     boxShadow: 'none',

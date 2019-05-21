@@ -27,6 +27,9 @@ const styles = theme => ({
     top: 50,
     position: "sticky",
     paddingTop: 5,
+    [theme.breakpoints.up('lg')]: {
+      top: 0,
+    }
 //    background: "#FFF"
   },
   /*
@@ -191,7 +194,7 @@ class Seguimientos extends Component {
     })
   }
   onSelectDetalleFiltro(){
-    
+
   }
 
   renderItems(movimientos) {
@@ -205,7 +208,7 @@ class Seguimientos extends Component {
 
   renderGrafico(totales, porcentajes) {
     const { classes } = this.props;
-    
+
     return (
       <ul className={classes.listaDePorcentajes}>
         <li className={[classes.itemListaDePorcentajes, classes.backgroundIngresos].join(' ')}>
@@ -253,7 +256,7 @@ class Seguimientos extends Component {
       }
       totales.saldo += movimiento.importe
     })
-    
+
     let total = totales.ingresos + totales.egresos + totales.saldo
     let porcentajes= {
       egresos: totales.egresos/total,

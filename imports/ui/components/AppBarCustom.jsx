@@ -10,14 +10,36 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  fondo: {
+    [theme.breakpoints.up('lg')]: {
+      width: 'calc(100% - 800px)',
+      margin: 400,
+      marginTop: 100,
+      position: 'fixed',
+      height: 65,
+      right: 0,
+      left: 0,
+      top: 0,
+      marginBottom: 0,
+      background: '#FFF',
+    },
+  },
   appBar: {
+    [theme.breakpoints.up('lg')]: {
+      margin: 400,
+      width: 'calc(100% - 800px)',
+      marginTop: 99
+    },
     top: -1,
     background: theme.palette.appBar.backgroundColor,
     transition: 'box-shadow .1s ease',
     boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
   },
   schrolled: {
-    boxShadow: 'none'
+    boxShadow: 'none',
+    [theme.breakpoints.up('lg')]: {
+      boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
+    },
   },
   titulo: {
     color: "#000",
@@ -78,6 +100,7 @@ class AppBarCustom extends Component {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <div className={classes.fondo}/>
       </div>
     );
   }

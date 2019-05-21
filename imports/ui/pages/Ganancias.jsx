@@ -26,7 +26,10 @@ const styles = theme => ({
     top: 50,
     position: "sticky",
     paddingTop: 14,
-    paddingBottom: 10
+    paddingBottom: 10,
+    [theme.breakpoints.up('lg')]: {
+      top: 0,
+    }
 //    background: "#FFF"
   },
   /*
