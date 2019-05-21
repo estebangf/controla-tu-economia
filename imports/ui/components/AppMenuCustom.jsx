@@ -156,7 +156,32 @@ const styles = theme => ({
     display: 'block',
     overflowX: 'hidden',
     overflowY: 'auto',
-    paddingTop: 0
+    paddingTop: 0,
+
+    ["&::-webkit-scrollbar"]: {
+      width: '6px !important',
+    },
+    ["&::-webkit-scrollbar-track"]: {
+      display: 'none !important',
+    },
+    ["&::-webkit-scrollbar-thumb"]: {
+      background: '#00000000 !important',
+      /* border-radius: 4px !important, */
+      /* -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5) !important, */
+    },
+    ["&::-webkit-scrollbar-button"]: {
+        display: 'none !important',
+    },
+    ["&::-webkit-scrollbar-corner"]: {
+      display: 'none !important',
+    },
+    /* HOVER */
+    ["&:hover::-webkit-scrollbar-thumb"]: {
+      background: '#bbbbbb !important',
+      /* border-radius: 4px !important, */
+      /* -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5) !important, */
+    }
+
   },
   listaMediaItem: {
     padding: 0

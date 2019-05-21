@@ -16,7 +16,6 @@ const styles = theme => ({
     textAlign: 'center',
     paddingTop: 15
   },
-
   listaGrafico:{
     background: '#FFF',
     paddingLeft: 10,
