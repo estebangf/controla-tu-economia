@@ -24,7 +24,7 @@ const styles = theme => ({
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
-    top: 50,
+    top: 47,
     position: "sticky",
     paddingTop: 5,
     [theme.breakpoints.up('lg')]: {
@@ -304,6 +304,7 @@ class Seguimientos extends Component {
                 disconect={detalleFiltro !== "new"}
               />
             </div>
+            <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(movimientosFiltrados)}

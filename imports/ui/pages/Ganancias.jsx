@@ -19,14 +19,13 @@ const styles = theme => ({
 
   listaGrafico:{
     background: '#FFF',
-    padding: 0,
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
-    top: 50,
+    top: 47,
     position: "sticky",
-    paddingTop: 14,
-    paddingBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 0,
     [theme.breakpoints.up('lg')]: {
       top: 0,
     }
@@ -277,6 +276,7 @@ class Ganancias extends Component {
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
             {this.renderGrafico(totales, porcentajes)}
+            <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(movimientos)}

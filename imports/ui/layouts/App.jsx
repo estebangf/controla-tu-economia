@@ -106,7 +106,7 @@ const styles = theme => ({
     minHeight: '100%',
 //    background: '#00000096',
     background: '#ffffff',
-    paddingTop: 64,
+    paddingTop: 47,
     zIndex: 1
   },
   transition:{

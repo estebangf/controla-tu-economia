@@ -30,9 +30,9 @@ const styles = theme => ({
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
-    top: 50,
+    top: 47,
     position: "sticky",
-    paddingTop: 14,
+    paddingTop: 5,
     [theme.breakpoints.up('lg')]: {
       top: 0,
     }
