@@ -6,6 +6,7 @@ import { withStyles, Typography, TextField, InputAdornment, Checkbox, FormContro
 
 import Autocomplete from '../components/Autocomplete'
 import { Meteor } from 'meteor/meteor';
+import Fechas from '../components/Fechas';
 
 const drawerWidth = 240;
 
@@ -32,8 +33,11 @@ class Movimiento extends Component {
       descripcion: '',
       importe: 0.00,
       variaLaGanancia: props.esIngreso,
+      fecha: new Date(),
       clear: undefined
     };
+
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
   static getDerivedStateFromProps(props, state){
@@ -50,7 +54,8 @@ class Movimiento extends Component {
           detalle: movimiento.detalle,
           descripcion: movimiento.descripcion,
           importe: Math.abs(movimiento.importe),
-          variaLaGanancia: movimiento.variaLaGanancia
+          variaLaGanancia: movimiento.variaLaGanancia,
+          fecha: movimiento.fecha
         }
       } else {
         return null
@@ -72,6 +77,12 @@ class Movimiento extends Component {
       [name]: checked
     })
   }
+  handleDateChange(name, date){
+    const fecha = new Date(date)
+    this.setState({ [name]: fecha });
+  };
+
+  
   guardar(){
     const {
       movimientoExists,
@@ -82,7 +93,8 @@ class Movimiento extends Component {
     const {
       detalle,
       descripcion,
-      variaLaGanancia
+      variaLaGanancia,
+      fecha
     } = this.state;
     const imp = Math.abs(parseFloat(this.state.importe));
     const importe = esIngreso ? imp : 0-imp;
@@ -97,6 +109,7 @@ class Movimiento extends Component {
         descripcion,
         importe,
         variaLaGanancia,
+        fecha,
         (error, result) => {
           if (error){
             console.log(error);
@@ -113,6 +126,7 @@ class Movimiento extends Component {
         importe,
         variaLaGanancia,
         cuentaId,
+        fecha,
         (error, result) => {
           if (error){
             console.log(error);
@@ -136,14 +150,16 @@ class Movimiento extends Component {
         detalle: movimiento.detalle,
         descripcion: movimiento.descripcion,
         importe: Math.abs(movimiento.importe),
-        variaLaGanancia: movimiento.variaLaGanancia
+        variaLaGanancia: movimiento.variaLaGanancia,
+        fecha: movimiento.fecha
       });
     } else {
       this.setState({
         detalle: '',
         descripcion: '',
         importe: 0.00,
-        variaLaGanancia: esIngreso
+        variaLaGanancia: esIngreso,
+        fecha: new Date()
       });
     }
   }
@@ -184,7 +200,8 @@ class Movimiento extends Component {
       detalle,
       descripcion,
       importe,
-      variaLaGanancia
+      variaLaGanancia,
+      fecha
     } = this.state;
 
     return (
@@ -220,6 +237,24 @@ class Movimiento extends Component {
           onChange={this.handleChange("detalle")}
           value={detalle}
           disconect={detalle !== "new"}
+        />
+
+        <Fechas
+          id={'fecha'}
+          fecha={fecha}
+          adornmentPosition="end"
+          autoOk={true}
+          keyboard={true}
+          fullWidth={true}
+          disableFuture={true}
+          variant="standar"
+          label="Fecha"
+          tipo="fechaTiempoTeclado"
+          maxDate={new Date()}
+          maxDateMessage={"Fecha mayor a hoy"}
+          invalidDateMessage={"Ej: 01/01/2019"}
+          handleDateChange={this.handleDateChange}
+          inputRoot={classes.inputFechaRoot}
         />
 
         <TextField

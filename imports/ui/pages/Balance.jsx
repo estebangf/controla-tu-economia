@@ -55,7 +55,7 @@ const styles = theme => ({
     right: theme.spacing.unit * 1,
     [theme.breakpoints.up('lg')]: {
       bottom: theme.spacing.unit * 1 + 50,
-      right: theme.spacing.unit * 1 + 410,
+      right: theme.spacing.unit * 1 + 210,
     },
   },
   menu:{

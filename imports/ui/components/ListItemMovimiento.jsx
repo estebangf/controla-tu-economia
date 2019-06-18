@@ -37,6 +37,16 @@ const styles = theme => ({
     paddingRight: 7.5,
     color: "#4385d6"
   },
+  egresoFontImporte: {
+    paddingRight: 7.5,
+    textAlign: "end",
+    color: "#de6c6c"
+  },
+  ingresoFontImporte: {
+    paddingRight: 7.5,
+    textAlign: "end",
+    color: "#4385d6"
+  },
   egresoIcono: {background: '#de6c6c' },
   ingresoIcono: {background: '#4385d6' }
 });
@@ -125,6 +135,21 @@ class ListItemMovimiento extends Component {
       anchorEl
     } = this.state;
 
+    const opciones = {
+      fecha: {
+        corta: {year: 'numeric', month: 'numeric', day: 'numeric' },
+        larga: {year: 'numeric', month: 'long', day: 'numeric' }
+      },
+      tiempo: {
+        corto: { hour: 'numeric', minute: 'numeric'},
+        corto12: { hour: 'numeric', minute: 'numeric', hour12: true}
+      },
+      fechaTiempo: {
+        corta: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },
+        corta12: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true },
+      }
+    }
+
     if (movimiento.esSaldoInicial) {
       return (
         <ListItem
@@ -180,15 +205,8 @@ class ListItemMovimiento extends Component {
                 secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
               />
               <ListItemSecondaryAction>
-                <Typography className={classes[movimiento.tipo+"Font"]} >
-                {function(){
-                  let importe = '$\u00A0'
-                  for(let i=0; i<=9-Math.abs(movimiento.importe.toFixed(2)).toString().length; i++){
-                    importe += '\u00A0\u00A0';
-                  }
-                  return importe+Math.abs(movimiento.importe.toFixed(2))
-                }()}</Typography>
-                <Typography className={classes[movimiento.tipo+"Font"]} style={{textAlign: "right"}}>{movimiento.fecha.toLocaleDateString()}</Typography>
+                <Typography className={classes[movimiento.tipo+"FontImporte"]} >$ {Math.abs(movimiento.importe.toFixed(2))}</Typography>
+                <Typography className={classes[movimiento.tipo+"Font"]} style={{textAlign: "right"}}>{movimiento.fecha.toLocaleDateString("es-ES", opciones.fechaTiempo.corta)}</Typography>
               </ListItemSecondaryAction>
             </ListItem>
           </Link>

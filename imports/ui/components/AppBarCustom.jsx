@@ -12,9 +12,9 @@ const styles = theme => ({
   },
   appBar: {
     [theme.breakpoints.up('lg')]: {
-      margin: 400,
-      width: 'calc(100% - 800px)',
-      marginTop: 101
+      margin: 200,
+      width: 'calc(100% - 400px)',
+      marginTop: 51
     },
     top: -1,
     background: theme.palette.appBar.backgroundColor,

@@ -63,18 +63,18 @@ const styles = theme => ({
       /* max-height: calc(100% - 100px), */
       position: 'fixed',
       /* margin-bottom: 0, */
-      left: 400,
-      right: 400,
+      left: 200,
+      right: 200,
       bottom: 50,
-      top: 164,
+      top: 114,
     },
   },
   fondo: {
     [theme.breakpoints.up('lg')]: {
       position: 'fixed',
-      backgroundColor: '#006e96',
+      backgroundColor: '#6bc18e',
       content: '',
-      height: 250,
+      height: 135,
       top: 0,
       width: '100%',
       zIndex: 0,
@@ -82,11 +82,12 @@ const styles = theme => ({
       right: 0
     }
   },
-  fondoSuperior: {
+/*
+  fondoSuperiors: {
     [theme.breakpoints.up('lg')]: {
       position: 'fixed',
       backgroundColor: '#006e96',
-      height: 100,
+      height: 20,
       top: 0,
       width: '100%',
       zIndex: 99999999999,
@@ -94,6 +95,7 @@ const styles = theme => ({
       right: 0
     },
   },
+*/
   rootApp: {
     [theme.breakpoints.up('lg')]: {
       // padding: 50,
