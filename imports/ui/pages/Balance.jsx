@@ -228,10 +228,12 @@ class Balance extends Component {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  style: { color: "#de6c6c" }
+                  style: { color: "#de6c6c",
+                  lineHeight: 0 }
                 }}
                 secondaryTypographyProps={{
-                  style: { color: "#de6c6c" }
+                  style: { color: "#de6c6c",
+                  lineHeight: 0 }
                 }}
                 primary={totales.egresos.toFixed(2)}
                 secondary="Egresos"
@@ -243,10 +245,12 @@ class Balance extends Component {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  style: { color: "#4385d6" }
+                  style: { color: "#4385d6",
+                  lineHeight: 0 }
                 }}
                 secondaryTypographyProps={{
-                  style: { color: "#4385d6" }
+                  style: { color: "#4385d6",
+                  lineHeight: 0 }
                 }}
                 primary={totales.ingresos.toFixed(2)}
                 secondary="Ingresos"
@@ -258,10 +262,12 @@ class Balance extends Component {
             <ListItem>
               <ListItemText
                 primaryTypographyProps={{
-                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a" }
+                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a",
+                  lineHeight: 0 }
                 }}
                 secondaryTypographyProps={{
-                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a" }
+                  style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a",
+                  lineHeight: 0 }
                 }}
                 primary={totales.saldo.toFixed(2)}
                 secondary={porcentajes.saldo < 0 ? 'Deuda' : "Saldo"}
