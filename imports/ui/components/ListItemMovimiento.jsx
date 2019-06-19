@@ -112,6 +112,7 @@ class ListItemMovimiento extends Component {
       movimiento.descripcion,
       movimiento.importe,
       !movimiento.variaLaGanancia,
+      movimiento.fecha,
       (error, result) => {
         if (error){
           console.log(error);
