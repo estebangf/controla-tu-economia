@@ -26,7 +26,7 @@ const styles = theme => ({
   },
   listaGrafico:{
     background: '#fff',
-    padding: 0,
+    paddingBottom: 0,
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
@@ -37,6 +37,13 @@ const styles = theme => ({
       top: 0,
     }
 //    background: "#FFF"
+  },
+  listaGraficoItem:{
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  divider:{
+    marginTop: 10,
   },
   barraGrafico:{
     transition: 'width 0.5s',
@@ -225,7 +232,7 @@ class Balance extends Component {
       <div className={classes.root}>
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
-            <ListItem>
+            <ListItem className={classes.listaGraficoItem}>
               <ListItemText
                 primaryTypographyProps={{
                   style: { color: "#de6c6c",
@@ -242,7 +249,7 @@ class Balance extends Component {
                 <span className={classes.barraGrafico} style={{background: '#de6c6c', width: 200*porcentajes.egresos}} />
               </ListItemSecondaryAction>
             </ListItem>
-            <ListItem>
+            <ListItem className={classes.listaGraficoItem}>
               <ListItemText
                 primaryTypographyProps={{
                   style: { color: "#4385d6",
@@ -259,7 +266,7 @@ class Balance extends Component {
                 <span className={classes.barraGrafico} style={{ background: '#4385d6', width: 200*porcentajes.ingresos}} />
               </ListItemSecondaryAction>
             </ListItem>
-            <ListItem>
+            <ListItem className={classes.listaGraficoItem}>
               <ListItemText
                 primaryTypographyProps={{
                   style: { color: porcentajes.saldo < 0 ? '#b94d4d' : "#3ab33a",
@@ -276,7 +283,7 @@ class Balance extends Component {
                 <span className={classes.barraGrafico} style={{background: porcentajes.saldo < 0 ? '#b94d4d' : '#77c677', width:  porcentajes.saldo < 0 ? 200*porcentajes.saldo*-1 : 200*porcentajes.saldo}} />
               </ListItemSecondaryAction>
             </ListItem>
-            <Divider />
+            <Divider className={classes.divider} />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>
             {this.renderItems(movimientos)}
