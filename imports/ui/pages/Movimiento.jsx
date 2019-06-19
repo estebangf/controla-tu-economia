@@ -206,6 +206,7 @@ class Movimiento extends Component {
 
     return (
       <div className={classes.root}>
+        {/*
         <Autocomplete
           id="userAutocomplete"
           items={[
@@ -238,7 +239,19 @@ class Movimiento extends Component {
           value={detalle}
           disconect={detalle !== "new"}
         />
+        */}
 
+        <TextField
+          InputLabelProps={{ shrink: !!detalle && detalle != '' }}
+          id="detalle"
+          fullWidth={true}
+          label="Detalle"
+          value={detalle}
+          onChange={this.handleChange('detalle')}
+          className={classes.textField}
+          margin="normal"
+        />
+        
         <Fechas
           id={'fecha'}
           fecha={fecha}
