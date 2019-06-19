@@ -6,6 +6,16 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import DateRange from '@material-ui/icons/DateRange';
 
+const PAGINAS_CON_FILTRO = [
+  "/movimientos/ingresos",
+  "/movimientos/ingresos/nuevo",
+  "/movimientos/egresos",
+  "/movimientos/egresos/nuevo",
+  "/movimientos/balance",
+  "/movimientos/seguimientos",
+  "/movimientos/ganancias",
+]
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -68,9 +78,15 @@ class AppBarCustom extends Component {
 
 
   render() {
-    const { classes, titulo, handleMenu, handleRangoFechas } = this.props;
+    const { classes, titulo, handleMenu, handleRangoFechas, cuenta } = this.props;
     const { schrolled } = this.state;
 
+/*
+    const verFiltro = !!PAGINAS_CON_FILTRO.filter(p => {
+      return location.pathname.includes(p)
+    })[0]
+*/
+    const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : ''].join(' ')}>
@@ -79,12 +95,14 @@ class AppBarCustom extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="primary" noWrap className={classes.titulo}>
-              {titulo}
+              {titulo}{verFiltro && !!cuenta ? " - "+cuenta : ''}
             </Typography>
-            <IconButton onClick={handleRangoFechas} className={classes.botonFechas} color="primary" aria-label="Fechas">
-              <DateRange />
-            </IconButton>
-          </Toolbar>
+            {!!verFiltro && (
+              <IconButton onClick={handleRangoFechas} className={classes.botonFechas} color="primary" aria-label="Fechas">
+                <DateRange />
+              </IconButton>
+            )}
+            </Toolbar>
         </AppBar>
       </div>
     );

@@ -10,10 +10,11 @@ export default withTracker(() => {
   const loading = !publicHandle.ready();
   const cuentas = Cuentas.find({}).fetch();
   const cuentasExists = !loading && !!cuentas.length;
-
+  
   return {
     loading,
     cuentasExists,
+    cuentaSeleccionada: JSON.parse(sessionStorage.getItem('cuentaSeleccionada')),
     cuentas: cuentasExists ? cuentas : [],
     user: Meteor.user(),
     loggued: !!Meteor.userId(),

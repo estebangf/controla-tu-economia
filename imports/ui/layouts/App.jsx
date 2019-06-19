@@ -229,16 +229,23 @@ class App extends Component {
       cuentas,
       loggued
     } = props;
+    const cuentaSeleccionadaProps = props.cuentaSeleccionada
     const {
       cuentaSeleccionada
     } = state;
 
     if (!loading && cuentasExists && !!loggued) {
       if (!!!cuentaSeleccionada || (!!cuentaSeleccionada && cuentas.map((c)=> {return c._id}).indexOf(cuentaSeleccionada._id) == -1) ) {
-        console.log("cuentas");
-        console.log(cuentas);
-        return {
-          cuentaSeleccionada: cuentas[0]
+        console.log("cuentaSeleccionadaProps");
+        console.log(cuentaSeleccionadaProps);
+        if (!!cuentaSeleccionadaProps) {
+          return {
+            cuentaSeleccionada: cuentaSeleccionadaProps
+          }
+        } else {
+          return {
+            cuentaSeleccionada: cuentas[0]
+          }
         }
       } else {
         return null
@@ -250,6 +257,7 @@ class App extends Component {
 
 
   seleccionarCuenta(cuentaSeleccionada) {
+    sessionStorage.setItem('cuentaSeleccionada', JSON.stringify(cuentaSeleccionada));
     this.setState({cuentaSeleccionada});
   }
 
@@ -413,13 +421,15 @@ class App extends Component {
       heightSchroleable,
       titulo,
       desde,
-      hasta
+      hasta,
+      cuentaSeleccionada
     } = this.state
 
 
     return (
       <div className={classes.rootApp}>
-        <AppBarCustom titulo={titulo} handleMenu={this.handleMenu} handleRangoFechas={this.handleRangoFechas} />
+        <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
+          handleRangoFechas={this.handleRangoFechas} cuenta={!!cuentaSeleccionada && cuentaSeleccionada.nombre} />
         <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} />
         <RangoFechas
           open={openRangoFechas}
