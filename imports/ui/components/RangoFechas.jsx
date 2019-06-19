@@ -51,16 +51,25 @@ const FINAL_ANHO = new Date(HOY_N)
 FINAL_ANHO.setMonth(11)
 FINAL_ANHO.setDate(31)
 
-const styles = {
+const styles = theme => ({
   content: {
     padding: 25,
     paddingTop: 0,
+    textAlign: "center"
+  },
+  boton:{
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%',
+    }
   },
   rangoActivo: {
-    background: '#52a5f3',
-    color: '#FFF !important'
+    background: '#52a5f3 !important',
+    color: '#FFF !important',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%',
+    }
   }
-};
+});
 
 class RangoFechas extends React.Component {
   render() {
@@ -84,25 +93,25 @@ class RangoFechas extends React.Component {
         <DialogTitle>Rango de fechas</DialogTitle>
         <div className={classes.content}>
           <Button
-            className={es(INICIO_MES,FINAL_MES) && classes.rangoActivo}
+            className={es(INICIO_MES,FINAL_MES) ? classes.rangoActivo : boton}
             disabled={es(INICIO_MES,FINAL_MES)}
             onClick={ () => {handleDateChange("desde", INICIO_MES); handleDateChange("hasta", FINAL_MES)} }>
             Mes Actual
           </Button>
           <Button
-            className={es(INICIO_MES_ANTERIOR,FINAL_MES_ANTERIOR) && classes.rangoActivo}
+            className={es(INICIO_MES_ANTERIOR,FINAL_MES_ANTERIOR) ? classes.rangoActivo : boton}
             disabled={es(INICIO_MES_ANTERIOR,FINAL_MES_ANTERIOR)}
             onClick={ () => {handleDateChange("desde", INICIO_MES_ANTERIOR); handleDateChange("hasta", FINAL_MES_ANTERIOR)} }>
             Mes anterior
           </Button>
-          <Button 
-            className={es(INICIO_MES_ANTERIOR,FINAL_MES) && classes.rangoActivo}
+          <Button
+            className={es(INICIO_MES_ANTERIOR,FINAL_MES) ? classes.rangoActivo : boton}
             disabled={es(INICIO_MES_ANTERIOR,FINAL_MES)}
             onClick={ () => {handleDateChange("desde", INICIO_MES_ANTERIOR); handleDateChange("hasta", FINAL_MES)} }>
             Desde el mes anterior
           </Button>
-          <Button 
-            className={es(INICIO_ANHO,FINAL_ANHO) && classes.rangoActivo}
+          <Button
+            className={es(INICIO_ANHO,FINAL_ANHO) ? classes.rangoActivo : boton}
             disabled={es(INICIO_ANHO,FINAL_ANHO)}
             onClick={ () => {handleDateChange("desde", INICIO_ANHO); handleDateChange("hasta", FINAL_ANHO)} }>
             Todo el año
