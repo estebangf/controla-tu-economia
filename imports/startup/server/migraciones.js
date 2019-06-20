@@ -65,14 +65,14 @@ gastos.forEach(gasto => {
 })
 */
 
-/*
+
 // PASE DE CUENTAS A CUADERNOS
 const cuentasNoVinculadas = Cuentas.find({cuentaVinculada: ""}).fetch();
 cuentasNoVinculadas.forEach(cuenta => {
   var cuadernoNuevoId = Cuadernos.insert({
     cuadernoVinculado: cuenta.cuentaVinculada,
     nombre: cuenta.nombre,
-    descripcion: cuenta.descripcio,
+    descripcion: cuenta.descripcion,
     userId: cuenta.userId,
     creado: cuenta.creada
   })
@@ -96,4 +96,3 @@ cuentasNoVinculadas.forEach(cuenta => {
     })
   })
 })
-*/
