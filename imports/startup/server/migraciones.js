@@ -65,7 +65,7 @@ gastos.forEach(gasto => {
 })
 */
 
-
+/*
 // PASE DE CUENTAS A CUADERNOS
 const cuentasNoVinculadas = Cuentas.find({cuentaVinculada: ""}).fetch();
 cuentasNoVinculadas.forEach(cuenta => {
@@ -96,3 +96,4 @@ cuentasNoVinculadas.forEach(cuenta => {
     })
   })
 })
+*/
