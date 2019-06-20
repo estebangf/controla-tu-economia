@@ -27,16 +27,16 @@ const styles = theme => ({
       color: "#4d4d4d"
     },
   },
-  cuentaVinculadaFont: {
+  cuadernoVinculadaFont: {
     paddingRight: 7.5,
     color: "#de6c6c"
   },
-  cuentaNormalFont: {
+  cuadernoNormalFont: {
     paddingRight: 7.5,
     color: "#4385d6"
   },
-  cuentaVinculadaIcono: {background: '#de6c6c' },
-  cuentaNormalIcono: {background: '#4385d6' },
+  cuadernoVinculadaIcono: {background: '#de6c6c' },
+  cuadernoNormalIcono: {background: '#4385d6' },
   radioSelect: {
     color: blue[600],
     '&$checked': {
@@ -45,7 +45,7 @@ const styles = theme => ({
   }
 });
 
-class ListItemCuenta extends Component {
+class ListItemCuaderno extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,8 +62,8 @@ class ListItemCuenta extends Component {
     component.setState({anchorEl: null});
   }
 
-  renderIcon(cuenta){
-    if (!!cuenta.cuentaVinculada) {
+  renderIcon(cuaderno){
+    if (!!cuaderno.cuadernoVinculado) {
       return <GroupIcon />
     } else {
       return <PersonIcon />
@@ -71,12 +71,12 @@ class ListItemCuenta extends Component {
   }
 
 
-  editar = (cuenta) => {
+  editar = (cuaderno) => {
     this.handleClose(this)
   }
-  eliminar = (cuenta) => {
-    Meteor.call('cuenta.eliminar',
-      cuenta._id,
+  eliminar = (cuaderno) => {
+    Meteor.call('cuaderno.eliminar',
+      cuaderno._id,
       (error, result) => {
         if (error){
           console.log(error);
@@ -91,42 +91,42 @@ class ListItemCuenta extends Component {
   render() {
     const { 
       classes,
-      cuenta,
+      cuaderno,
       seleccionada,
-      seleccionarCuenta
+      seleccionarCuaderno
     } = this.props;
     const {
       anchorEl
     } = this.state;
 
-    const cuentaStyle = "Cuenta"+(!!cuenta.cuentaVinculada ? "Vinculada" : "Normal");
+    const cuadernoStyle = "Cuaderno"+(!!cuaderno.cuadernoVinculado ? "Vinculada" : "Normal");
 
     return (
       <div>
-        <Link onContextMenu={this.handleClick} to={"/cuentas/"+cuenta._id} className={classes.link}>
+        <Link onContextMenu={this.handleClick} to={"/cuadernos/"+cuaderno._id} className={classes.link}>
           <ListItem
             button
           >
             <ListItemAvatar>
-              <Avatar className={classes[cuentaStyle+"Icono"]}>
-                {this.renderIcon(cuenta)}
+              <Avatar className={classes[cuadernoStyle+"Icono"]}>
+                {this.renderIcon(cuaderno)}
               </Avatar>
             </ListItemAvatar>
             <ListItemText
               primaryTypographyProps={{
-                className: classes[cuentaStyle+"Font"]
+                className: classes[cuadernoStyle+"Font"]
               }}
               secondaryTypographyProps={{
-                className: classes[cuentaStyle+"Font"]
+                className: classes[cuadernoStyle+"Font"]
               }}
-              primary={cuenta.nombre}
-              secondary={!!cuenta.descripcion ? cuenta.descripcion : null}
+              primary={cuaderno.nombre}
+              secondary={!!cuaderno.descripcion ? cuaderno.descripcion : null}
             />
             <ListItemSecondaryAction>
               <Radio className={classes.radioSelect}
                 color="prymary"
                 onClick={(e) => {e.preventDefault();
-                  seleccionarCuenta(cuenta)}}
+                  seleccionarCuaderno(cuaderno)}}
                 checked={seleccionada}
               />
             </ListItemSecondaryAction>
@@ -137,19 +137,19 @@ class ListItemCuenta extends Component {
             key={"option"}
             disabled={true}
             onClick={() => this.handleClose(this)}
-          >{cuenta.nombre}</MenuItem>
-          <Link to={"/cuentas/"+cuenta._id} className={classes.link}>
-            <MenuItem onClick={() => this.editar(cuenta)}>Editar</MenuItem>
+          >{cuaderno.nombre}</MenuItem>
+          <Link to={"/cuadernos/"+cuaderno._id} className={classes.link}>
+            <MenuItem onClick={() => this.editar(cuaderno)}>Editar</MenuItem>
           </Link>
-          <MenuItem onClick={() => this.eliminar(cuenta)}>Eliminar</MenuItem>
+          <MenuItem onClick={() => this.eliminar(cuaderno)}>Eliminar</MenuItem>
         </Menu>
       </div>
     );
   }
 }
 
-ListItemCuenta.propTypes = {
+ListItemCuaderno.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ListItemCuenta);
+export default withStyles(styles)(ListItemCuaderno);

@@ -19,8 +19,8 @@ import AppBarCustom from '../components/AppBarCustom';
 import AppMenuCustom from '../components/AppMenuCustom';
 import RangoFechas from '../components/RangoFechas';
 
-import CuentaContainer from '../containers/CuentaContainer';
-import CuentasContainer from '../containers/CuentasContainer';
+import CuadernoContainer from '../containers/CuadernoContainer';
+import CuadernosContainer from '../containers/CuadernosContainer';
 
 import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
@@ -166,14 +166,14 @@ class App extends Component {
       openRangoFechas: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
-      cuentaSeleccionada: undefined,
+      cuadernoSeleccionada: undefined,
       titulo: "Controla tu Economía",
       desde: START_MONTH,
       hasta: END_MONTH
 
     };
 
-    this.seleccionarCuenta = this.seleccionarCuenta.bind(this);
+    this.seleccionarCuaderno = this.seleccionarCuaderno.bind(this);
     this.cambiarTitulo = this.cambiarTitulo.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleMenu = this.handleMenu.bind(this)
@@ -225,26 +225,26 @@ class App extends Component {
   static getDerivedStateFromProps(props, state){
     const {
       loading,
-      cuentasExists,
-      cuentas,
+      cuadernosExists,
+      cuadernos,
       loggued
     } = props;
-    const cuentaSeleccionadaProps = props.cuentaSeleccionada
+    const cuadernoSeleccionadaProps = props.cuadernoSeleccionada
     const {
-      cuentaSeleccionada
+      cuadernoSeleccionada
     } = state;
 
-    if (!loading && cuentasExists && !!loggued) {
-      if (!!!cuentaSeleccionada || (!!cuentaSeleccionada && cuentas.map((c)=> {return c._id}).indexOf(cuentaSeleccionada._id) == -1) ) {
-        console.log("cuentaSeleccionadaProps");
-        console.log(cuentaSeleccionadaProps);
-        if (!!cuentaSeleccionadaProps) {
+    if (!loading && cuadernosExists && !!loggued) {
+      if (!!!cuadernoSeleccionada || (!!cuadernoSeleccionada && cuadernos.map((c)=> {return c._id}).indexOf(cuadernoSeleccionada._id) == -1) ) {
+        console.log("cuadernoSeleccionadaProps");
+        console.log(cuadernoSeleccionadaProps);
+        if (!!cuadernoSeleccionadaProps) {
           return {
-            cuentaSeleccionada: cuentaSeleccionadaProps
+            cuadernoSeleccionada: cuadernoSeleccionadaProps
           }
         } else {
           return {
-            cuentaSeleccionada: cuentas[0]
+            cuadernoSeleccionada: cuadernos[0]
           }
         }
       } else {
@@ -256,9 +256,9 @@ class App extends Component {
   }
 
 
-  seleccionarCuenta(cuentaSeleccionada) {
-    sessionStorage.setItem('cuentaSeleccionada', JSON.stringify(cuentaSeleccionada));
-    this.setState({cuentaSeleccionada});
+  seleccionarCuaderno(cuadernoSeleccionada) {
+    sessionStorage.setItem('cuadernoSeleccionada', JSON.stringify(cuadernoSeleccionada));
+    this.setState({cuadernoSeleccionada});
   }
 
   cambiarTitulo(titulo) {
@@ -280,13 +280,13 @@ class App extends Component {
 
   renderOfflinePages(){
     const {
-      cuentasExists
+      cuadernosExists
     } = this.props
     return [
       <Route
         exact
         path="/"
-        render={() => <InicioContainer cambiarTitulo={this.cambiarTitulo} cuentasExists={cuentasExists}/>}
+        render={() => <InicioContainer cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
       />,
       <Route
         exact
@@ -302,8 +302,8 @@ class App extends Component {
   }
 
   renderOnlinePages(){
-    const { loggued, cuentas } = this.props;
-    const { cuentaSeleccionada, desde, hasta } = this.state;
+    const { loggued, cuadernos } = this.props;
+    const { cuadernoSeleccionada, desde, hasta } = this.state;
     const cambiarTitulo = this.cambiarTitulo
     const fechas = {
       desde,
@@ -312,12 +312,12 @@ class App extends Component {
     const pase = {
       handleAlerta: this.handleAlerta,
       cambiarTitulo,
-      cuentaSeleccionada,
+      cuadernoSeleccionada,
       ...fechas
     }
 
     if (!!loggued) {
-      if (!!cuentaSeleccionada) {
+      if (!!cuadernoSeleccionada) {
         return [
           <Route
             exact
@@ -356,30 +356,30 @@ class App extends Component {
           />,
           <Route
             exact
-            path="/cuentas/"
-            render={() => <CuentasContainer cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta} {...pase} />}
+            path="/cuadernos/"
+            render={() => <CuadernosContainer cuadernos={cuadernos} seleccionarCuaderno={this.seleccionarCuaderno} {...pase} />}
           />,
           <Route
             exact
-            path="/cuentas/:id"
-            render={({match}) => <CuentaContainer match={match} {...pase} />}
+            path="/cuadernos/:id"
+            render={({match}) => <CuadernoContainer match={match} {...pase} />}
           />,
         ]
       } else {
         return [
           <Route
             path="/movimientos/*"
-            render={({match}) => <CuentasContainer {...pase} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            render={({match}) => <CuadernosContainer {...pase} cuadernos={cuadernos} seleccionarCuaderno={this.seleccionarCuaderno}/>}
           />,
           <Route
             exact
-            path="/cuentas/"
-            render={() => <CuentasContainer {...pase} cuentas={cuentas} seleccionarCuenta={this.seleccionarCuenta}/>}
+            path="/cuadernos/"
+            render={() => <CuadernosContainer {...pase} cuadernos={cuadernos} seleccionarCuaderno={this.seleccionarCuaderno}/>}
           />,
           <Route
             exact
-            path="/cuentas/:id"
-            render={({match}) => <CuentaContainer cambiarTitulo={this.cambiarTitulo} match={match} />}
+            path="/cuadernos/:id"
+            render={({match}) => <CuadernoContainer cambiarTitulo={this.cambiarTitulo} match={match} />}
           />,
         ]
       }
@@ -390,7 +390,7 @@ class App extends Component {
           render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
         />,
         <Route
-          path="/cuentas/*"
+          path="/cuadernos/*"
           render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
         />,
       ]
@@ -422,14 +422,14 @@ class App extends Component {
       titulo,
       desde,
       hasta,
-      cuentaSeleccionada
+      cuadernoSeleccionada
     } = this.state
 
 
     return (
       <div className={classes.rootApp}>
         <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
-          handleRangoFechas={this.handleRangoFechas} cuenta={!!cuentaSeleccionada && cuentaSeleccionada.nombre} />
+          handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre} />
         <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} />
         <RangoFechas
           open={openRangoFechas}

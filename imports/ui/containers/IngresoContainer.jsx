@@ -4,9 +4,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Movimientos } from '/imports/api/movimientos/movimientos'
 import Movimiento from '../pages/Movimiento.jsx';
 
-export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
-  const cuentaId = !!cuentaSeleccionada ?
-    (!!cuentaSeleccionada.cuentaVinculada ? cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
+  const cuadernoId = !!cuadernoSeleccionada ?
+    (!!cuadernoSeleccionada.cuadernoVinculado ? cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id) : undefined;
   
   const movimientoId = match.params.id
   const publicHandle = Meteor.subscribe('movimientos.ingreso',movimientoId);
@@ -21,7 +21,7 @@ export default withTracker(({match, cuentaSeleccionada, cambiarTitulo}) => {
     cambiarTitulo("Nuevo Ingreso");
   }
   return {
-    cuentaId,
+    cuadernoId,
     loading,
     movimientoExists,
     movimiento: movimientoExists ? movimiento : {},

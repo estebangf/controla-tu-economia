@@ -87,7 +87,7 @@ class Movimiento extends Component {
     const {
       movimientoExists,
       movimiento,
-      cuentaId,
+      cuadernoId,
       esIngreso
     } = this.props
     const {
@@ -125,7 +125,7 @@ class Movimiento extends Component {
         descripcion,
         importe,
         variaLaGanancia,
-        cuentaId,
+        cuadernoId,
         fecha,
         (error, result) => {
           if (error){

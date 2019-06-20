@@ -5,14 +5,14 @@ import Ganancias from '../pages/Ganancias.jsx';
 
 import { Movimientos } from '/imports/api/movimientos/movimientos';
 
-export default withTracker(({cuentaSeleccionada, cambiarTitulo, desde, hasta}) => {
+export default withTracker(({cuadernoSeleccionada, cambiarTitulo, desde, hasta}) => {
   cambiarTitulo("Ganancias");
-  const cuentaId = !!cuentaSeleccionada ?
-    (!!cuentaSeleccionada.cuentaVinculada ?
-      cuentaSeleccionada.cuentaVinculada : cuentaSeleccionada._id) : undefined;
+  const cuadernoId = !!cuadernoSeleccionada ?
+    (!!cuadernoSeleccionada.cuadernoVinculado ?
+      cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id) : undefined;
   
   const publicHandleMovimientos = Meteor.subscribe(
-    'movimientos', cuentaId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
+    'movimientos', cuadernoId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());
   const loadingMovimientos = !publicHandleMovimientos.ready();
   const movimientos = Movimientos.find({ variaLaGanancia: true }, { sort: { fecha: 1 } }).fetch();
   const movimientosExists = !loadingMovimientos && !!movimientos;

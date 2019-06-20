@@ -19,11 +19,11 @@ const styles = theme => ({
   link:{
     textDecoration: 'none'
   },
-  btnCuentas: {
-    color: theme.palette.cuentas.buttonText,
-    backgroundColor: theme.palette.cuentas.backgroundColor,
+  btnCuadernos: {
+    color: theme.palette.cuadernos.buttonText,
+    backgroundColor: theme.palette.cuadernos.backgroundColor,
     '&:hover': {
-      backgroundColor: theme.palette.cuentas.buttonHover,
+      backgroundColor: theme.palette.cuadernos.buttonHover,
     },
     marginBottom: 15,
     fontSize: 15,
@@ -135,10 +135,10 @@ class Inicio extends Component {
   renderLinksMovimientos() {
     const {
       classes,
-      cuentasExists
+      cuadernosExists
     } = this.props;
 
-    if(cuentasExists) {
+    if(cuadernosExists) {
       return ([
         <Typography variant="h5" className={classes.titulo}>Movimientos</Typography>,
         <Link className={classes.link} to={'/movimientos/egresos'}>
@@ -169,9 +169,9 @@ class Inicio extends Component {
       <div className={classes.root}>
         <img className={classes.logoImgaen} src="/icono196x196.png" />
 
-        <Typography variant="h5" className={classes.titulo}>Cuentas</Typography>
-        <Link className={classes.link} to={'/cuentas/'}>
-          <Button fullWidth={true} variant="contained" className={classes.btnCuentas}>Lista de Cuentas</Button>
+        <Typography variant="h5" className={classes.titulo}>Cuadernos</Typography>
+        <Link className={classes.link} to={'/cuadernos/'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnCuadernos}>Lista de Cuadernos</Button>
         </Link>
 
         {this.renderLinksMovimientos()}

@@ -5,12 +5,12 @@ import { check } from 'meteor/check';
 import { Movimientos } from './movimientos.js'
 
 Meteor.methods({
-  'movimiento.nuevo'(detalle, descripcion, importe, variaLaGanancia, cuentaId, fecha) {
+  'movimiento.nuevo'(detalle, descripcion, importe, variaLaGanancia, cuadernoId, fecha) {
     check(detalle, String);
     check(descripcion, String);
     check(importe, Number);
     check(variaLaGanancia, Boolean);
-    check(cuentaId, String);
+    check(cuadernoId, String);
     check(fecha, Date);
 
     if (!!this.userId) {
@@ -19,7 +19,7 @@ Meteor.methods({
         descripcion,
         importe,
         variaLaGanancia,
-        cuentaId,
+        cuadernoId,
         userId: this.userId,
         creado: new Date(),
         fecha
@@ -59,10 +59,10 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
   },
-  'movimiento.saldoInicial'(cuentaId, hasta){
-    check(cuentaId, String);
+  'movimiento.saldoInicial'(cuadernoId, hasta){
+    check(cuadernoId, String);
     check(hasta, Date);
-    const movimientos = Movimientos.find({cuentaId: cuentaId,
+    const movimientos = Movimientos.find({cuadernoId: cuadernoId,
       "$and": [
         { creado: { "$lt": new Date(hasta) }}
       ]

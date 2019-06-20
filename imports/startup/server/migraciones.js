@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Ingresos } from '../../api/ingresos/ingresos.js'
 import { Gastos } from '../../api/gastos/gastos.js'
 import { Cuentas } from '../../api/cuentas/cuentas.js'
+import { Cuadernos } from '../../api/cuadernos/cuadernos.js'
 import { Movimientos } from '../../api/movimientos/movimientos.js'
 
 
@@ -63,3 +64,34 @@ gastos.forEach(gasto => {
   });
 })
 */
+
+const cuentasNoVinculadas = Cuentas.find({cuentaVinculada: ""}).fetch();
+cuentasNoVinculadas.forEach(cuenta => {
+  var cuadernoNuevoId = Cuadernos.insert({
+    cuadernoVinculado: cuenta.cuentaVinculada,
+    nombre: cuenta.nombre,
+    descripcion: cuenta.descripcio,
+    userId: cuenta.userId,
+    creado: cuenta.creada
+  })
+  Movimientos.update({ cuentaId: cuenta._id }, {
+    $set: {
+      cuadernoId: cuadernoNuevoId
+    },
+//    $unset: {
+//      cuentaVinculada: true
+//    }
+  }, { multi: true });
+
+  var cuentasVinculadas = Cuentas.find({cuentaVinculada: cuenta._id}).fetch();
+  cuentasVinculadas.forEach(cuentaV => {
+    Cuadernos.insert({
+      cuadernoVinculado: cuadernoNuevoId,
+      nombre: cuentaV.nombre,
+      descripcion: cuentaV.descripcion,
+      userId: cuentaV.userId,
+      creado: cuentaV.creada
+    })
+  })
+
+})

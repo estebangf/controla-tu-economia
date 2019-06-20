@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+ 
 import { AppBar, Toolbar, Typography, withStyles} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -78,7 +78,7 @@ class AppBarCustom extends Component {
 
 
   render() {
-    const { classes, titulo, handleMenu, handleRangoFechas, cuenta } = this.props;
+    const { classes, titulo, handleMenu, handleRangoFechas, cuaderno } = this.props;
     const { schrolled } = this.state;
 
 /*
@@ -95,7 +95,7 @@ class AppBarCustom extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="primary" noWrap className={classes.titulo}>
-              {titulo}{verFiltro && !!cuenta ? " - "+cuenta : ''}
+              {titulo}{verFiltro && !!cuaderno ? " - "+cuaderno : ''}
             </Typography>
             {!!verFiltro && (
               <IconButton onClick={handleRangoFechas} className={classes.botonFechas} color="primary" aria-label="Fechas">

@@ -1,23 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import App from '../layouts/App.jsx';
-
+import CuadernosList from '../pages/CuadernosList.jsx';
 import { Cuadernos } from '/imports/api/cuadernos/cuadernos';
 
-export default withTracker(() => {
+export default withTracker(({cambiarTitulo}) => {
+  cambiarTitulo("Cuadernos");
   const publicHandle = Meteor.subscribe('cuadernos');
   const loading = !publicHandle.ready();
+//  const cuadernos = Cuadernos.find({}, { sort: { createdAt: -1 } }).fetch();
   const cuadernos = Cuadernos.find({}).fetch();
-  const cuadernosExists = !loading && !!cuadernos.length;
-  
+  const cuadernosExists = !loading && !!cuadernos;
+
   return {
     loading,
     cuadernosExists,
-    cuadernoSeleccionada: JSON.parse(sessionStorage.getItem('cuadernoSeleccionada')),
     cuadernos: cuadernosExists ? cuadernos : [],
-    user: Meteor.user(),
-    loggued: !!Meteor.userId(),
-    connected: Meteor.status().connected,
   };
-})(App);
+})(CuadernosList);

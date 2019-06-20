@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { withStyles, List, Typography } from '@material-ui/core';
-import ListItemCuenta from '../components/ListItemCuenta';
+import ListItemCuaderno from '../components/ListItemCuaderno';
 
 const drawerWidth = 240;
 
@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 
-class CuentasList extends Component {
+class CuadernosList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,12 +22,12 @@ class CuentasList extends Component {
     };
   }
   
-  renderCuentas() {
-    const { cuentas, cuentaSeleccionada, seleccionarCuenta } = this.props;
+  renderCuadernos() {
+    const { cuadernos, cuadernoSeleccionada, seleccionarCuaderno } = this.props;
     
-    return cuentas.map(cuenta => {
+    return cuadernos.map(cuaderno => {
       return (
-        <ListItemCuenta cuenta={cuenta} seleccionada={cuenta._id == cuentaSeleccionada._id} seleccionarCuenta={seleccionarCuenta} />
+        <ListItemCuaderno cuaderno={cuaderno} seleccionada={cuaderno._id == cuadernoSeleccionada._id} seleccionarCuaderno={seleccionarCuaderno} />
       )
     })
   }
@@ -37,19 +37,19 @@ class CuentasList extends Component {
     return (
       <div className={classes.root}>
         <List className={classes.root}>
-          {this.renderCuentas()}
+          {this.renderCuadernos()}
         </List>
         
-        <Link className={classes.link} to={'/cuentas/nueva'}>
-          Nueva Cuenta
+        <Link className={classes.link} to={'/cuadernos/nueva'}>
+          Nuevo Cuaderno
         </Link>
       </div>
     )
   }
 };
 
-CuentasList.propTypes = {
+CuadernosList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CuentasList);
+export default withStyles(styles)(CuadernosList);

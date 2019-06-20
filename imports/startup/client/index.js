@@ -14,7 +14,7 @@ const theme = createMuiTheme({
     appBar:{
       backgroundColor: "#fff"
     },
-    cuentas:{
+    cuadernos:{
 
     },
     egresos: {

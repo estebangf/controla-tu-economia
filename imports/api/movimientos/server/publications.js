@@ -1,18 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Movimientos } from '../movimientos.js'
 
-Meteor.publish('movimientos', function movimientos(cuentaId, desde, hasta) {
-//  return Movimientos.find({userId: Meteor.userId(), cuentaId: cuentaId})
-  return Movimientos.find({cuentaId: cuentaId,
+Meteor.publish('movimientos', function movimientos(cuadernoId, desde, hasta) {
+//  return Movimientos.find({userId: Meteor.userId(), cuadernoId: cuadernoId})
+  return Movimientos.find({cuadernoId: cuadernoId,
     "$and": [
       { creado: { "$gte": new Date(desde) }},
       { creado: { "$lte": new Date(hasta) }}
     ] })
 });
 
-Meteor.publish('movimientos.ingresos', function movimientos(cuentaId, desde, hasta) {
-//  return Movimientos.find({userId: Meteor.userId(), cuentaId: cuentaId})
-  return Movimientos.find({cuentaId: cuentaId,
+Meteor.publish('movimientos.ingresos', function movimientos(cuadernoId, desde, hasta) {
+//  return Movimientos.find({userId: Meteor.userId(), cuadernoId: cuadernoId})
+  return Movimientos.find({cuadernoId: cuadernoId,
     "$and": [
       { creado: { "$gte": new Date(desde) }},
       { creado: { "$lte": new Date(hasta) }}
@@ -21,9 +21,9 @@ Meteor.publish('movimientos.ingresos', function movimientos(cuentaId, desde, has
   })
 });
 
-Meteor.publish('movimientos.egresos', function movimientos(cuentaId, desde, hasta) {
-//  return Movimientos.find({userId: Meteor.userId(), cuentaId: cuentaId})
-  return Movimientos.find({cuentaId: cuentaId,
+Meteor.publish('movimientos.egresos', function movimientos(cuadernoId, desde, hasta) {
+//  return Movimientos.find({userId: Meteor.userId(), cuadernoId: cuadernoId})
+  return Movimientos.find({cuadernoId: cuadernoId,
     "$and": [
       { creado: { "$gte": new Date(desde) }},
       { creado: { "$lte": new Date(hasta) }}

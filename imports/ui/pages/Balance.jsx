@@ -109,7 +109,7 @@ class Balance extends Component {
     };
 
   }
-
+  
   renderItems(movimientos) {
     return movimientos.map(mov => {
       const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
@@ -121,13 +121,13 @@ class Balance extends Component {
 
   componentDidMount(){
     const {
-      cuentaId,
+      cuadernoId,
       desde
     } = this.props;
 
     const self = this
     Meteor.call('movimiento.saldoInicial',
-      cuentaId,
+      cuadernoId,
       desde,
       (error, result) => {
         if (error){
@@ -144,15 +144,15 @@ class Balance extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      cuentaId,
+      cuadernoId,
       desde
     } = this.props;
 
     const self = this
 
-    if ((desde !== prevProps.desde) || (cuentaId !== prevProps.cuentaId)) {
+    if ((desde !== prevProps.desde) || (cuadernoId !== prevProps.cuadernoId)) {
       Meteor.call('movimiento.saldoInicial',
-        cuentaId,
+        cuadernoId,
         desde,
         (error, result) => {
           if (error){

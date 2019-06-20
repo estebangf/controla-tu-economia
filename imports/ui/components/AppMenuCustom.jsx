@@ -23,16 +23,16 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 
 const categorias = [
   {
-    text: "Cuentas",
+    text: "Cuadernos",
     paginas: [
       {
         text: "Lista",
-        link: "/cuentas",
+        link: "/cuadernos",
         icon: ListIcon
       },
       {
         text: "Nueva",
-        link: "/cuentas/nueva",
+        link: "/cuadernos/nueva",
         icon: AddIcon
       }
     ]

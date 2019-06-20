@@ -22,14 +22,14 @@ const styles = theme => ({
 });
 
 
-class Cuenta extends Component {
+class Cuaderno extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: '',
       nombre: '',
       descripcion: '',
-      cuentaVinculada: '',
+      cuadernoVinculado: '',
       esVinculada: false
     };
   }
@@ -37,18 +37,18 @@ class Cuenta extends Component {
   static getDerivedStateFromProps(props, state){
     const {
       loading,
-      cuentaExists,
-      cuenta
+      cuadernoExists,
+      cuaderno
     } = props;
 
-    if (!loading && cuentaExists) {
-      if (state.id == '' || state.id != cuenta._id) {
+    if (!loading && cuadernoExists) {
+      if (state.id == '' || state.id != cuaderno._id) {
         return {
-          id: cuenta._id,
-          nombre: cuenta.nombre,
-          descripcion: cuenta.descripcion,
-          cuentaVinculada: cuenta.cuentaVinculada,
-          esVinculada: !!cuenta.cuentaVinculada
+          id: cuaderno._id,
+          nombre: cuaderno.nombre,
+          descripcion: cuaderno.descripcion,
+          cuadernoVinculado: cuaderno.cuadernoVinculado,
+          esVinculada: !!cuaderno.cuadernoVinculado
         }
       } else {
         return null
@@ -71,20 +71,20 @@ class Cuenta extends Component {
 
   guardar(){
     const {
-      cuentaExists,
-      cuenta
+      cuadernoExists,
+      cuaderno
     } = this.props
     const { 
       nombre,
       descripcion,
-      cuentaVinculada
+      cuadernoVinculado
     } = this.state;
-    const id = cuenta._id;
+    const id = cuaderno._id;
 
-    if(cuentaExists) {
-      Meteor.call('cuenta.editar',
+    if(cuadernoExists) {
+      Meteor.call('cuaderno.editar',
         id,
-        cuentaVinculada,
+        cuadernoVinculado,
         nombre,
         descripcion,
         (error, result) => {
@@ -96,8 +96,8 @@ class Cuenta extends Component {
         }
       )
     } else {
-      Meteor.call('cuenta.nueva',
-        cuentaVinculada,
+      Meteor.call('cuaderno.nueva',
+        cuadernoVinculado,
         nombre,
         descripcion,
         (error, result) => {
@@ -112,22 +112,22 @@ class Cuenta extends Component {
   }
   limpiar(mensaje){
     const {
-      cuentaExists,
-      cuenta
+      cuadernoExists,
+      cuaderno
     } = this.props
 
-    if(cuentaExists) {
+    if(cuadernoExists) {
       this.setState({
-        nombre: cuenta.nombre,
-        descripcion: cuenta.descripcion,
-        cuentaVinculada: cuenta.cuentaVinculada,
-        esVinculada: !!cuentaVinculada
+        nombre: cuaderno.nombre,
+        descripcion: cuaderno.descripcion,
+        cuadernoVinculado: cuaderno.cuadernoVinculado,
+        esVinculada: !!cuadernoVinculado
       });
     } else {
       this.setState({
         nombre: '',
         descripcion: '',
-        cuentaVinculada: '',
+        cuadernoVinculado: '',
         esVinculada: false
       });
     }
@@ -137,10 +137,10 @@ class Cuenta extends Component {
   render() {
     const { 
       classes,
-      cuentaExists
+      cuadernoExists
     } = this.props;
     const {
-      cuentaVinculada,
+      cuadernoVinculado,
       nombre,
       descripcion,
       esVinculada
@@ -148,7 +148,7 @@ class Cuenta extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>{cuentaExists ? "Editar Cuenta" : "Nueva Cuenta"}</Typography>
+        <Typography variant="h4" className={classes.titulo}>{cuadernoExists ? "Editar Cuaderno" : "Nueva Cuaderno"}</Typography>
         <Link to={'/'}>Inicio</Link>
 
         <TextField
@@ -172,13 +172,13 @@ class Cuenta extends Component {
           margin="normal"
         />
         <TextField
-          InputLabelProps={{ shrink: !!cuentaVinculada && cuentaVinculada != '' }} 
+          InputLabelProps={{ shrink: !!cuadernoVinculado && cuadernoVinculado != '' }} 
           disabled={!esVinculada}
-          id="cuentaVinculada"
+          id="cuadernoVinculado"
           fullWidth={true}
-          label="Cuenta Vinculada"
-          value={cuentaVinculada}
-          onChange={this.handleChange('cuentaVinculada')}
+          label="Cuaderno Vinculada"
+          value={cuadernoVinculado}
+          onChange={this.handleChange('cuadernoVinculado')}
           className={classes.textField}
           margin="normal"
         />
@@ -190,7 +190,7 @@ class Cuenta extends Component {
             color="primary"
           />
           }
-          label={"¿Es una cuenta vinculada a la de alguien mas? " + (esVinculada ? "Si" : "No")}
+          label={"¿Es una cuaderno vinculada a la de alguien mas? " + (esVinculada ? "Si" : "No")}
         />
 
         <div className={classes.actions}>
@@ -198,7 +198,7 @@ class Cuenta extends Component {
             Guardar
           </Button>
           <Button fullWidth={true} color="secondary" onClick={() => this.limpiar("Todo borrado")} className={classes.button}>
-            {cuentaExists ? "Volver a cargar" : "Limpiar"}
+            {cuadernoExists ? "Volver a cargar" : "Limpiar"}
           </Button>
         </div>
       </div>
@@ -206,8 +206,8 @@ class Cuenta extends Component {
   }
 };
 
-Cuenta.propTypes = {
+Cuaderno.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Cuenta);
+export default withStyles(styles)(Cuaderno);
