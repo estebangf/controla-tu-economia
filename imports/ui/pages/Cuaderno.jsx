@@ -30,7 +30,7 @@ class Cuaderno extends Component {
       nombre: '',
       descripcion: '',
       cuadernoVinculado: '',
-      esVinculada: false
+      esVinculado: false
     };
   }
 
@@ -48,7 +48,7 @@ class Cuaderno extends Component {
           nombre: cuaderno.nombre,
           descripcion: cuaderno.descripcion,
           cuadernoVinculado: cuaderno.cuadernoVinculado,
-          esVinculada: !!cuaderno.cuadernoVinculado
+          esVinculado: !!cuaderno.cuadernoVinculado
         }
       } else {
         return null
@@ -121,14 +121,14 @@ class Cuaderno extends Component {
         nombre: cuaderno.nombre,
         descripcion: cuaderno.descripcion,
         cuadernoVinculado: cuaderno.cuadernoVinculado,
-        esVinculada: !!cuadernoVinculado
+        esVinculado: !!cuadernoVinculado
       });
     } else {
       this.setState({
         nombre: '',
         descripcion: '',
         cuadernoVinculado: '',
-        esVinculada: false
+        esVinculado: false
       });
     }
     alert(mensaje)
@@ -143,7 +143,7 @@ class Cuaderno extends Component {
       cuadernoVinculado,
       nombre,
       descripcion,
-      esVinculada
+      esVinculado
     } = this.state;
 
     return (
@@ -173,10 +173,10 @@ class Cuaderno extends Component {
         />
         <TextField
           InputLabelProps={{ shrink: !!cuadernoVinculado && cuadernoVinculado != '' }} 
-          disabled={!esVinculada}
+          disabled={!esVinculado}
           id="cuadernoVinculado"
           fullWidth={true}
-          label="Cuaderno Vinculada"
+          label="Cuaderno Vinculado"
           value={cuadernoVinculado}
           onChange={this.handleChange('cuadernoVinculado')}
           className={classes.textField}
@@ -185,12 +185,12 @@ class Cuaderno extends Component {
         <FormControlLabel
           control={
             <Checkbox
-            checked={esVinculada}
-            onChange={this.handleChangeChecked('esVinculada')}
+            checked={esVinculado}
+            onChange={this.handleChangeChecked('esVinculado')}
             color="primary"
           />
           }
-          label={"¿Es una cuaderno vinculada a la de alguien mas? " + (esVinculada ? "Si" : "No")}
+          label={"¿Es una cuaderno vinculado a la de alguien mas? " + (esVinculado ? "Si" : "No")}
         />
 
         <div className={classes.actions}>
