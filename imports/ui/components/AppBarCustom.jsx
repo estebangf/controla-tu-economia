@@ -36,7 +36,7 @@ const styles = theme => ({
   },
   appBarModerna: {
     [theme.breakpoints.down('md')]: {
-      backgroundImage: "url(/fondo_c.jpg)",
+      backgroundImage: "url(/fondo_o.png)",
 //      backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPositionX: "center",

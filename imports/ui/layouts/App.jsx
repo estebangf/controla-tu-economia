@@ -89,7 +89,7 @@ const styles = theme => ({
       bottom: 0,
       right: 0,
       position: 'fixed',
-      backgroundImage: "url(/fondo_c.jpg)",
+      backgroundImage: "url(/fondo_o.png)",
 //      backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPositionX: "center",

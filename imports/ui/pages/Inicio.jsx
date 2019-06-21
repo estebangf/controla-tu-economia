@@ -42,7 +42,8 @@ const styles = theme => ({
     boxShadow: "0 5px 5px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
   },
   divSeccion: {
-    display: 'flex'
+    display: 'flex',
+    marginBottom: 10
   },
   link:{
     textDecoration: 'none'
@@ -178,7 +179,7 @@ class Inicio extends Component {
               <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/balanza_c.png)"}} />
             </div>
           </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/ganancia'}>
+          <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
             <div className={classes.divIconoSeccion}>
               <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/ganancia_c.png)"}} />
             </div>
