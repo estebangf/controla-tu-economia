@@ -170,7 +170,7 @@ class Inicio extends Component {
       cuadernosExists
     } = this.props;
 
-    if(!cuadernosExists) {
+    if(cuadernosExists) {
       return ([
         <div className={classes.divSeccion}>
           <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
@@ -201,7 +201,6 @@ class Inicio extends Component {
           </div>
           </Link>
         </div>,
-        <Typography variant="h5" className={classes.titulo}>Estados</Typography>,
         <Link className={classes.link} to={'/movimientos/seguimientos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnSeguimientos}>Seguimientos</Button>
         </Link>,
@@ -217,7 +216,6 @@ class Inicio extends Component {
       <div className={classes.root}>
         <img className={classes.logoImgaen} src="/icono196x196.png" />
         
-        <Typography variant="h5" className={classes.titulo}>Cuadernos</Typography>
         <Link className={classes.link} to={'/cuadernos/'}>
           <Button fullWidth={true} variant="contained" className={classes.btnCuadernos}>Lista de Cuadernos</Button>
         </Link>
