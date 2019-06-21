@@ -29,7 +29,19 @@ const styles = theme => ({
     top: -1,
     background: theme.palette.appBar.backgroundColor,
     transition: 'box-shadow .1s ease',
-    boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
+    boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
+    [theme.breakpoints.down('md')]: {
+      color: "#FFF"
+    },
+  },
+  appBarModerna: {
+    [theme.breakpoints.down('md')]: {
+      backgroundImage: "url(/fondo_c.jpg)",
+//      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPositionX: "center",
+      backgroundPositionY: "top",
+    }
   },
   schrolled: {
     boxShadow: 'none',
@@ -89,7 +101,7 @@ class AppBarCustom extends Component {
     const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : ''].join(' ')}>
+        <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : '', window.location.pathname == "/" ? classes.appBarModerna : ''].join(' ')}>
           <Toolbar>
             <IconButton onClick={handleMenu} className={classes.menuButton} color="primary" aria-label="Menu">
               <MenuIcon />

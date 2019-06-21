@@ -75,11 +75,25 @@ const styles = theme => ({
       backgroundColor: '#6bc18e',
       content: '',
       height: 135,
-      top: 0,
       width: '100%',
       zIndex: 0,
+      top: 0,
       left: 0,
       right: 0
+    },
+  },
+  fondoModerno: {
+    [theme.breakpoints.down('md')]: {
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      position: 'fixed',
+      backgroundImage: "url(/fondo_c.jpg)",
+//      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPositionX: "center",
+      backgroundPositionY: "top",
     }
   },
 /*
@@ -108,6 +122,9 @@ const styles = theme => ({
     minHeight: '100%',
 //    background: '#00000096',
     background: '#ffffff',
+    [theme.breakpoints.down('md')]: {
+      background: 'transparent',
+    },
     paddingTop: 47,
     zIndex: 1
   },
@@ -473,7 +490,7 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <div className={classes.fondo} />
+        <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
         <div className={classes.fondoSuperior} />
         <CssBaseline />
         <BrowserRouter>

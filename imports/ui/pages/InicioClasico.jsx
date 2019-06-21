@@ -16,40 +16,8 @@ const styles = theme => ({
     height: 150,
     margin: 'auto',
   },
-  iconoSeccionPrincipal: {
-    width: 75,
-    height: 75,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
-  },
-  iconoSeccion: {
-    width: 50,
-    height: 50,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
-  },
-  divIconoSeccion:{
-    background: "#00000099",
-    padding: 20,
-    paddingBottom: 15,
-    borderRadius: "100%",
-    width: "fit-content",
-    margin: "auto",
-    marginBottom: 5,
-    marginTop: 5,
-    boxShadow: "0 5px 5px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
-  },
-  divSeccion: {
-    display: 'flex'
-  },
   link:{
     textDecoration: 'none'
-  },
-  linkSeccion:{
-    textDecoration: 'none',
-    margin: "auto",
   },
   btnCuadernos: {
     color: theme.palette.cuadernos.buttonText,
@@ -170,41 +138,25 @@ class Inicio extends Component {
       cuadernosExists
     } = this.props;
 
-    if(!cuadernosExists) {
+    if(cuadernosExists) {
       return ([
-        <div className={classes.divSeccion}>
-          <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
-            <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/balanza_c.png)"}} />
-            </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/ganancia'}>
-            <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/ganancia_c.png)"}} />
-            </div>
-          </Link>
-        </div>,
-        <div className={classes.divSeccion}>
-          <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_c.png)"}} />
-          </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_c.png)"}} />
-          </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_c.png)"}} />
-          </div>
-          </Link>
-        </div>,
+        <Typography variant="h5" className={classes.titulo}>Movimientos</Typography>,
+        <Link className={classes.link} to={'/movimientos/egresos'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnGastos}>Lista de Gastos</Button>
+        </Link>,
+        <Link className={classes.link} to={'/movimientos/ingresos'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnIngresos}>Lista de Ingreso</Button>
+        </Link>,
         <Typography variant="h5" className={classes.titulo}>Estados</Typography>,
         <Link className={classes.link} to={'/movimientos/seguimientos'}>
           <Button fullWidth={true} variant="contained" className={classes.btnSeguimientos}>Seguimientos</Button>
         </Link>,
+        <Link className={classes.link} to={'/movimientos/balance'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnBalance}>Balance</Button>
+        </Link>,
+        <Link className={classes.link} to={'/movimientos/ganancias'}>
+          <Button fullWidth={true} variant="contained" className={classes.btnGanancias}>Ganancias</Button>
+        </Link>
       ])
     }
   }
@@ -216,7 +168,7 @@ class Inicio extends Component {
     return (
       <div className={classes.root}>
         <img className={classes.logoImgaen} src="/icono196x196.png" />
-        
+
         <Typography variant="h5" className={classes.titulo}>Cuadernos</Typography>
         <Link className={classes.link} to={'/cuadernos/'}>
           <Button fullWidth={true} variant="contained" className={classes.btnCuadernos}>Lista de Cuadernos</Button>
