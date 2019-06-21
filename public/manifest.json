@@ -42,5 +42,6 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#66bb6a",
+  "font_color": "#ffffff",
   "theme_color": "#ffffff"
 }
