@@ -11,6 +11,9 @@ const styles = theme => ({
   root: {
     padding: 15,
     textAlign: 'center',
+    bottom: 0,
+    position: "absolute",
+    width: "100%"
   },
   logoImgaen: {
     height: 150,
@@ -201,10 +204,7 @@ class Inicio extends Component {
             <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_c.png)"}} />
           </div>
           </Link>
-        </div>,
-        <Link className={classes.link} to={'/movimientos/seguimientos'}>
-          <Button fullWidth={true} variant="contained" className={classes.btnSeguimientos}>Seguimientos</Button>
-        </Link>,
+        </div>
       ])
     }
   }
@@ -215,12 +215,6 @@ class Inicio extends Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <img className={classes.logoImgaen} src="/icono196x196.png" />
-        
-        <Link className={classes.link} to={'/cuadernos/'}>
-          <Button fullWidth={true} variant="contained" className={classes.btnCuadernos}>Lista de Cuadernos</Button>
-        </Link>
-
         {this.renderLinksMovimientos()}
       </div>
     )

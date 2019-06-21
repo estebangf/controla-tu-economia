@@ -30,9 +30,6 @@ const styles = theme => ({
     background: theme.palette.appBar.backgroundColor,
     transition: 'box-shadow .1s ease',
     boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
-    [theme.breakpoints.down('md')]: {
-      color: "#FFF"
-    },
   },
   appBarModerna: {
     [theme.breakpoints.down('md')]: {
@@ -50,16 +47,26 @@ const styles = theme => ({
     },
   },
   titulo: {
-    color: "#000",
+    color: theme.palette.appBar.color,
     flexGrow: 1,
+    position: 'absolute',
+    textAlign: 'center',
+    width: '100%',
+    left: 0,
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 15,
+    color: theme.palette.appBar.color,
   },
-  botonFechas: {
+  iconoDerecha: {
+    color: theme.palette.appBar.color,
     position: "absolute",
-    right: 0
+    right: 0,
+  },
+  iconoLogo: {
+    right: 10,
+    maxHeight: 25
   }
 });
 
@@ -99,22 +106,28 @@ class AppBarCustom extends Component {
     })[0]
 */
     const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
+    const verLogo = location.pathname == "/"
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : '', window.location.pathname == "/" ? classes.appBarModerna : ''].join(' ')}>
           <Toolbar>
-            <IconButton onClick={handleMenu} className={classes.menuButton} color="primary" aria-label="Menu">
+            <IconButton onClick={handleMenu} className={classes.menuButton} aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="primary" noWrap className={classes.titulo}>
+            <Typography variant="h6" noWrap className={classes.titulo}>
               {titulo}{verFiltro && !!cuaderno ? " - "+cuaderno : ''}
             </Typography>
             {!!verFiltro && (
-              <IconButton onClick={handleRangoFechas} className={classes.botonFechas} color="primary" aria-label="Fechas">
+              <IconButton onClick={handleRangoFechas} className={classes.iconoDerecha} aria-label="Fechas">
                 <DateRange />
               </IconButton>
             )}
-            </Toolbar>
+            {!!verLogo && (
+              <IconButton className={classes.iconoDerecha}>
+                <img className={classes.iconoLogo} src="/icono196x196.png" />
+              </IconButton>
+            )}
+          </Toolbar>
         </AppBar>
       </div>
     );

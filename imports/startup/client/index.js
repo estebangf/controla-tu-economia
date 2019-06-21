@@ -12,7 +12,8 @@ const theme = createMuiTheme({
     primary: blue,
     secondary: red,
     appBar:{
-      backgroundColor: "#fff"
+      backgroundColor: "#337dbf",
+      color: "#FFF"
     },
     cuadernos:{
 
