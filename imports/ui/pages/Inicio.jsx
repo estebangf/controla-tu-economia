@@ -1,19 +1,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import red from '@material-ui/core/colors/red';
 
-import { withStyles, Typography, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
+import clsx from 'clsx';
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    padding: 15,
+    // padding: 15,
     textAlign: 'center',
-    bottom: 0,
-    position: "absolute",
+    // bottom: 0,
+    // position: "absolute",
     width: "100%"
+  },
+  rootCard: {
+    padding: 15,
+    paddingTop: 30,
+    background: theme.palette.appBar.backgroundColor,
+    marginBottom: 30
+  },
+  card: {
+
+  },
+  rootLinks: {
+    padding: 15,
   },
   logoImgaen: {
     height: 150,
@@ -158,7 +184,6 @@ const styles = theme => ({
   },
 });
 
-
 class Inicio extends Component {
   constructor(props) {
     super(props);
@@ -168,53 +193,113 @@ class Inicio extends Component {
     };
   }
 
+  renderCuadernoSeleccionado(){
+    const {  
+      classes,
+      cuadernoSeleccionada
+    } = this.props;
+
+    if (!!cuadernoSeleccionada) {
+      return (
+        <div className={classes.rootCard}>
+          <Card className={classes.card}>
+            <CardHeader
+              avatar={
+                <Avatar aria-label="Recipe" className={classes.avatar}>
+                  {cuadernoSeleccionada.nombre[0]}
+                </Avatar>
+              }
+              action={
+                <IconButton aria-label="Settings">
+                  <MoreVertIcon />
+                </IconButton>
+              }
+              title={cuadernoSeleccionada.nombre}
+              subheader={cuadernoSeleccionada.descripcion}
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Tienes seleccionado este cuaderno, puedes: marcarlo como favorito para que siempre sea el seleecionado al
+                iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o editarlo.
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="Add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton aria-label="Share">
+                <ShareIcon />
+              </IconButton>
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: false,
+                })}
+                aria-expanded={false}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={false} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph>Method:</Typography>
+              </CardContent>
+            </Collapse>
+          </Card>
+        </div>
+      )
+    }
+  }
+
   renderLinksMovimientos() {
-    const {
+    const {  
       classes,
       cuadernosExists
     } = this.props;
 
     if(cuadernosExists) {
-      return ([
-        <div className={classes.divSeccion}>
-          <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
+      return (
+        <div className={classes.rootLinks}>
+          <div className={classes.divSeccion}>
+            <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
+              <div className={classes.divIconoSeccion}>
+                <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/balanza_b.png)"}} />
+              </div>
+            </Link>
+            <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
+              <div className={classes.divIconoSeccion}>
+                <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/ganancia_b.png)"}} />
+              </div>
+            </Link>
+          </div>
+          <div className={classes.divSeccion}>
+            <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
             <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/balanza_c.png)"}} />
+              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_b.png)"}} />
             </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
+            </Link>
+            <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
             <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/ganancia_c.png)"}} />
+              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_b.png)"}} />
             </div>
-          </Link>
-        </div>,
-        <div className={classes.divSeccion}>
-          <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_c.png)"}} />
+            </Link>
+            <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
+            <div className={classes.divIconoSeccion}>
+              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_b.png)"}} />
+            </div>
+            </Link>
           </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_c.png)"}} />
-          </div>
-          </Link>
-          <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
-          <div className={classes.divIconoSeccion}>
-            <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_c.png)"}} />
-          </div>
-          </Link>
         </div>
-      ])
+      )
     }
   }
 
   render() {
-    const { 
-      classes,
-    } = this.props;
+    const { classes, cuadernoSeleccionada } = this.props;
+
     return (
       <div className={classes.root}>
+        {this.renderCuadernoSeleccionado()}
         {this.renderLinksMovimientos()}
       </div>
     )

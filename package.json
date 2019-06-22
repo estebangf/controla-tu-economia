@@ -28,5 +28,8 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "clsx": "^1.0.4"
   }
 }

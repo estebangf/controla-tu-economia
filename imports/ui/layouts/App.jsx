@@ -83,6 +83,7 @@ const styles = theme => ({
     },
   },
   fondoModerno: {
+/*
     [theme.breakpoints.down('md')]: {
       top: 0,
       left: 0,
@@ -95,6 +96,7 @@ const styles = theme => ({
       backgroundPositionX: "center",
       backgroundPositionY: "top",
     }
+*/
   },
 /*
   fondoSuperiors: {
@@ -297,14 +299,9 @@ class App extends Component {
 
   renderOfflinePages(){
     const {
-      cuadernosExists
+      cuadernosExists, loggued
     } = this.props
     return [
-      <Route
-        exact
-        path="/"
-        render={() => <InicioContainer cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
-      />,
       <Route
         exact
         path="/signin"
@@ -315,11 +312,17 @@ class App extends Component {
         path="/join"
         render={() => <JoinPage cambiarTitulo={this.cambiarTitulo} />}
       />,
+      !!loggued ? '' :
+      <Route
+        exact
+        path="/*"
+        render={() => <SignInPage cambiarTitulo={this.cambiarTitulo} />}
+      />,
     ]
   }
 
   renderOnlinePages(){
-    const { loggued, cuadernos } = this.props;
+    const { loggued, cuadernos, cuadernosExists } = this.props;
     const { cuadernoSeleccionada, desde, hasta } = this.state;
     const cambiarTitulo = this.cambiarTitulo
     const fechas = {
@@ -332,10 +335,16 @@ class App extends Component {
       cuadernoSeleccionada,
       ...fechas
     }
+    
 
     if (!!loggued) {
       if (!!cuadernoSeleccionada) {
         return [
+          <Route
+            exact
+            path="/"
+            render={() => <InicioContainer cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
+          />,
           <Route
             exact
             path="/movimientos/egresos"
@@ -384,6 +393,11 @@ class App extends Component {
         ]
       } else {
         return [
+          <Route
+            exact
+            path="/"
+            render={() => <InicioContainer cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
+          />,
           <Route
             path="/movimientos/*"
             render={({match}) => <CuadernosContainer {...pase} cuadernos={cuadernos} seleccionarCuaderno={this.seleccionarCuaderno}/>}

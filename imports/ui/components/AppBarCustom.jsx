@@ -32,6 +32,7 @@ const styles = theme => ({
     boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)",
   },
   appBarModerna: {
+/*
     [theme.breakpoints.down('md')]: {
       backgroundImage: "url(/fondo_o.png)",
 //      backgroundSize: "cover",
@@ -39,6 +40,7 @@ const styles = theme => ({
       backgroundPositionX: "center",
       backgroundPositionY: "top",
     }
+  */
   },
   schrolled: {
     boxShadow: 'none',
@@ -51,7 +53,8 @@ const styles = theme => ({
     flexGrow: 1,
     position: 'absolute',
     textAlign: 'center',
-    width: '100%',
+    width: "calc(100% - 100px)",
+    margin: "auto 50px",
     left: 0,
   },
   menuButton: {
