@@ -14,10 +14,10 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import GradeIcon from '@material-ui/icons/Grade';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
 
 const drawerWidth = 240;
 
@@ -33,10 +33,14 @@ const styles = theme => ({
     padding: 15,
     paddingTop: 30,
     background: theme.palette.appBar.backgroundColor,
-    marginBottom: 30
+    marginBottom: 30,
+    borderRadius: '0px 0px 15px 15px'
   },
   card: {
 
+  },
+  cardHeader:{
+    textAlign: "left"
   },
   rootLinks: {
     padding: 15,
@@ -46,23 +50,23 @@ const styles = theme => ({
     margin: 'auto',
   },
   iconoSeccionPrincipal: {
-    width: 75,
-    height: 75,
+    width: 35,
+    height: 35,
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
   },
   iconoSeccion: {
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 35,
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
   },
   divIconoSeccion:{
-    background: "#00000099",
-    padding: 20,
-    paddingBottom: 15,
+    background: theme.palette.appBar.backgroundColor,
+    padding: 10,
+    paddingBottom: 10,
     borderRadius: "100%",
     width: "fit-content",
     margin: "auto",
@@ -182,6 +186,16 @@ const styles = theme => ({
     paddingTop: 0,
     overflowY: 'auto'
   },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
 });
 
 class Inicio extends Component {
@@ -189,9 +203,15 @@ class Inicio extends Component {
     super(props);
     this.state = {
       showConnectionIssue: false,
-      drawerOpen: false
+      drawerOpen: false,
+      expanded: false
     };
   }
+
+  handleExpandClick = () => {
+    this.setState(state => ({expanded: !state.expanded}));
+  }
+
 
   renderCuadernoSeleccionado(){
     const {  
@@ -199,52 +219,50 @@ class Inicio extends Component {
       cuadernoSeleccionada
     } = this.props;
 
+    const {
+      expanded
+    } = this.state
+
     if (!!cuadernoSeleccionada) {
       return (
         <div className={classes.rootCard}>
           <Card className={classes.card}>
             <CardHeader
-              avatar={
-                <Avatar aria-label="Recipe" className={classes.avatar}>
-                  {cuadernoSeleccionada.nombre[0]}
-                </Avatar>
-              }
+              className={classes.cardHeader}
               action={
-                <IconButton aria-label="Settings">
-                  <MoreVertIcon />
+                <IconButton aria-label="Settings" onClick={() => { alert("EN DESARROLLO")}}>
+                  <EditIcon />
                 </IconButton>
               }
               title={cuadernoSeleccionada.nombre}
               subheader={cuadernoSeleccionada.descripcion}
             />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Tienes seleccionado este cuaderno, puedes: marcarlo como favorito para que siempre sea el seleecionado al
-                iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o editarlo.
-              </Typography>
-            </CardContent>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Tienes seleccionado este cuaderno, puedes: marcarlo como favorito para que siempre sea el seleecionado al
+                  iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o editarlo.
+                </Typography>
+              </CardContent>
+            </Collapse>
             <CardActions disableSpacing>
-              <IconButton aria-label="Add to favorites">
-                <FavoriteIcon />
+              <IconButton aria-label="Add to favorites" onClick={() => { alert("EN DESARROLLO")}}>
+                <GradeIcon />
               </IconButton>
-              <IconButton aria-label="Share">
+              <IconButton aria-label="Share" onClick={() => { alert("EN DESARROLLO")}}>
                 <ShareIcon />
               </IconButton>
               <IconButton
                 className={clsx(classes.expand, {
-                  [classes.expandOpen]: false,
+                  [classes.expandOpen]: expanded,
                 })}
-                aria-expanded={false}
+                aria-expanded={expanded}
+                onClick={this.handleExpandClick}
                 aria-label="Show more"
               >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>
-            <Collapse in={false} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography paragraph>Method:</Typography>
-              </CardContent>
-            </Collapse>
           </Card>
         </div>
       )
