@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import clsx from 'clsx';
+
 import { Link } from 'react-router-dom';
-import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu, Radio } from '@material-ui/core';
+import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu, Radio, IconButton } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 
 import PersonIcon from '@material-ui/icons/Person';
 import GroupIcon from '@material-ui/icons/Group';
+import CheckIcon from '@material-ui/icons/Check';
 
 const drawerWidth = 240;
 
@@ -38,10 +41,13 @@ const styles = theme => ({
   cuadernoVinculadaIcono: {background: '#de6c6c' },
   cuadernoNormalIcono: {background: '#4385d6' },
   radioSelect: {
+    transition: "color 0.5s"
+  },
+  noSeleccionada: {
+    color: blue[100],
+  },
+  seleccionada: {
     color: blue[600],
-    '&$checked': {
-      color: blue[500],
-    }, 
   }
 });
 
@@ -123,12 +129,17 @@ class ListItemCuaderno extends Component {
               secondary={!!cuaderno.descripcion ? cuaderno.descripcion : null}
             />
             <ListItemSecondaryAction>
-              <Radio className={classes.radioSelect}
+              <IconButton
+                className={clsx(classes.radioSelect, {
+                  [classes.noSeleccionada]: !seleccionada,
+                  [classes.seleccionada]: seleccionada,
+                })}
                 color="prymary"
                 onClick={(e) => {e.preventDefault();
                   seleccionarCuaderno(cuaderno)}}
-                checked={seleccionada}
-              />
+                aria-label="Seleccionar">
+                <CheckIcon />
+              </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         </Link>
@@ -142,6 +153,7 @@ class ListItemCuaderno extends Component {
             <MenuItem onClick={() => this.editar(cuaderno)}>Editar</MenuItem>
           </Link>
           <MenuItem onClick={() => this.eliminar(cuaderno)}>Eliminar</MenuItem>
+          <MenuItem onClick={() => {seleccionarCuaderno(cuaderno); this.handleClose(this)}}>Seleccionar</MenuItem>
         </Menu>
       </div>
     );

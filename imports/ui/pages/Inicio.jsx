@@ -17,7 +17,7 @@ import { red } from '@material-ui/core/colors';
 import GradeIcon from '@material-ui/icons/Grade';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import EditIcon from '@material-ui/icons/Edit';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import { Fab, Grid } from '@material-ui/core';
 
 const drawerWidth = 240;
@@ -68,6 +68,9 @@ const styles = theme => ({
   },
   divIconoSeccion:{
     background: theme.palette.appBar.backgroundColor,
+    "&:hover":{
+      background: "#044580",
+    }
     /*
 
     padding: 10,
@@ -235,7 +238,8 @@ class Inicio extends Component {
     } = this.props;
 
     if(!!cuadernoSeleccionada){
-      const cuadernoId = cuadernoSeleccionada._id;
+      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ? 
+      cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
 
       const self = this
       Meteor.call('movimiento.saldoInicial',
@@ -262,8 +266,12 @@ class Inicio extends Component {
     } = this.props;
 
     if (!!cuadernoSeleccionada) {
-      const cuadernoIdPrev = !!prevProps.cuadernoSeleccionada ? prevProps.cuadernoSeleccionada._id : '';
-      const cuadernoId = cuadernoSeleccionada._id;
+      const cuadernoIdPrev = !!prevProps.cuadernoSeleccionada ?
+        !!prevProps.cuadernoSeleccionada.cuadernoVinculado ? 
+          prevProps.cuadernoSeleccionada.cuadernoVinculado : prevProps.cuadernoSeleccionada._id
+        : '';
+      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ? 
+      cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
       
       const self = this
 
@@ -336,9 +344,11 @@ class Inicio extends Component {
             <CardHeader
               className={classes.cardHeader}
               action={
-                <IconButton aria-label="Settings" onClick={() => { alert("EN DESARROLLO")}}>
-                  <EditIcon />
-                </IconButton>
+                <Link className={classes.linkSeccion} to={'/cuadernos'}>
+                  <IconButton aria-label="Cuadernos">
+                    <ImportContactsIcon />
+                  </IconButton>
+                </Link>
               }
               title={cuadernoSeleccionada.nombre}
               subheader={cuadernoSeleccionada.descripcion}
