@@ -262,11 +262,12 @@ class Inicio extends Component {
     } = this.props;
 
     if (!!cuadernoSeleccionada) {
+      const cuadernoIdPrev = !!prevProps.cuadernoSeleccionada ? prevProps.cuadernoSeleccionada._id : '';
       const cuadernoId = cuadernoSeleccionada._id;
       
       const self = this
 
-      if ((hasta != prevProps.hasta) || (cuadernoId != (!!prevProps.cuadernoSeleccionada && prevProps.cuadernoSeleccionada._id))) {
+      if ((hasta != prevProps.hasta) || (cuadernoId != cuadernoIdPrev)) {
         Meteor.call('movimiento.saldoInicial',
           cuadernoId,
           hasta,
