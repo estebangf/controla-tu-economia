@@ -64,7 +64,7 @@ Meteor.methods({
     check(hasta, Date);
     const movimientos = Movimientos.find({cuadernoId: cuadernoId,
       "$and": [
-        { creado: { "$lt": new Date(hasta) }}
+        { fecha: { "$lt": new Date(hasta) }}
       ]
     }).fetch()
     var saldoInicial = 0;

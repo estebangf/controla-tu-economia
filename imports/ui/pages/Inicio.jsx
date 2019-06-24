@@ -18,6 +18,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
+import { Fab, Grid } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -36,6 +37,15 @@ const styles = theme => ({
     marginBottom: 30,
     borderRadius: '0px 0px 15px 15px'
   },
+  cardContent:{
+    paddingBottom: 0,
+    paddingTop: 0
+  },
+  rootGrid: {
+    flexGrow: 1,
+    maxWidth: '100%',
+    margin: 0
+  },
   card: {
 
   },
@@ -49,22 +59,17 @@ const styles = theme => ({
     height: 150,
     margin: 'auto',
   },
-  iconoSeccionPrincipal: {
-    width: 35,
-    height: 35,
-    backgroundSize: "contain",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
-  },
   iconoSeccion: {
-    width: 35,
-    height: 35,
+    width: 25,
+    height: 25,
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
   },
   divIconoSeccion:{
     background: theme.palette.appBar.backgroundColor,
+    /*
+
     padding: 10,
     paddingBottom: 10,
     borderRadius: "100%",
@@ -73,6 +78,7 @@ const styles = theme => ({
     marginBottom: 5,
     marginTop: 5,
     boxShadow: "0 5px 5px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
+    */
   },
   divSeccion: {
     display: 'flex',
@@ -84,6 +90,18 @@ const styles = theme => ({
   linkSeccion:{
     textDecoration: 'none',
     margin: "auto",
+  },
+  tituloSeccion: {
+    marginTop: 5
+  },
+  saldoNegativo: {
+    color: theme.palette.saldo.negativo.color,
+  },
+  saldoPositivo: {
+    color: theme.palette.saldo.positivo.color,
+  },
+  saldoPeligroso: {
+    color: theme.palette.saldo.peligroso.color,
   },
   btnCuadernos: {
     color: theme.palette.cuadernos.buttonText,
@@ -204,14 +222,100 @@ class Inicio extends Component {
     this.state = {
       showConnectionIssue: false,
       drawerOpen: false,
-      expanded: false
+      expanded: false,
+      saldoCuaderno: 0
     };
+  }
+
+
+  componentDidMount(){
+    const {
+      cuadernoSeleccionada,
+      hasta
+    } = this.props;
+
+    if(!!cuadernoSeleccionada){
+      const cuadernoId = cuadernoSeleccionada._id;
+
+      const self = this
+      Meteor.call('movimiento.saldoInicial',
+        cuadernoId,
+        hasta,
+        (error, result) => {
+          if (error){
+            console.log(error);
+          } else {
+            console.log(result)
+            self.setState({
+              saldoCuaderno: result
+            })
+          }
+        }
+      )
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      cuadernoSeleccionada,
+      hasta
+    } = this.props;
+
+    if (!!cuadernoSeleccionada) {
+      const cuadernoId = cuadernoSeleccionada._id;
+      
+      const self = this
+
+      if ((hasta != prevProps.hasta) || (cuadernoId != (!!prevProps.cuadernoSeleccionada && prevProps.cuadernoSeleccionada._id))) {
+        Meteor.call('movimiento.saldoInicial',
+          cuadernoId,
+          hasta,
+          (error, result) => {
+            if (error){
+              console.log(error);
+            } else {
+              console.log(result)
+              self.setState({
+                saldoCuaderno: result
+              })
+            }
+          }
+        )
+      }
+    }
   }
 
   handleExpandClick = () => {
     this.setState(state => ({expanded: !state.expanded}));
   }
 
+  compartirCuaderno = () => {
+    const {
+      cuadernoSeleccionada,
+      handleAlerta
+    } = this.props
+    // Crea un campo de texto "oculto"
+    var aux = document.createElement("input");
+    
+    // Asigna el contenido del elemento especificado al valor del campo
+    // aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+    aux.setAttribute("value", cuadernoSeleccionada._id);
+    
+    // Añade el campo a la página
+    document.body.appendChild(aux);
+    
+    // Selecciona el contenido del campo
+    aux.select();
+    
+    // Copia el texto seleccionado
+    document.execCommand("copy");
+    
+    // Elimina el campo de la página
+    document.body.removeChild(aux);
+    
+    console.log(cuadernoSeleccionada._id+" copiado.")
+    handleAlerta("Código de cuaderno copiado.")
+    }
 
   renderCuadernoSeleccionado(){
     const {  
@@ -220,7 +324,8 @@ class Inicio extends Component {
     } = this.props;
 
     const {
-      expanded
+      expanded,
+      saldoCuaderno
     } = this.state
 
     if (!!cuadernoSeleccionada) {
@@ -237,19 +342,27 @@ class Inicio extends Component {
               title={cuadernoSeleccionada.nombre}
               subheader={cuadernoSeleccionada.descripcion}
             />
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
+            <CardContent className={classes.cardContent}>
+              <Typography id="saldo-cuaderno" variant="h4" gutterBottom
+                className={clsx({
+                  [classes.saldoNegativo]: saldoCuaderno < 0,
+                  [classes.saldoPositivo]: saldoCuaderno > 250,
+                  [classes.saldoPeligroso]: saldoCuaderno >= 0 && saldoCuaderno <= 250,
+                })}>
+                $ {saldoCuaderno.toFixed(2)}
+              </Typography>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Tienes seleccionado este cuaderno, puedes: marcarlo como favorito para que siempre sea el seleecionado al
                   iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o editarlo.
                 </Typography>
-              </CardContent>
-            </Collapse>
+              </Collapse>
+            </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="Add to favorites" onClick={() => { alert("EN DESARROLLO")}}>
                 <GradeIcon />
               </IconButton>
-              <IconButton aria-label="Share" onClick={() => { alert("EN DESARROLLO")}}>
+              <IconButton aria-label="Share" onClick={this.compartirCuaderno}>
                 <ShareIcon />
               </IconButton>
               <IconButton
@@ -277,37 +390,56 @@ class Inicio extends Component {
 
     if(cuadernosExists) {
       return (
-        <div className={classes.rootLinks}>
-          <div className={classes.divSeccion}>
-            <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
-              <div className={classes.divIconoSeccion}>
-                <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/balanza_b.png)"}} />
-              </div>
-            </Link>
-            <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
-              <div className={classes.divIconoSeccion}>
-                <div className={classes.iconoSeccionPrincipal} style={{backgroundImage: "url(/ganancia_b.png)"}} />
-              </div>
-            </Link>
-          </div>
-          <div className={classes.divSeccion}>
-            <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
-            <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_b.png)"}} />
-            </div>
-            </Link>
-            <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
-            <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_b.png)"}} />
-            </div>
-            </Link>
-            <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
-            <div className={classes.divIconoSeccion}>
-              <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_b.png)"}} />
-            </div>
-            </Link>
-          </div>
-        </div>
+        <Grid container className={classes.rootGrid} spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/balanza_b.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Balance</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ganancia_b.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ganancias</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_b.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ingresos</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_b.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Egresos</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_b.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Transferencias</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       )
     }
   }

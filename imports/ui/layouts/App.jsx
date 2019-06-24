@@ -343,7 +343,7 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={() => <InicioContainer cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
+            render={() => <InicioContainer handleAlerta={this.handleAlerta} hasta={hasta} cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
           />,
           <Route
             exact
@@ -396,7 +396,7 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={() => <InicioContainer cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
+            render={() => <InicioContainer handleAlerta={this.handleAlerta} hasta={hasta} cuadernoSeleccionada={cuadernoSeleccionada} cambiarTitulo={this.cambiarTitulo} cuadernosExists={cuadernosExists}/>}
           />,
           <Route
             path="/movimientos/*"

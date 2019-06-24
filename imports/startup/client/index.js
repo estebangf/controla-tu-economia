@@ -18,6 +18,17 @@ const theme = createMuiTheme({
     cuadernos:{
 
     },
+    saldo:{
+      negativo:{
+        color: red[300]
+      },
+      positivo:{
+        color: blue[400]
+      },
+      peligroso: {
+        color: orange[400]
+      }
+    },
     egresos: {
       buttonText: '#FFF',
       backgroundColor: red[300],
