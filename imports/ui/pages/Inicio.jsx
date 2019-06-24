@@ -365,7 +365,7 @@ class Inicio extends Component {
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Tienes seleccionado este cuaderno, puedes: marcarlo como favorito para que siempre sea el seleecionado al
-                  iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o editarlo.
+                  iniciar la aplicacion, compartir su codigo para que alguien lo vincule, o cambiarlo.
                 </Typography>
               </Collapse>
             </CardContent>
@@ -407,7 +407,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/balanza_b.png)"}} />
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/balanza_ib.png)"}} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Balance</Typography>
@@ -415,7 +415,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ganancia_b.png)"}} />
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ganancia_ib.png)"}} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ganancias</Typography>
@@ -427,7 +427,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_b.png)"}} />
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_ib.png)"}} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ingresos</Typography>
@@ -435,7 +435,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_b.png)"}} />
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_ib.png)"}} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Egresos</Typography>
@@ -443,7 +443,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_b.png)"}} />
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_ib.png)"}} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Transferencias</Typography>

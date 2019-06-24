@@ -127,7 +127,7 @@ class AppBarCustom extends Component {
             )}
             {!!verLogo && (
               <IconButton className={classes.iconoDerecha}>
-                <img className={classes.iconoLogo} src="/icono196x196.png" />
+                <img className={classes.iconoLogo} src="/miniLogo.png" />
               </IconButton>
             )}
           </Toolbar>
