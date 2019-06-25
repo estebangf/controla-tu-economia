@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 
 import FilterListIcon from '@material-ui/icons/FilterList';
+import HomeIcon from '@material-ui/icons/Home';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
@@ -23,6 +24,16 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 
 const categorias = [
   {
+    text: "Accesos directos",
+    paginas: [
+      {
+        text: "Inicio",
+        link: "/",
+        icon: HomeIcon
+      },
+    ]
+  },
+  {
     text: "Cuadernos",
     paginas: [
       {
@@ -31,7 +42,7 @@ const categorias = [
         icon: ListIcon
       },
       {
-        text: "Nueva",
+        text: "Nuevo",
         link: "/cuadernos/nueva",
         icon: AddIcon
       }
@@ -51,6 +62,11 @@ const categorias = [
         icon: ListIcon
       },
       {
+        text: "Lista Transferencias",
+        link: "/movimientos/transferencias",
+        icon: ListIcon
+      },
+      {
         text: "Nuevo Ingreso",
         link: "/movimientos/ingresos/nuevo",
         icon: AddIcon
@@ -58,6 +74,11 @@ const categorias = [
       {
         text: "Nuevo Gasto",
         link: "/movimientos/egresos/nuevo",
+        icon: AddIcon
+      },
+      {
+        text: "Nueva Transferencias",
+        link: "/movimientos/transferencias/nueva",
         icon: AddIcon
       }
     ]
@@ -115,29 +136,30 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: '#FFF',
+    backgroundColor: theme.palette.appBar.backgroundColor,
+    // backgroundColor: '#FFF',
   },
   link:{
     textDecoration: 'none',
     '&:focus':{
       textDecoration: 'none',
-      color: '#000'
+      color: '#dbedfd'
     },
     '&:hover':{
       textDecoration: 'none',
-      color: '#000'
+      color: '#dbedfd'
     },
     '&:visited':{
       textDecoration: 'none',
-      color: '#000'
+      color: '#dbedfd'
     },
     '&:link':{
       textDecoration: 'none',
-      color: '#000'
+      color: '#dbedfd'
     },
     '&:active':{
       textDecoration: 'none',
-      color: '#000'
+      color: '#dbedfd'
     },
   },
   divider: {
@@ -148,10 +170,10 @@ const styles = theme => ({
     height: 0,
     verticalAlign: 'middle',
     padding: 8,
-    paddingLeft: 0
+    paddingLeft: 0,
   },
   listaMedia: {
-    backgroundColor: '#ebebeb',
+    backgroundColor: '#1263ab',
     position: 'relative',
     display: 'block',
     overflowX: 'hidden',
@@ -177,31 +199,37 @@ const styles = theme => ({
     },
     /* HOVER */
     ["&:hover::-webkit-scrollbar-thumb"]: {
-      background: '#bbbbbb !important',
+      background: '#03549c !important',
       /* border-radius: 4px !important, */
       /* -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5) !important, */
     }
-
   },
   listaMediaItem: {
     padding: 0
   },
   listItemText:{
     color: '#505050',
+    color: '#dbedfd'
   },
   listaMediaCategoria:{
     width: "100%"
   },
   listSubheader:{
-    color: '#505050',
-    backgroundColor: '#ebebeb',
+    color: '#dbedfd',
+    backgroundColor: '#1263ab',
   },
   listaFooter:{
     flex: '0 0 auto'
   },
   toolbar: {
     ...theme.mixins.toolbar,
+    margin: 0,
+    background: theme.palette.appBar.backgroundColor,
+    textAlign: 'center',
+  },
+  toolbarContent: {
     margin: 'auto',
+    color: '#FFF'
   },
   content: {
     flexGrow: 1,
@@ -230,10 +258,12 @@ class AppMenuCustom extends Component {
         onClose={handleMenu}
         anchor="left" >
         <div className={classes.toolbar}>
-          <Typography className={classes.listItemText}>
-            <img className={classes.logoImgaen} src="/icono196x196.png" />
-            Controla tu Economia
-          </Typography>
+          <div className={classes.toolbarContent}>
+            <Typography className={classes.listItemText}>
+              <img className={classes.logoImgaen} src="/icono196x196.png" />
+              Controla tu Economia
+            </Typography>
+          </div>
         </div>
         <Divider className={classes.divider}/>
         <List
