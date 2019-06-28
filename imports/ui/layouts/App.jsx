@@ -24,6 +24,7 @@ import CuadernosContainer from '../containers/CuadernosContainer';
 
 import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
+import TransferenciaContainer from '../containers/TransferenciaContainer';
 import EgresosContainer from '../containers/EgresosContainer';
 import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
@@ -33,6 +34,20 @@ import SeguimientosContainer from '../containers/SeguimientosContainer';
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
 
+
+const PAGINAS_CON_MENU_DROWEABLE = [
+  "/cuadernos",
+  "/cuadernos/nuevo",
+  "/movimientos/ingresos",
+  "/movimientos/ingresos/nuevo",
+  "/movimientos/egresos",
+  "/movimientos/egresos/nuevo",
+  "/movimientos/transferencias",
+  "/movimientos/transferencias/nueva",
+  "/movimientos/balance",
+  "/movimientos/seguimientos",
+  "/movimientos/ganancias",
+]
 
 const TODAY_M = new Date()
 TODAY_M.setHours(0)
@@ -68,6 +83,21 @@ const styles = theme => ({
       bottom: 50,
       top: 114,
     },
+  },
+  loadingRoot:{
+    display: 'flex',
+    position: 'fixed',
+    top: 0,
+    width: "100%",
+    height: "100%",
+    background: '#ffffffad',
+    left: 0,
+    zIndex: 999999999999,
+    verticalAlign: 'middle',
+    textAlign: 'center',
+  },
+  loadingContainer:{
+    margin: 'auto'
   },
   fondo: {
     [theme.breakpoints.up('lg')]: {
@@ -367,6 +397,11 @@ class App extends Component {
           />,
           <Route
             exact
+            path="/movimientos/transferencias/:id"
+            render={({match}) => <TransferenciaContainer cuadernos={cuadernos} match={match} {...pase} />}
+          />,
+          <Route
+            exact
             path="/movimientos/seguimientos"
             render={() => <SeguimientosContainer {...pase} />}
           />,
@@ -457,11 +492,15 @@ class App extends Component {
     } = this.state
 
 
+    const verMenuDroweable = PAGINAS_CON_MENU_DROWEABLE.includes(location.pathname)
+
     return (
       <div className={classes.rootApp}>
-        <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
-          handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre} />
-        <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} />
+        { !!user ? 
+          <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
+            handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre} />
+        : '' }
+        { verMenuDroweable ? <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} /> : ''}
         <RangoFechas
           open={openRangoFechas}
           handleRangoFechas={this.handleRangoFechas}
@@ -482,6 +521,14 @@ class App extends Component {
             {this.renderNotFoundPage()}
           </Switch>
         </div>
+        { loading ?
+          <div className={classes.loadingRoot}>
+            <div className={classes.loadingContainer}>
+              <div class="loader" id="loader"></div>
+              cargando
+            </div>
+          </div>
+          : ''}
       </div>
     );
   }

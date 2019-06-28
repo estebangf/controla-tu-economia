@@ -3,26 +3,53 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 import { Transferencias } from './transferencias.js'
+import { Movimientos } from '../movimientos/movimientos.js'
 
 Meteor.methods({
-  'transferencia.nuevo'(detalle, descripcion, importe, variaLaGanancia, cuadernoId, fecha) {
-    check(detalle, String);
-    check(descripcion, String);
-    check(importe, Number);
-    check(variaLaGanancia, Boolean);
+  'transferencia.nueva'(cuadernoId, fecha, egreso, ingreso) {
     check(cuadernoId, String);
     check(fecha, Date);
+    check(egreso, Object);
+    check(ingreso, Object);
 
     if (!!this.userId) {
-      return Transferencias.insert({
-        detalle,
-        descripcion,
-        importe,
-        variaLaGanancia,
-        cuadernoId,
+
+      const transferenciaId = Transferencias.insert({
+        egresoId: "",
+        ingresoId: "",
         userId: this.userId,
-        creado: new Date(),
+        creada: new Date(),
         fecha
+      });
+
+      const egresoId = Movimientos.insert({
+        detalle: egreso.detalle,
+        descripcion: egreso.descripcion,
+        importe: egreso.importe,
+        variaLaGanancia: egreso.variaLaGanancia,
+        cuadernoId: egreso.cuadernoId,
+        transferenciaId,
+        userId: this.userId,
+        creado: egreso.creado,
+        fecha: egreso.fecha
+      });
+      const ingresoId = Movimientos.insert({
+        detalle: ingreso.detalle,
+        descripcion: ingreso.descripcion,
+        importe: ingreso.importe,
+        variaLaGanancia: ingreso.variaLaGanancia,
+        cuadernoId: ingreso.cuadernoId,
+        transferenciaId,
+        userId: this.userId,
+        creado: ingreso.creado,
+        fecha: ingreso.fecha
+      });
+
+      Transferencias.update(transferenciaId, {
+        $set: {
+          egresoId,
+          ingresoId
+        }
       });
     } else {
       throw new Meteor.Error('not-authorized');
@@ -64,7 +91,7 @@ Meteor.methods({
     check(hasta, Date);
     const transferencias = Transferencias.find({cuadernoId: cuadernoId,
       "$and": [
-        { creado: { "$lt": new Date(hasta) }}
+        { creada: { "$lt": new Date(hasta) }}
       ]
     }).fetch()
     var saldoInicial = 0;

@@ -196,7 +196,11 @@ class ListItemMovimiento extends Component {
                   className: classes[movimiento.tipo+"Font"]
                 }}
                 primary={movimiento.detalle}
-                secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
+                secondary={
+                  <div style={{maxWidth: 'calc(100% - 60px)'}}>
+                    {!!movimiento.descripcion ? movimiento.descripcion : null}
+                  </div>
+                }
               />
               <ListItemSecondaryAction>
                 <Typography className={classes[movimiento.tipo+"FontImporte"]} >$  {Math.abs(movimiento.importe.toFixed(2))}</Typography>

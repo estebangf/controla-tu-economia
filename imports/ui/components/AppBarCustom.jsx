@@ -4,18 +4,32 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, withStyles} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DateRange from '@material-ui/icons/DateRange';
 
 const PAGINAS_CON_FILTRO = [
   "/movimientos/ingresos",
-  "/movimientos/ingresos/nuevo",
   "/movimientos/egresos",
-  "/movimientos/egresos/nuevo",
+  "/movimientos/transferencias",
   "/movimientos/balance",
   "/movimientos/seguimientos",
   "/movimientos/ganancias",
 ]
-
+const PAGINAS_CON_ATRAS = [
+  "/cuadernos/nuevo",
+  "/movimientos/ingresos/nuevo",
+  "/movimientos/egresos/nuevo",
+  "/movimientos/transferencias/nueva",
+]
+const PAGINAS_CON_MENU = [
+  "/cuadernos",
+  "/movimientos/ingresos",
+  "/movimientos/egresos",
+  "/movimientos/transferencias",
+  "/movimientos/balance",
+  "/movimientos/seguimientos",
+  "/movimientos/ganancias",
+]
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -109,14 +123,24 @@ class AppBarCustom extends Component {
     })[0]
 */
     const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
+    const verAtras = PAGINAS_CON_ATRAS.includes(location.pathname)
+    const verMenu = PAGINAS_CON_MENU.includes(location.pathname)
     const verLogo = location.pathname == "/"
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : '', window.location.pathname == "/" ? classes.appBarModerna : ''].join(' ')}>
           <Toolbar>
-            <IconButton onClick={handleMenu} className={classes.menuButton} aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
+            { verAtras ? 
+              <IconButton onClick={() => {history.go(-1)}} className={classes.menuButton} aria-label="Menu">
+                <ArrowBackIcon />
+              </IconButton>
+            :
+              verMenu ? 
+              <IconButton onClick={handleMenu} className={classes.menuButton} aria-label="Menu">
+                <MenuIcon />
+              </IconButton>
+              : ''
+            }
             <Typography variant="h6" noWrap className={classes.titulo}>
               {titulo}{verFiltro && !!cuaderno ? " - "+cuaderno : ''}
             </Typography>
