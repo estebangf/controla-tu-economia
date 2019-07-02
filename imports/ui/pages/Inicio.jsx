@@ -17,7 +17,7 @@ import { red } from '@material-ui/core/colors';
 import GradeIcon from '@material-ui/icons/Grade';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { Fab, Grid } from '@material-ui/core';
 
 const drawerWidth = 240;
@@ -346,7 +346,7 @@ class Inicio extends Component {
               action={
                 <Link className={classes.linkSeccion} to={'/cuadernos'}>
                   <IconButton aria-label="Cuadernos">
-                    <ImportContactsIcon />
+                    <LibraryBooksIcon />
                   </IconButton>
                 </Link>
               }

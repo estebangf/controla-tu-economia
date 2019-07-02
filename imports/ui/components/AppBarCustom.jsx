@@ -16,6 +16,7 @@ const PAGINAS_CON_FILTRO = [
   "/movimientos/ganancias",
 ]
 const PAGINAS_CON_ATRAS = [
+  "/cuadernos/",
   "/cuadernos/nuevo",
   "/movimientos/ingresos/",
   "/movimientos/ingresos/nuevo",
