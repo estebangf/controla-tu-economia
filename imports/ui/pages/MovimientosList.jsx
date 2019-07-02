@@ -6,11 +6,46 @@ import { withStyles, Typography, ListItemAvatar, Avatar, List, ListItemText, Lis
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
   },
+  fab: {
+    margin: theme.spacing.unit,
+    background: "#FFF",
+    position: 'fixed',
+    bottom: theme.spacing.unit * 1,
+    right: theme.spacing.unit * 1,
+    [theme.breakpoints.up('lg')]: {
+      bottom: theme.spacing.unit * 1 + 50,
+      right: theme.spacing.unit * 1 + 210,
+    },
+  },
+  egresosFab: {
+    color: "#FFF",
+    background: theme.palette.egresos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.egresos.buttonHover
+    },
+  },
+  ingresosFab: {
+    color: "#FFF",
+    background: theme.palette.ingresos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.ingresos.buttonHover
+    },
+  },
+  transferenciasFab: {
+    color: "#FFF",
+    background: theme.palette.seguimientos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.seguimientos.buttonHover
+    },
+  }
 });
 
 class MovimientosList extends Component {
@@ -37,13 +72,17 @@ class MovimientosList extends Component {
     const { classes, pagina } = this.props;
     return (
       <div className={classes.root}>
-        <Link className={classes.link} to={'/movimientos/'+pagina+'/nuevo'}>
-          Nuevo Movimiento
-        </Link>
-        
         <List className={classes.root}>
           {this.renderMovimientos()}
         </List>
+
+        <Link className={classes.link} to={'/movimientos/'+pagina+'/nuevo'}>
+          <Fab
+            className={[classes.fab, classes[pagina+"Fab"]].join(' ')}
+            onClick={this.handleClick}>
+            <AddIcon />
+          </Fab>
+        </Link>
       </div>
     )
   }

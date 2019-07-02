@@ -93,8 +93,14 @@ class ListItemMovimiento extends Component {
     this.handleClose(this)
   }
   eliminar = (movimiento) => {
-    Meteor.call('movimiento.eliminar',
-      movimiento._id,
+    var tipo = 'movimiento'
+    var id = movimiento._id
+    if(!!movimiento.transferenciaId) {
+      tipo = 'transferencia'
+      id = movimiento.transferenciaId
+    }
+    Meteor.call(tipo+'.eliminar',
+      id,
       (error, result) => {
         if (error){
           console.log(error);
@@ -179,7 +185,14 @@ class ListItemMovimiento extends Component {
     } else {
       return (
         <div>
-          <Link onContextMenu={this.handleClick} to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
+          <Link onContextMenu={this.handleClick} to={
+              "/movimientos/" + 
+              (!!movimiento.transferenciaId ? 
+                "transferencia" : movimiento.tipo) +
+              "s/" +
+              (!!movimiento.transferenciaId ?
+                movimiento.transferenciaId : movimiento._id)
+              } className={classes.link}>
             <ListItem
               button
             >
@@ -214,7 +227,14 @@ class ListItemMovimiento extends Component {
               disabled={true}
               onClick={() => this.handleClose(this)}
             >{movimiento.detalle + ' x ' + Math.abs(movimiento.importe.toFixed(2))}</MenuItem>
-            <Link to={"/movimientos/"+movimiento.tipo+"s/"+movimiento._id} className={classes.link}>
+            <Link to={
+              "/movimientos/" + 
+              (!!movimiento.transferenciaId ? 
+                "transferencia" : movimiento.tipo) +
+              "s/" +
+              (!!movimiento.transferenciaId ?
+                movimiento.transferenciaId : movimiento._id)
+            } className={classes.link}>
               <MenuItem onClick={() => this.editar(movimiento)}>Editar</MenuItem>
             </Link>
             <MenuItem onClick={() => this.eliminar(movimiento)}>Eliminar</MenuItem>

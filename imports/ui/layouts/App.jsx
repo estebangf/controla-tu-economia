@@ -25,6 +25,7 @@ import CuadernosContainer from '../containers/CuadernosContainer';
 import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
 import TransferenciaContainer from '../containers/TransferenciaContainer';
+import TransferenciasContainer from '../containers/TransferenciasContainer';
 import EgresosContainer from '../containers/EgresosContainer';
 import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
@@ -36,6 +37,7 @@ const pageHeight = window.innerHeight;
 
 
 const PAGINAS_CON_MENU_DROWEABLE = [
+  "/",
   "/cuadernos",
   "/cuadernos/nuevo",
   "/movimientos/ingresos",
@@ -270,7 +272,6 @@ class App extends Component {
     this.setState({ [name]: fecha });
   };
 
-
   static getDerivedStateFromProps(props, state){
     const {
       loading,
@@ -285,8 +286,6 @@ class App extends Component {
 
     if (!loading && cuadernosExists && !!loggued) {
       if (!!!cuadernoSeleccionada || (!!cuadernoSeleccionada && cuadernos.map((c)=> {return c._id}).indexOf(cuadernoSeleccionada._id) == -1) ) {
-        console.log("cuadernoSeleccionadaProps");
-        console.log(cuadernoSeleccionadaProps);
         if (!!cuadernoSeleccionadaProps) {
           return {
             cuadernoSeleccionada: cuadernoSeleccionadaProps
@@ -399,6 +398,11 @@ class App extends Component {
             exact
             path="/movimientos/transferencias/:id"
             render={({match}) => <TransferenciaContainer cuadernos={cuadernos} match={match} {...pase} />}
+          />,
+          <Route
+            exact
+            path="/movimientos/transferencias"
+            render={({match}) => <TransferenciasContainer cuadernos={cuadernos} match={match} {...pase} />}
           />,
           <Route
             exact

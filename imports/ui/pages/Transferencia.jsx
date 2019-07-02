@@ -34,11 +34,13 @@ class Transferencia extends Component {
     this.state = {
       id: '',
       detalle: '',
+      fecha: new Date(),
       descripcion: '',
       importe: 0.00,
-      variaLaGanancia: props.esIngreso,
-      fecha: new Date(),
-      clear: undefined
+      cuadernoEgreso: '',
+      egresoVariaLaGanancia: false,
+      cuadernoIngreso: '',
+      ingresoVariaLaGanancia: false
     };
 
     this.handleDateChange = this.handleDateChange.bind(this)
@@ -48,18 +50,27 @@ class Transferencia extends Component {
     const {
       loading,
       transferenciaExists,
-      transferencia
+      transferencia,
+      movimientosExists,
+      egreso,
+      ingreso,
     } = props;
 
-    if (!loading && transferenciaExists) {
-      if (state.id == '' || state.id != transferencia._id) {
+    if (!loading && transferenciaExists && movimientosExists) {
+      if (
+        state.id == '' ||
+        state.id != transferencia._id
+        ) {
         return {
           id: transferencia._id,
-          detalle: transferencia.detalle,
-          descripcion: transferencia.descripcion,
-          importe: Math.abs(transferencia.importe),
-          variaLaGanancia: transferencia.variaLaGanancia,
-          fecha: transferencia.fecha
+          detalle: ingreso.detalle,
+          fecha: transferencia.fecha,
+          descripcion: ingreso.descripcion,
+          importe: Math.abs(ingreso.importe),
+          cuadernoEgreso: egreso.cuadernoId,
+          egresoVariaLaGanancia: egreso.variaLaGanancia,
+          cuadernoIngreso: ingreso.cuadernoId,
+          ingresoVariaLaGanancia: ingreso.variaLaGanancia
         }
       } else {
         return null
@@ -75,10 +86,10 @@ class Transferencia extends Component {
     })
   }
   handleChangeChecked = name => event => {
-    const { esIngreso, variaLaGanancia } = this.props
+    const esIngreso = name == "ingresoVariaLaGanancia"
     const checked = esIngreso ? !event.target.checked : event.target.checked
     this.setState({
-      [name]: checked
+        [name]: checked
     })
   }
   handleDateChange(name, date){
@@ -89,31 +100,38 @@ class Transferencia extends Component {
   
   guardar(){
     const {
+      loading,
       transferenciaExists,
       transferencia,
-      cuadernoId,
-      esIngreso
+      movimientosExists,
+      egreso,
+      ingreso,
     } = this.props
     const {
+      id,
       detalle,
+      fecha,
       descripcion,
-      variaLaGanancia,
-      fecha
-    } = this.state;
-    const imp = Math.abs(parseFloat(this.state.importe));
-    const importe = esIngreso ? imp : 0-imp;
-    const id = transferencia._id;
+      cuadernoEgreso,
+      egresoVariaLaGanancia,
+      ingresoVariaLaGanancia,
+      cuadernoIngreso
+    } = this.state
 
+    const importe = Math.abs(this.state.importe)
     const self = this;
 
     if(transferenciaExists) {
       Meteor.call('transferencia.editar',
         id,
         detalle,
+        fecha,
         descripcion,
         importe,
-        variaLaGanancia,
-        fecha,
+        cuadernoEgreso,
+        egresoVariaLaGanancia,
+        ingresoVariaLaGanancia,
+        cuadernoIngreso,
         (error, result) => {
           if (error){
             console.log(error);
@@ -124,13 +142,15 @@ class Transferencia extends Component {
         }
       )
     } else {
-      Meteor.call('transferencia.nuevo',
+      Meteor.call('transferencia.nueva',
         detalle,
+        fecha,
         descripcion,
         importe,
-        variaLaGanancia,
-        cuadernoId,
-        fecha,
+        cuadernoEgreso,
+        egresoVariaLaGanancia,
+        ingresoVariaLaGanancia,
+        cuadernoIngreso,
         (error, result) => {
           if (error){
             console.log(error);
@@ -146,31 +166,35 @@ class Transferencia extends Component {
     const {
       transferenciaExists,
       transferencia,
-      esIngreso
+      movimientosExists,
+      egreso,
+      ingreso,
     } = this.props
 
-    if(transferenciaExists) {
+    if(transferenciaExists && movimientosExists) {
       this.setState({
         detalle: transferencia.detalle,
+        fecha: transferencia.fecha,
         descripcion: transferencia.descripcion,
-        importe: Math.abs(transferencia.importe),
-        variaLaGanancia: transferencia.variaLaGanancia,
-        fecha: transferencia.fecha
+        importe: Math.abs(ingreso.importe),
+        cuadernoEgreso: egreso._id,
+        egresoVariaLaGanancia: egreso.variaLaGanancia,
+        cuadernoIngreso: ingreso._id,
+        ingresoVariaLaGanancia: ingreso.variaLaGanancia
       });
     } else {
       this.setState({
         detalle: '',
+        fecha: new Date(),
         descripcion: '',
         importe: 0.00,
-        variaLaGanancia: esIngreso,
-        fecha: new Date()
+        cuadernoEgreso: '',
+        egresoVariaLaGanancia: false,
+        cuadernoIngreso: '',
+        ingresoVariaLaGanancia: true
       });
     }
   }
-
-  clearSelection = () => {
-    this.state.clear();
-  };
 
   render() {
     const {
@@ -183,24 +207,16 @@ class Transferencia extends Component {
     } = this.props;
     const {
       detalle,
+      fecha,
       descripcion,
       importe,
-      fecha
+      cuadernoEgreso,
+      egresoVariaLaGanancia,
+      cuadernoIngreso,
+      ingresoVariaLaGanancia
     } = this.state;
-
-    const transferencia = {
-      origen: {
-        id: cuadernoSeleccionada._id,
-        variaLaGanancia: false
-      },
-      destino: {
-        id: 0,
-        variaLaGanancia: false
-      }
-    }
     return (
       <div className={classes.root}>
-
         <TextField
           InputLabelProps={{ shrink: !!detalle && detalle != '' }}
           id="detalle"
@@ -229,10 +245,10 @@ class Transferencia extends Component {
           inputRoot={classes.inputFechaRoot}
         />
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Cuaderno de origen</InputLabel>
+          <InputLabel htmlFor="age-helper">Cuaderno de egreso</InputLabel>
           <Select
-            value={transferencia.origen.id}
-            onChange={"handleChange"}
+            value={cuadernoEgreso}
+            onChange={this.handleChange("cuadernoEgreso")}
           >
             <MenuItem value={0}>
               <em>No seleccionado</em>
@@ -240,7 +256,7 @@ class Transferencia extends Component {
             {
               cuadernos.map((cuaderno) => {
                 return (
-                  <MenuItem value={cuaderno._id}>{cuaderno.nombre}</MenuItem>
+                  <MenuItem value={!!cuaderno.cuadernoVinculado ? cuaderno.cuadernoVinculado : cuaderno._id}>{cuaderno.nombre}</MenuItem>
                 )
               })
             }
@@ -250,8 +266,8 @@ class Transferencia extends Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="age-helper">Destino</InputLabel>
           <Select
-            value={transferencia.destino.id}
-            onChange={"handleChange"}
+            value={cuadernoIngreso}
+            onChange={this.handleChange("cuadernoIngreso")}
           >
             <MenuItem value={0}>
               <em>No seleccionado</em>
@@ -259,7 +275,7 @@ class Transferencia extends Component {
             {
               cuadernos.map((cuaderno) => {
                 return (
-                  <MenuItem value={cuaderno._id}>{cuaderno.nombre}</MenuItem>
+                  <MenuItem value={!!cuaderno.cuadernoVinculado ? cuaderno.cuadernoVinculado : cuaderno._id}>{cuaderno.nombre}</MenuItem>
                 )
               })
             }
@@ -293,23 +309,23 @@ class Transferencia extends Component {
         <FormControlLabel
           control={
             <Checkbox
-            checked={transferencia.origen.variaLaGanancia}
-            onChange={this.handleChangeChecked('variaLaGanancia')}
+            checked={egresoVariaLaGanancia}
+            onChange={this.handleChangeChecked('egresoVariaLaGanancia')}
             color="primary"
           />
           }
-          label={ transferencia.origen.variaLaGanancia ? "Es un insumo" : "No es insumo" }
+          label={ egresoVariaLaGanancia ? "Es un insumo" : "No es insumo" }
         /><em> - Origen</em>
         <br />
         <FormControlLabel
           control={
             <Checkbox
-            checked={!transferencia.destino.variaLaGanancia}
-            onChange={this.handleChangeChecked('variaLaGanancia')}
+            checked={!ingresoVariaLaGanancia}
+            onChange={this.handleChangeChecked('ingresoVariaLaGanancia')}
             color="primary"
           />
           }
-          label={ !transferencia.destino.variaLaGanancia ? "Es un prestamo" : "No es un prestamo" }
+          label={ !ingresoVariaLaGanancia ? "Es un prestamo" : "No es un prestamo" }
         /><em> - Destino</em>
         <div className={classes.actions}>
           <Button fullWidth={true} variant="contained" onClick={() => this.guardar()} color="primary" className={classes.button}>

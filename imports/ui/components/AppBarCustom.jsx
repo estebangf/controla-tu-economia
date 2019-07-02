@@ -17,11 +17,15 @@ const PAGINAS_CON_FILTRO = [
 ]
 const PAGINAS_CON_ATRAS = [
   "/cuadernos/nuevo",
+  "/movimientos/ingresos/",
   "/movimientos/ingresos/nuevo",
+  "/movimientos/egresos/",
   "/movimientos/egresos/nuevo",
+  "/movimientos/transferencias/",
   "/movimientos/transferencias/nueva",
 ]
 const PAGINAS_CON_MENU = [
+  "/",
   "/cuadernos",
   "/movimientos/ingresos",
   "/movimientos/egresos",
@@ -118,14 +122,15 @@ class AppBarCustom extends Component {
     const { schrolled } = this.state;
 
 /*
-    const verFiltro = !!PAGINAS_CON_FILTRO.filter(p => {
-      return location.pathname.includes(p)
-    })[0]
-*/
-    const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
     const verAtras = PAGINAS_CON_ATRAS.includes(location.pathname)
+*/
+    const verAtras = !!PAGINAS_CON_ATRAS.filter(p => {
+      return location.pathname.includes(p)
+    }).length
+    const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
     const verMenu = PAGINAS_CON_MENU.includes(location.pathname)
     const verLogo = location.pathname == "/"
+
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={[classes.appBar, !schrolled ? classes.schrolled : '', window.location.pathname == "/" ? classes.appBarModerna : ''].join(' ')}>

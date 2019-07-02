@@ -67,19 +67,19 @@ const styles = theme => ({
   },
   menu:{
     [theme.breakpoints.up('lg')]: {
-      bottom: 70 + 50,
+      bottom: 65 + 50,
     },
-    bottom: 70,
+    bottom: 65,
     background: 'transparent',
     boxShadow: 'none',
     top: 'auto !important',
   },
   menuItem: {
     marginLeft: 8,
-    marginRight: 8,
+    marginRight: 1,
     // margin: 0px 8px;
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 0,
+    paddingBottom: 12.5,
     paddingLeft: 0,
     paddingRight: 0,
     boxShadow: 'none',
@@ -89,10 +89,25 @@ const styles = theme => ({
     },
   },
   fabChildEgreso: {
-    background: "#de6c6c"
+    color: "#FFF",
+    background: theme.palette.egresos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.egresos.buttonHover
+    },
   },
   fabChildIngreso: {
-    background: "#4385d6"
+    color: "#FFF",
+    background: theme.palette.ingresos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.ingresos.buttonHover
+    },
+  },
+  fabChildTransferencia: {
+    color: "#FFF",
+    background: theme.palette.seguimientos.backgroundColor,
+    '&:hover': {
+      background: theme.palette.seguimientos.buttonHover
+    },
   }
 });
 
@@ -305,18 +320,23 @@ class Balance extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem style={{display: "none"}} className={classes.menuItem}>
-          </MenuItem>
           <MenuItem className={classes.menuItem} onClick={this.handleClose}>
-            <Link className={classes.link} to={"/movimientos/egresos/nuevo"}>
-              <Fab color="secondary" className={classes.fabChildEgreso} size="small">
+            <Link className={classes.link} to={"/movimientos/ingresos/nuevo"}>
+              <Fab className={classes.fabChildIngreso} size="small">
                 <AddIcon />
               </Fab>
             </Link>
           </MenuItem>
           <MenuItem className={classes.menuItem} onClick={this.handleClose}>
-            <Link className={classes.link} to={"/movimientos/ingresos/nuevo"}>
-              <Fab color="primary" className={classes.fabChildIngreso} size="small">
+            <Link className={classes.link} to={"/movimientos/egresos/nuevo"}>
+              <Fab className={classes.fabChildEgreso} size="small">
+                <AddIcon />
+              </Fab>
+            </Link>
+          </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={this.handleClose}>
+            <Link className={classes.link} to={"/movimientos/transferencias/nueva"}>
+              <Fab className={classes.fabChildTransferencia} size="small">
                 <AddIcon />
               </Fab>
             </Link>
