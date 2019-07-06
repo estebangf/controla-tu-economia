@@ -59,7 +59,7 @@ Meteor.publish('movimientos.transferencias', function transferencia(cuadernoId, 
   //  return Movimientos.find({_id: id, userId: Meteor.userId()})
     return Movimientos.find({
       cuadernoId: cuadernoId,
-      transferenciaId: { "$ne": '' },
+      transferenciaId: { "$nin": ['', null, undefined ] },
       "$and": [
         { fecha: { "$gte": new Date(desde) }},
         { fecha: { "$lte": new Date(hasta) }}

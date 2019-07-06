@@ -88,7 +88,6 @@ class ListItemMovimiento extends Component {
     }
   }
 
-
   editar = (movimiento) => {
     this.handleClose(this)
   }
@@ -130,7 +129,24 @@ class ListItemMovimiento extends Component {
     this.handleClose(this)
   }
 
-
+  invertirMonto = (movimiento) => {
+    Meteor.call('movimiento.editar',
+      movimiento._id,
+      movimiento.detalle,
+      movimiento.descripcion,
+      movimiento.importe * -1,
+      !movimiento.variaLaGanancia,
+      movimiento.fecha,
+      (error, result) => {
+        if (error){
+          console.log(error);
+        } else {
+          console.log(result)
+        }
+      }
+    )
+    this.handleClose(this)
+  }
 
   render() {
     const {
@@ -244,6 +260,14 @@ class ListItemMovimiento extends Component {
                   (movimiento.variaLaGanancia ? "Desmarcar como insumo" : "Marcar como insumo")
                   :
                   (movimiento.variaLaGanancia ? "Marcar como prestamo" : "Desmarcar como prestamo")
+              }
+            </MenuItem>
+            <MenuItem disabled={!!movimiento.transferenciaId} onClick={() => this.invertirMonto(movimiento)}>
+              {
+                movimiento.tipo == "egreso" ?
+                  "Hacer ingreso"
+                  :
+                  "Hacer egreso"
               }
             </MenuItem>
           </Menu>
