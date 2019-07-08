@@ -89,6 +89,11 @@ const styles = theme => ({
       top: 114,
     },
   },
+  dialogPaperCalculadora:{
+    maxWidth: 64*4,
+    minWidth: 64*4,
+    minHeight: 'fit-content',
+  },
   loadingRoot:{
     display: 'flex',
     position: 'fixed',
@@ -528,7 +533,14 @@ class App extends Component {
           hasta={hasta}
           handleDateChange={this.handleDateChange}
         />
-        <Dialog onClose={this.handleCalculadora} open={openCalculadora}>
+        <Dialog
+          maxWidth="lg"
+          PaperProps={{
+            className: classes.dialogPaperCalculadora
+          }}
+          onClose={this.handleCalculadora}
+          open={openCalculadora}
+          >
           <Calculadora />
         </Dialog>
 {/*

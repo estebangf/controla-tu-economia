@@ -43,6 +43,7 @@ const numeros = [
 const styles = theme => ({
   calculadora: {
     maxWidth: 64*4,
+    minWidth: 64*4,
     paddingTop: 16
   },
   historial:{
