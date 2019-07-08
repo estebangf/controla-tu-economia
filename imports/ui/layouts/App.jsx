@@ -19,9 +19,10 @@ import AppBarCustom from '../components/AppBarCustom';
 import AppMenuCustom from '../components/AppMenuCustom';
 import RangoFechas from '../components/RangoFechas';
 
+import CalculadoraContainer from '../containers/CalculadoraContainer';
+
 import CuadernoContainer from '../containers/CuadernoContainer';
 import CuadernosContainer from '../containers/CuadernosContainer';
-
 import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
 import TransferenciaContainer from '../containers/TransferenciaContainer';
@@ -31,6 +32,8 @@ import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
 import GananciasContainer from '../containers/GananciasContainer';
 import SeguimientosContainer from '../containers/SeguimientosContainer';
+import { Dialog } from '@material-ui/core';
+import Calculadora from '../components/Calculadora';
 
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
@@ -215,6 +218,7 @@ class App extends Component {
       mensajeAlerta: '',
       openMenu: false,
       openRangoFechas: false,
+      openCalculadora: false,
 //      heightSchroleable: pageHeight - 64,
       heightSchroleable: pageHeight,
       cuadernoSeleccionada: undefined,
@@ -230,6 +234,7 @@ class App extends Component {
     this.handleMenu = this.handleMenu.bind(this)
     this.handleAlerta = this.handleAlerta.bind(this)
     this.handleRangoFechas = this.handleRangoFechas.bind(this)
+    this.handleCalculadora = this.handleCalculadora.bind(this)
 
 /*
     this.logout = this.logout.bind(this);
@@ -252,6 +257,11 @@ class App extends Component {
   handleRangoFechas() {
     this.setState({
       openRangoFechas: !this.state.openRangoFechas
+    })
+  }
+  handleCalculadora(){
+    this.setState({
+      openCalculadora: !this.state.openCalculadora
     })
   }
 
@@ -340,6 +350,11 @@ class App extends Component {
         exact
         path="/join"
         render={() => <JoinPage cambiarTitulo={this.cambiarTitulo} />}
+      />,
+      <Route
+        exact
+        path="/herramientas/calculadora"
+        render={() => <CalculadoraContainer cambiarTitulo={this.cambiarTitulo} />}
       />,
       !!loggued ? '' :
       <Route
@@ -488,7 +503,7 @@ class App extends Component {
       showConnectionIssue,
       openMenu,
       openRangoFechas,
-      heightSchroleable,
+      openCalculadora,
       titulo,
       desde,
       hasta,
@@ -502,7 +517,8 @@ class App extends Component {
       <div className={classes.rootApp}>
         { !!user ? 
           <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
-            handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre} />
+            handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre}
+            handleCalculadora={this.handleCalculadora} />
         : '' }
         { verMenuDroweable ? <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} /> : ''}
         <RangoFechas
@@ -512,6 +528,9 @@ class App extends Component {
           hasta={hasta}
           handleDateChange={this.handleDateChange}
         />
+        <Dialog onClose={this.handleCalculadora} open={openCalculadora}>
+          <Calculadora />
+        </Dialog>
 {/*
         <HeaderApp />
         <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>

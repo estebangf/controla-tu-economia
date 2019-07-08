@@ -25,6 +25,14 @@ const PAGINAS_CON_ATRAS = [
   "/movimientos/transferencias/",
   "/movimientos/transferencias/nueva",
 ]
+const PAGINAS_CON_CALCULADORA = [
+  "/movimientos/ingresos/",
+  "/movimientos/ingresos/nuevo",
+  "/movimientos/egresos/",
+  "/movimientos/egresos/nuevo",
+  "/movimientos/transferencias/",
+  "/movimientos/transferencias/nueva",
+]
 const PAGINAS_CON_MENU = [
   "/",
   "/cuadernos",
@@ -119,13 +127,16 @@ class AppBarCustom extends Component {
 
 
   render() {
-    const { classes, titulo, handleMenu, handleRangoFechas, cuaderno } = this.props;
+    const { classes, titulo, handleMenu, handleRangoFechas, handleCalculadora, cuaderno } = this.props;
     const { schrolled } = this.state;
 
 /*
     const verAtras = PAGINAS_CON_ATRAS.includes(location.pathname)
 */
     const verAtras = !!PAGINAS_CON_ATRAS.filter(p => {
+      return location.pathname.includes(p)
+    }).length
+    const verCalculadora = !!PAGINAS_CON_CALCULADORA.filter(p => {
       return location.pathname.includes(p)
     }).length
     const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
@@ -158,6 +169,11 @@ class AppBarCustom extends Component {
             {!!verLogo && (
               <IconButton className={classes.iconoDerecha}>
                 <img className={classes.iconoLogo} src="/miniLogo.png" />
+              </IconButton>
+            )}
+            {!!verCalculadora && (
+              <IconButton className={classes.iconoDerecha} onClick={handleCalculadora}>
+                <img className={classes.iconoLogo} src="/calculadora_b.png" />
               </IconButton>
             )}
           </Toolbar>
