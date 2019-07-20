@@ -5,13 +5,14 @@ import { check } from 'meteor/check';
 import { Movimientos } from './movimientos.js'
 
 Meteor.methods({
-  'movimiento.nuevo'(detalle, descripcion, importe, variaLaGanancia, cuadernoId, fecha) {
+  'movimiento.nuevo'(detalle, descripcion, importe, variaLaGanancia, cuadernoId, fecha, categoria) {
     check(detalle, String);
     check(descripcion, String);
     check(importe, Number);
     check(variaLaGanancia, Boolean);
     check(cuadernoId, String);
     check(fecha, Date);
+    check(categoria, String);
 
     if (!!this.userId) {
       return Movimientos.insert({
@@ -22,19 +23,21 @@ Meteor.methods({
         cuadernoId,
         userId: this.userId,
         creado: new Date(),
-        fecha
+        fecha,
+        categoria
       });
     } else {
       throw new Meteor.Error('not-authorized');
     }
   },
-  'movimiento.editar'(id, detalle, descripcion, importe, variaLaGanancia, fecha) {
+  'movimiento.editar'(id, detalle, descripcion, importe, variaLaGanancia, fecha, categoria) {
     check(id, String);
     check(detalle, String);
     check(descripcion, String);
     check(importe, Number);
     check(variaLaGanancia, Boolean);
     check(fecha, Date);
+    check(categoria, String);
 
     if (!!this.userId) {
       return Movimientos.update(id, {
@@ -43,7 +46,8 @@ Meteor.methods({
           descripcion,
           importe,
           variaLaGanancia,
-          fecha
+          fecha,
+          categoria
         }
       });
     } else {

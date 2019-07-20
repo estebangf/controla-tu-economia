@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Movimientos } from '/imports/api/movimientos/movimientos'
+import { Categorias } from '/imports/api/categorias/categorias'
 import Movimiento from '../pages/Movimiento.jsx';
 
 export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
@@ -15,6 +16,13 @@ export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
   const movimiento = Movimientos.findOne({_id: movimientoId});
   const movimientoExists = !loading && !!movimiento;
 
+
+  const publicHandleCategorias = Meteor.subscribe('categorias');
+  const loadingCategorias = !publicHandleCategorias.ready();
+  const categorias = Categorias.find({}).fetch();
+  const categoriasExists = !loadingCategorias && !!categorias;
+
+
   if(movimientoExists){
     cambiarTitulo("Editar Ingreso");
   } else {
@@ -25,6 +33,9 @@ export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
     loading,
     movimientoExists,
     movimiento: movimientoExists ? movimiento : {},
+    loadingCategorias,
+    categoriasExists,
+    categorias: categoriasExists ? categorias : [],
     esIngreso: true
   };
 })(Movimiento);

@@ -172,8 +172,9 @@ class ListItemMovimiento extends Component {
         corta12: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true },
       }
     }
-
+    var secondary = ""
     if (movimiento.esSaldoInicial) {
+      secondary += movimiento.descripcion
       return (
         <ListItem
           button
@@ -191,7 +192,7 @@ class ListItemMovimiento extends Component {
               className: classes[movimiento.tipo+"Font"]
             }}
             primary={movimiento.detalle}
-            secondary={!!movimiento.descripcion ? movimiento.descripcion : null}
+            secondary={!!secondary ? secondary : null}
           />
           <ListItemSecondaryAction>
             <Typography className={classes[movimiento.tipo+"FontImporte"]} >$  {Math.abs(movimiento.importe.toFixed(2))}</Typography>
@@ -199,6 +200,9 @@ class ListItemMovimiento extends Component {
         </ListItem>
       );
     } else {
+      secondary += !!movimiento.categoriaNombre ? movimiento.categoriaNombre : ''
+      secondary += ' - '
+      secondary += !!movimiento.descripcion ? movimiento.descripcion : ''
       return (
         <div>
           <Link onContextMenu={this.handleClick} to={
@@ -227,7 +231,7 @@ class ListItemMovimiento extends Component {
                 primary={movimiento.detalle}
                 secondary={
                   <div style={{maxWidth: 'calc(100% - 60px)'}}>
-                    {!!movimiento.descripcion ? movimiento.descripcion : null}
+                    {!!secondary ? secondary : null}
                   </div>
                 }
               />

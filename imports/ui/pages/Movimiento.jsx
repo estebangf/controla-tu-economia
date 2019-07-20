@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { withStyles, Typography, TextField, InputAdornment, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 
-import Autocomplete from '../components/Autocomplete'
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
 import { Meteor } from 'meteor/meteor';
 import Fechas from '../components/Fechas';
 
@@ -34,6 +39,7 @@ class Movimiento extends Component {
       importe: 0.00,
       variaLaGanancia: props.esIngreso,
       fecha: new Date(),
+      categoria: '',
       clear: undefined
     };
 
@@ -55,7 +61,8 @@ class Movimiento extends Component {
           descripcion: movimiento.descripcion,
           importe: Math.abs(movimiento.importe),
           variaLaGanancia: movimiento.variaLaGanancia,
-          fecha: movimiento.fecha
+          fecha: movimiento.fecha,
+          categoria: movimiento.categoria,
         }
       } else {
         return null
@@ -94,7 +101,8 @@ class Movimiento extends Component {
       detalle,
       descripcion,
       variaLaGanancia,
-      fecha
+      fecha,
+      categoria
     } = this.state;
     const imp = Math.abs(parseFloat(this.state.importe));
     const importe = esIngreso ? imp : 0-imp;
@@ -110,6 +118,7 @@ class Movimiento extends Component {
         importe,
         variaLaGanancia,
         fecha,
+        categoria,
         (error, result) => {
           if (error){
             console.log(error);
@@ -127,6 +136,7 @@ class Movimiento extends Component {
         variaLaGanancia,
         cuadernoId,
         fecha,
+        categoria,
         (error, result) => {
           if (error){
             console.log(error);
@@ -151,7 +161,8 @@ class Movimiento extends Component {
         descripcion: movimiento.descripcion,
         importe: Math.abs(movimiento.importe),
         variaLaGanancia: movimiento.variaLaGanancia,
-        fecha: movimiento.fecha
+        fecha: movimiento.fecha,
+        categoria: movimiento.categoria
       });
     } else {
       this.setState({
@@ -159,7 +170,8 @@ class Movimiento extends Component {
         descripcion: '',
         importe: 0.00,
         variaLaGanancia: esIngreso,
-        fecha: new Date()
+        fecha: new Date(),
+        categoria: ''
       });
     }
   }
@@ -194,14 +206,16 @@ class Movimiento extends Component {
       classes,
       loading,
       movimientoExists,
-      esIngreso
+      esIngreso,
+      categorias
     } = this.props;
     const {
       detalle,
       descripcion,
       importe,
       variaLaGanancia,
-      fecha
+      fecha,
+      categoria
     } = this.state;
 
     return (
@@ -240,6 +254,26 @@ class Movimiento extends Component {
           disconect={detalle !== "new"}
         />
         */}
+
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="categoria">Categoria</InputLabel>
+          <Select
+            value={categoria}
+            fullWidth={true}
+            onChange={this.handleChange('categoria')}
+            inputProps={{
+              name: 'categoria',
+              id: 'categoria',
+            }}
+          >
+            <MenuItem disabled value={''}>No seleccionada</MenuItem>
+            {categorias.map(c => {
+              return (
+                <MenuItem value={c._id}>{c.nombre}</MenuItem>
+              )
+            })}
+          </Select>
+        </FormControl>
 
         <TextField
           InputLabelProps={{ shrink: !!detalle && detalle != '' }}

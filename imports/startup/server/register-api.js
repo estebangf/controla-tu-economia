@@ -7,5 +7,8 @@ import '../../api/transferencias/server/publications.js';
 import '../../api/cuadernos/cuadernos.js';
 import '../../api/cuadernos/server/publications.js';
 
+import '../../api/categorias/categorias.js';
+import '../../api/categorias/server/publications.js';
+
 import '../../api/seguimientos/seguimientos.js';
 import '../../api/seguimientos/server/publications.js';

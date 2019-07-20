@@ -126,8 +126,13 @@ class Balance extends Component {
   }
   
   renderItems(movimientos) {
+    const { categorias } = this.props
     return movimientos.map(mov => {
-      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
+      const movimiento = {
+        ...mov,
+        tipo: mov.importe < 0 ? "egreso" : "ingreso",
+        categoriaNombre: categorias[mov.categoria]
+      }
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )
