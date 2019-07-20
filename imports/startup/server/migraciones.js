@@ -99,7 +99,7 @@ cuentasNoVinculadas.forEach(cuenta => {
 })
 */
 
-
+/*
 // CREACION DE CATEGORIAS:
 
 const nombresCategorias = [
@@ -230,9 +230,10 @@ const movimientosSinCategoria = movimientos.filter(m => {
 movimientosSinCategoria.forEach(m => {
   Movimientos.update({
     _id: m._id,
-  },{
-    $set: {
-      categoria: sinCategoria._id,
-    }
+    },{
+      $set: {
+        categoria: sinCategoria._id,
+      }
+  })
 })
-})
+*/
