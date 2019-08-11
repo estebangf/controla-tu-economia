@@ -18,7 +18,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   rootList: {
     paddingTop: 0,
-    paddingBottom: 55
+    paddingBottom: 64
   },
   titulo: {
     textAlign: 'center',
@@ -33,9 +33,9 @@ const styles = theme => ({
     top: 47,
     position: "sticky",
     paddingTop: 5,
-    [theme.breakpoints.up('lg')]: {
-      top: 0,
-    }
+    // [theme.breakpoints.up('lg')]: {
+    //   top: 0,
+    // }
 //    background: "#FFF"
   },
   listaGraficoItem:{
@@ -60,15 +60,15 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 1,
     right: theme.spacing.unit * 1,
-    [theme.breakpoints.up('lg')]: {
-      bottom: theme.spacing.unit * 1 + 50,
-      right: theme.spacing.unit * 1 + 210,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   bottom: theme.spacing.unit * 1 + 50,
+    //   right: theme.spacing.unit * 1 + 210,
+    // },
   },
   menu:{
-    [theme.breakpoints.up('lg')]: {
-      bottom: 65 + 50,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   bottom: 65 + 50,
+    // },
     bottom: 65,
     background: 'transparent',
     boxShadow: 'none',

@@ -12,7 +12,8 @@ import AddIcon from '@material-ui/icons/Add';
 const drawerWidth = 240;
 
 const styles = theme => ({
-  root: {
+  rootList: {
+    paddingBottom: 64
   },
   fab: {
     margin: theme.spacing.unit,
@@ -20,10 +21,10 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 1,
     right: theme.spacing.unit * 1,
-    [theme.breakpoints.up('lg')]: {
-      bottom: theme.spacing.unit * 1 + 50,
-      right: theme.spacing.unit * 1 + 210,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   bottom: theme.spacing.unit * 1 + 50,
+    //   right: theme.spacing.unit * 1 + 210,
+    // },
   },
   egresosFab: {
     color: "#FFF",
@@ -72,7 +73,7 @@ class MovimientosList extends Component {
     const { classes, pagina } = this.props;
     return (
       <div className={classes.root}>
-        <List className={classes.root}>
+        <List className={classes.rootList}>
           {this.renderMovimientos()}
         </List>
 

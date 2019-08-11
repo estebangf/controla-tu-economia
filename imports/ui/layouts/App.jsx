@@ -76,18 +76,14 @@ START_MONTH.setDate(1)
 const styles = theme => ({
   root: {
     display: 'flex',
-    [theme.breakpoints.up('lg')]: {
-      /* margin: 400px, */
-      boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 5px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
-      /* margin-top: 140px, */
-      /* max-height: calc(100% - 100px), */
-      position: 'fixed',
-      /* margin-bottom: 0, */
-      left: 200,
-      right: 200,
-      bottom: 50,
-      top: 114,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 5px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
+    //   position: 'fixed',
+    //   left: 200,
+    //   right: 200,
+    //   bottom: 50,
+    //   top: 114,
+    // },
   },
   dialogPaperCalculadora:{
     maxWidth: 64*4,
@@ -110,17 +106,17 @@ const styles = theme => ({
     margin: 'auto'
   },
   fondo: {
-    [theme.breakpoints.up('lg')]: {
-      position: 'fixed',
-      backgroundColor: '#6bc18e',
-      content: '',
-      height: 135,
-      width: '100%',
-      zIndex: 0,
-      top: 0,
-      left: 0,
-      right: 0
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   position: 'fixed',
+    //   backgroundColor: '#6bc18e',
+    //   content: '',
+    //   height: 135,
+    //   width: '100%',
+    //   zIndex: 0,
+    //   top: 0,
+    //   left: 0,
+    //   right: 0
+    // },
   },
   fondoModerno: {
 /*
@@ -153,13 +149,13 @@ const styles = theme => ({
   },
 */
   rootApp: {
-    [theme.breakpoints.up('lg')]: {
-      // padding: 50,
-      // paddingTop: 25,
-      // paddingBottom: 0
-      overflow: 'auto',
-      paddingTop: 0,
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   // padding: 50,
+    //   // paddingTop: 25,
+    //   // paddingBottom: 0
+    //   overflow: 'auto',
+    //   paddingTop: 0,
+    // },
     minWidth: '100%',
     minHeight: '100%',
 //    background: '#00000096',
@@ -167,7 +163,7 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       background: 'transparent',
     },
-    paddingTop: 47,
+    paddingTop: 46,
     zIndex: 1
   },
   transition:{
@@ -586,8 +582,12 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
-        <div className={classes.fondoSuperior} />
+        {
+          /*
+          <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
+          <div className={classes.fondoSuperior} />
+          */
+        }
         <CssBaseline />
         <BrowserRouter>
           <Route

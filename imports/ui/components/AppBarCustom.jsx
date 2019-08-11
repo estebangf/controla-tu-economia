@@ -48,11 +48,11 @@ const styles = theme => ({
     flexGrow: 1,
   },
   appBar: {
-    [theme.breakpoints.up('lg')]: {
-      margin: 200,
-      width: 'calc(100% - 400px)',
-      marginTop: 51
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   margin: 200,
+    //   width: 'calc(100% - 400px)',
+    //   marginTop: 51
+    // },
     top: -1,
     background: theme.palette.appBar.backgroundColor,
     transition: 'box-shadow .1s ease',
@@ -71,9 +71,9 @@ const styles = theme => ({
   },
   schrolled: {
     boxShadow: 'none',
-    [theme.breakpoints.up('lg')]: {
-      boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   boxShadow: "0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)"
+    // },
   },
   titulo: {
     color: theme.palette.appBar.color,
