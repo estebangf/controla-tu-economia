@@ -418,6 +418,14 @@ class Inicio extends Component {
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ganancias</Typography>
               </Grid>
+              <Grid item xs={4}>
+                <Link className={classes.linkSeccion} to={'/presupuestos'}>
+                  <Fab className={classes.divIconoSeccion}>
+                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ganancia_ib.png)"}} />
+                  </Fab>
+                </Link>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Presupuestos</Typography>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>

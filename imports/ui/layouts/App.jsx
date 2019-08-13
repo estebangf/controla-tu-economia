@@ -54,6 +54,7 @@ const PAGINAS_CON_MENU_DROWEABLE = [
   "/movimientos/balance",
   "/movimientos/seguimientos",
   "/movimientos/ganancias",
+  "/presupuestos",
 ]
 
 const TODAY_M = new Date()

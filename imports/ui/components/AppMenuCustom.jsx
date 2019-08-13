@@ -18,6 +18,7 @@ import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import HorizontalSplit from '@material-ui/icons/HorizontalSplit';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -84,13 +85,23 @@ const categorias = [
     ]
   },
   {
-    text: "Estados",
+    text: "Seguimientos",
     paginas: [
       {
         text: "Seguimientos",
         link: "/movimientos/seguimientos",
         icon: FilterListIcon
       },
+      {
+        text: "Presupuestos",
+        link: "/presupuestos",
+        icon: HorizontalSplit
+      }
+    ]
+  },
+  {
+    text: "Estados",
+    paginas: [
       {
         text: "Balance",
         link: "/movimientos/balance",
