@@ -60,10 +60,10 @@ class PresupuestosList extends Component {
 
   renderPresupuestos() {
     const { presupuestos, movimientos } = this.props;
-    var total = 0;
 
     return presupuestos.map(presupuesto => {
-      const movimientosF = movimientos.filter((m) => {
+      var total = 0;
+      var movimientosF = movimientos.filter((m) => {
         return presupuesto.categorias.includes(m.categoria)
       })
       movimientosF.forEach((m) => {
