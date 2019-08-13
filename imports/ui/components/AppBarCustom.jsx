@@ -14,6 +14,7 @@ const PAGINAS_CON_FILTRO = [
   "/movimientos/balance",
   "/movimientos/seguimientos",
   "/movimientos/ganancias",
+  "/presupuestos",
 ]
 const PAGINAS_CON_ATRAS = [
   "/cuadernos/",
@@ -24,6 +25,8 @@ const PAGINAS_CON_ATRAS = [
   "/movimientos/egresos/nuevo",
   "/movimientos/transferencias/",
   "/movimientos/transferencias/nueva",
+  "/presupuestos/",
+  "/presupuestos/nuevo",
 ]
 const PAGINAS_CON_CALCULADORA = [
   "/movimientos/ingresos/",
@@ -32,6 +35,8 @@ const PAGINAS_CON_CALCULADORA = [
   "/movimientos/egresos/nuevo",
   "/movimientos/transferencias/",
   "/movimientos/transferencias/nueva",
+  "/presupuestos/",
+  "/presupuestos/nuevo",
 ]
 const PAGINAS_CON_MENU = [
   "/",
@@ -42,6 +47,7 @@ const PAGINAS_CON_MENU = [
   "/movimientos/balance",
   "/movimientos/seguimientos",
   "/movimientos/ganancias",
+  "/presupuestos",
 ]
 const styles = theme => ({
   root: {

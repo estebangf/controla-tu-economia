@@ -10,5 +10,8 @@ import '../../api/cuadernos/server/publications.js';
 import '../../api/categorias/categorias.js';
 import '../../api/categorias/server/publications.js';
 
+import '../../api/presupuestos/presupuestos.js';
+import '../../api/presupuestos/server/publications.js';
+
 import '../../api/seguimientos/seguimientos.js';
 import '../../api/seguimientos/server/publications.js';

@@ -32,6 +32,8 @@ import IngresosContainer from '../containers/IngresosContainer';
 import BalanceContainer from '../containers/BalanceContainer';
 import GananciasContainer from '../containers/GananciasContainer';
 import SeguimientosContainer from '../containers/SeguimientosContainer';
+import PresupuestoContainer from '../containers/PresupuestoContainer';
+import PresupuestosContainer from '../containers/PresupuestosContainer';
 import { Dialog } from '@material-ui/core';
 import Calculadora from '../components/Calculadora';
 
@@ -424,6 +426,16 @@ class App extends Component {
             exact
             path="/movimientos/seguimientos"
             render={() => <SeguimientosContainer {...pase} />}
+          />,
+          <Route
+            exact
+            path="/presupuestos/:id"
+            render={({match}) => <PresupuestoContainer cuadernos={cuadernos} match={match} {...pase} />}
+          />,
+          <Route
+            exact
+            path="/presupuestos/"
+            render={({match}) => <PresupuestosContainer match={match} {...pase} />}
           />,
           <Route
             exact

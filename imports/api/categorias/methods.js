@@ -5,7 +5,7 @@ import { check } from 'meteor/check';
 import { Categorias } from './categorias.js'
 
 Meteor.methods({
-  'categoria.nueva'(nombre) {   
+  'categoria.nueva'(nombre) {
     check(nombre, String);
     if (!!this.userId) {
       return Categorias.insert({
