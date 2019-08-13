@@ -106,7 +106,6 @@ class Presupuesto extends Component {
   guardar(){
     const {
       presupuestoExists,
-      presupuesto,
     } = this.props
     const {
       id,

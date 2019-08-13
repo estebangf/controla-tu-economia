@@ -66,13 +66,8 @@ class ListItemPresupuesto extends Component {
     this.handleClose(this)
   }
   eliminar = (presupuesto) => {
-    var tipo = 'presupuesto'
     var id = presupuesto._id
-    if(!!presupuesto.transferenciaId) {
-      tipo = 'transferencia'
-      id = presupuesto.transferenciaId
-    }
-    Meteor.call(tipo+'.eliminar',
+    Meteor.call('presupuesto.eliminar',
       id,
       (error, result) => {
         if (error){
@@ -163,34 +158,13 @@ class ListItemPresupuesto extends Component {
             key={"option"}
             disabled={true}
             onClick={() => this.handleClose(this)}
-          >{presupuesto.detalle + ' x ' + Math.abs(presupuesto.importe.toFixed(2))}</MenuItem>
+          >{presupuesto.nombre + ' x ' + presupuesto.importe.toFixed(2)}</MenuItem>
           <Link to={
-            "/presupuestos/" + 
-            (!!presupuesto.transferenciaId ? 
-              "transferencia" : presupuesto.tipo) +
-            "s/" +
-            (!!presupuesto.transferenciaId ?
-              presupuesto.transferenciaId : presupuesto._id)
+            "/presupuestos/"+presupuesto._id
           } className={classes.link}>
             <MenuItem onClick={() => this.editar(presupuesto)}>Editar</MenuItem>
           </Link>
           <MenuItem onClick={() => this.eliminar(presupuesto)}>Eliminar</MenuItem>
-          <MenuItem onClick={() => this.variaLaGanancia(presupuesto)}>
-            {
-              presupuesto.tipo == "egreso" ?
-                (presupuesto.variaLaGanancia ? "Desmarcar como insumo" : "Marcar como insumo")
-                :
-                (presupuesto.variaLaGanancia ? "Marcar como prestamo" : "Desmarcar como prestamo")
-            }
-          </MenuItem>
-          <MenuItem disabled={!!presupuesto.transferenciaId} onClick={() => this.invertirMonto(presupuesto)}>
-            {
-              presupuesto.tipo == "egreso" ?
-                "Hacer ingreso"
-                :
-                "Hacer egreso"
-            }
-          </MenuItem>
         </Menu>
       </div>
     );
