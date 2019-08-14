@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu, LinearProgress } from '@material-ui/core';
 
+import { amber, green, red } from '@material-ui/core/colors';
+
 import HelpIcon from '@material-ui/icons/Help';
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
@@ -11,6 +13,22 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const drawerWidth = 240;
+
+//#abeaae
+const colores = {
+  success: {
+    p: green[100],
+    b: green[600]
+  },
+  error: {
+    p: red[100],
+    b: red[700]
+  },
+  warning:  {
+    p: amber[100],
+    b: amber[700]
+  },
+}
 
 const styles = theme => ({
   link: {
@@ -41,8 +59,7 @@ const styles = theme => ({
   },
   estadoTexto: {
     paddingTop: 8
-  }
-
+  },
 });
 
 class ListItemPresupuesto extends Component {
@@ -110,6 +127,28 @@ class ListItemPresupuesto extends Component {
     secondary += !!presupuesto.categoriaNombre ? presupuesto.categoriaNombre : ''
     secondary += ' - '
     secondary += !!presupuesto.descripcion ? presupuesto.descripcion : ''
+
+    const porsentajeGastado = sumaGastos * 100 / presupuesto.importe;
+    const porsentajeDias = (presupuesto.hasta - new Date()) * 100 / (presupuesto.hasta - presupuesto.desde);
+
+    const ColorLinearProgressImporte = withStyles({
+      colorPrimary: {
+        backgroundColor: porsentajeGastado < 60 ? colores.success.p : porsentajeGastado < 90 ? colores.warning.p : colores.error.p,
+      },
+      barColorPrimary: {
+        backgroundColor: porsentajeGastado < 60 ? colores.success.b : porsentajeGastado < 90 ? colores.warning.b : colores.error.b,
+      },
+    })(LinearProgress);
+    
+    const ColorLinearProgressDias = withStyles({
+      colorPrimary: {
+        backgroundColor: porsentajeDias < 60 ? colores.success.p : porsentajeDias < 90 ? colores.warning.p : colores.error.p,
+      },
+      barColorPrimary: {
+        backgroundColor: porsentajeDias < 60 ? colores.success.b : porsentajeDias < 90 ? colores.warning.b : colores.error.b,
+      },
+    })(LinearProgress);
+    
     return (
       <div>
         <Link onContextMenu={this.handleClick} to={
@@ -140,11 +179,13 @@ class ListItemPresupuesto extends Component {
                   <Typography className={classes.estadoTexto}>
                     Dinero restante: ${(presupuesto.importe - sumaGastos).toFixed(2)}
                   </Typography>
-                  <LinearProgress variant="determinate" value={sumaGastos * 100 / presupuesto.importe} />
+                  <ColorLinearProgressImporte
+                   variant="determinate" value={porsentajeGastado} />
                   <Typography className={classes.estadoTexto}>
                     Dias restantes: {((presupuesto.hasta - new Date())/1000/60/60/24).toFixed(0)}
                   </Typography>
-                  <LinearProgress variant="determinate" value={(presupuesto.hasta - new Date()) * 100 / (presupuesto.hasta - presupuesto.desde)} />
+                  <ColorLinearProgressDias
+                  variant="determinate" value={porsentajeDias} />
                   <Typography className={classes.estadoTexto}>
                     Se recomienda ${((presupuesto.importe - sumaGastos)/((presupuesto.hasta - new Date())/1000/60/60/24)).toFixed(0)} por dia.
                   </Typography>

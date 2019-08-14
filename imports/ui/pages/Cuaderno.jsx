@@ -18,6 +18,9 @@ const styles = theme => ({
   },
   button: {
     marginBottom: 5
+  },
+  formControl: {
+    width: "100%"
   }
 });
 
@@ -89,9 +92,9 @@ class Cuaderno extends Component {
         descripcion,
         (error, result) => {
           if (error){
-            alert(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            alert(result);
+            self.props.handleAlerta("Cuaderno editado", "success")
           }
         }
       )
@@ -102,9 +105,9 @@ class Cuaderno extends Component {
         descripcion,
         (error, result) => {
           if (error){
-            alert(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            this.limpiar(result);
+            self.props.handleAlerta("Cuaderno creado", "success")
           }
         }
       )

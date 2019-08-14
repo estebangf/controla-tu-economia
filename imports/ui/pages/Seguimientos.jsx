@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper } from '@material-ui/core';
+import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
 import Autocomplete from '../components/Autocomplete';
@@ -174,6 +174,9 @@ const styles = theme => ({
   filtro: {
     padding: 10,
     margin: '30px 15px 10px 15px'
+  },
+  formControl: {
+    width: "100%"
   }
 });
 
@@ -184,7 +187,7 @@ class Seguimientos extends Component {
     this.state = {
       showConnectionIssue: false,
       drawerOpen: false,
-      detalleFiltro: ''
+      categoriaFiltro: 'sin'
     };
   }
 
@@ -200,6 +203,7 @@ class Seguimientos extends Component {
   renderItems(movimientos) {
     return movimientos.map(mov => {
       const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
+      
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )
@@ -233,14 +237,15 @@ class Seguimientos extends Component {
     const {
       classes,
       movimientos,
+      categorias
     } = this.props;
 
     const {
-      detalleFiltro
+      categoriaFiltro
     } = this.state;
 
     const movimientosFiltrados = movimientos.filter((movimiento) => {
-      return movimiento.detalle.toLowerCase().includes((!!detalleFiltro ? detalleFiltro.toLowerCase() : ''));
+      return movimiento.categoria == categoriaFiltro || categoriaFiltro == 'sin';
     })
 
     let totales = {
@@ -270,39 +275,30 @@ class Seguimientos extends Component {
           <ListSubheader className={classes.listaGrafico}>
             {this.renderGrafico(totales, porcentajes)}
             <div className={classes.filtro}>
-              <Autocomplete
-                id="filtro-detalle"
-                items={[
-                  {
-                    primary: "Sueldo",
-                    secondary: undefined,
-                    data: { _id: "1", name: "Sueldo", email: "some@email.com" }
-                  },
-                  {
-                    primary: "Carton",
-                    secondary: undefined,
-                    data: { _id: "2", name: "Carton", email: "some@email.com" }
-                  },
-                  {
-                    primary: "Tomate",
-                    secondary: undefined,
-                    data: { _id: "3", name: "Tomate", email: "some@email.com" }
-                  },
-                ]}
-                inputDetails={{
-                  id: "detalle",
-                  name: "detalle",
-                  label: "Detalle",
-                  placeholder: "Detalle",
-                  fullWidth: true,
-                  variant:"outlined"
-                  //            avatar: "circle"
+              
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="categoriaFiltro">Categoria</InputLabel>
+              <Select
+                value={categoriaFiltro}
+                fullWidth={true}
+                onChange={this.handleChange('categoriaFiltro')}
+                inputProps={{
+                  name: 'categoriaFiltro',
+                  id: 'categoriaFiltro',
                 }}
-                onSelect={this.onSelectDetalleFiltro}
-                onChange={this.handleChange("detalleFiltro")}
-                value={detalleFiltro}
-                disconect={detalleFiltro !== "new"}
-              />
+              >
+                <MenuItem value='sin'>Sin filtro</MenuItem>
+                <MenuItem value={''}>Sin Categorizar</MenuItem>
+                {categorias.map(c => {
+                  return (
+                    <MenuItem value={c._id}>{c.nombre}</MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>
+
+
+
             </div>
             <Divider />
           </ListSubheader>

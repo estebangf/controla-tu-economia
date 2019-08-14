@@ -26,6 +26,9 @@ const styles = theme => ({
   },
   button: {
     marginBottom: 5
+  },
+  formControl: {
+    width: "100%"
   }
 });
 
@@ -121,10 +124,9 @@ class Movimiento extends Component {
         categoria,
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Movimiento editado")
+            self.props.handleAlerta("Movimiento editado", "success")
           }
         }
       )
@@ -139,10 +141,9 @@ class Movimiento extends Component {
         categoria,
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Movimiento creado")
+            self.props.handleAlerta("Movimiento creado", "success")
           }
         }
       )

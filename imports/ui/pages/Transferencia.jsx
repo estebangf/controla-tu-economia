@@ -134,10 +134,9 @@ class Transferencia extends Component {
         cuadernoIngreso,
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Transferencia editado")
+            self.props.handleAlerta("Transferencia editada", "success")
           }
         }
       )
@@ -153,10 +152,9 @@ class Transferencia extends Component {
         cuadernoIngreso,
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Transferencia creado")
+            self.props.handleAlerta("Transferencia creada", "success")
           }
         }
       )

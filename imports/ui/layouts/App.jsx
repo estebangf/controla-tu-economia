@@ -220,6 +220,7 @@ class App extends Component {
       showConnectionIssue: false,
       openAlerta: false,
       mensajeAlerta: '',
+      variantAlert: 'warning',
       openMenu: false,
       openRangoFechas: false,
       openCalculadora: false,
@@ -237,6 +238,7 @@ class App extends Component {
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleMenu = this.handleMenu.bind(this)
     this.handleAlerta = this.handleAlerta.bind(this)
+    this.handleCloseAlert = this.handleCloseAlert.bind(this)
     this.handleRangoFechas = this.handleRangoFechas.bind(this)
     this.handleCalculadora = this.handleCalculadora.bind(this)
 
@@ -246,12 +248,20 @@ class App extends Component {
   */
   }
 
-  handleAlerta = (mensaje) => {
+  handleAlerta = (mensaje, variant) => {
     this.setState(state => ({
-      openAlerta: !state.openAlerta,
-      mensajeAlerta: mensaje
+      openAlerta: true,
+      mensajeAlerta: mensaje,
+      variantAlert: variant
     }));
   };
+  handleCloseAlert = () => {
+    this.setState(state => ({
+      openAlerta: false,
+      mensajeAlerta: "Warning",
+      variantAlert: "warning"
+    }));
+  }
 
   handleMenu() {
     this.setState({
@@ -585,10 +595,12 @@ class App extends Component {
 
     const {
       openAlerta,
-      mensajeAlerta
+      mensajeAlerta,
+      variantAlert
     } = this.state
 
     const alerta = {
+      variant: variantAlert,
       open: openAlerta,
       mensaje: mensajeAlerta
     };
@@ -609,7 +621,7 @@ class App extends Component {
             )}
           />
         </BrowserRouter>
-        <Alerta alerta={alerta} handleClose={() => this.handleAlerta("")} />
+        <Alerta alerta={alerta} handleClose={() => this.handleCloseAlert()} />
       </div>
     );
   }

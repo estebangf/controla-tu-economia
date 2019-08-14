@@ -130,10 +130,9 @@ class Presupuesto extends Component {
         Math.abs(importe),
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Presupuesto editado")
+            self.props.handleAlerta("Presupuesto editado", "success")
           }
         }
       )
@@ -147,10 +146,9 @@ class Presupuesto extends Component {
         Math.abs(importe),
         (error, result) => {
           if (error){
-            console.log(error);
+            self.props.handleAlerta(error.toString(), "error")
           } else {
-            console.log(result)
-            self.props.handleAlerta("Presupuesto creado")
+            self.props.handleAlerta("Presupuesto creado", "success")
           }
         }
       )
