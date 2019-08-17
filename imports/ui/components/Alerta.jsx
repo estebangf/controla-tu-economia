@@ -76,7 +76,7 @@ class Alerta extends Component {
           horizontal: 'left',
         }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
       >
         <SnackbarContent

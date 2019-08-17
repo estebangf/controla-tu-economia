@@ -59,10 +59,18 @@ class MovimientosList extends Component {
   }
 
   renderMovimientos() {
-    const { movimientos } = this.props;
+    const { movimientos, categorias } = this.props;
 
     return movimientos.map(mov => {
-      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
+      const categoria = categorias.filter((c) => {
+        return c._id == mov.categoria
+      })
+      const movimiento = {
+        ...mov,
+        tipo: mov.importe < 0 ? "egreso" : "ingreso",
+        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria"
+      }
+
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )

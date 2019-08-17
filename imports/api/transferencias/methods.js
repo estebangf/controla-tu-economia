@@ -6,7 +6,8 @@ import { Transferencias } from './transferencias.js'
 import { Movimientos } from '../movimientos/movimientos.js'
 
 Meteor.methods({
-  'transferencia.nueva'(detalle, fecha, descripcion, importe, cuadernoEgreso, egresoVariaLaGanancia, ingresoVariaLaGanancia, cuadernoIngreso) {
+  'transferencia.nueva'(categoria, detalle, fecha, descripcion, importe, cuadernoEgreso, egresoVariaLaGanancia, ingresoVariaLaGanancia, cuadernoIngreso) {
+    check(categoria, String);
     check(detalle, String);
     check(fecha, Date);
     check(descripcion, String);
@@ -27,6 +28,7 @@ Meteor.methods({
       });
 
       const egresoId = Movimientos.insert({
+        categoria,
         detalle,
         descripcion,
         importe: 0 - importe,
@@ -38,6 +40,7 @@ Meteor.methods({
         fecha: fecha
       });
       const ingresoId = Movimientos.insert({
+        categoria,
         detalle,
         descripcion,
         importe,
@@ -59,8 +62,9 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
   },
-  'transferencia.editar'(id, detalle, fecha, descripcion, importe, cuadernoEgreso, egresoVariaLaGanancia, ingresoVariaLaGanancia, cuadernoIngreso) {
+  'transferencia.editar'(id, categoria, detalle, fecha, descripcion, importe, cuadernoEgreso, egresoVariaLaGanancia, ingresoVariaLaGanancia, cuadernoIngreso) {
     check(id, String);
+    check(categoria, String);
     check(detalle, String);
     check(fecha, Date);
     check(descripcion, String);
@@ -78,6 +82,7 @@ Meteor.methods({
 
       Movimientos.update(transferencia.egresoId, {
         $set: {
+          categoria,
           detalle,
           descripcion,
           importe: 0 - importe,
@@ -89,6 +94,7 @@ Meteor.methods({
 
       Movimientos.update(transferencia.ingresoId, {
         $set: {
+          categoria,
           detalle,
           descripcion,
           importe: importe,

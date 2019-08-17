@@ -18,10 +18,6 @@ export default withTracker(({cuadernoSeleccionada, cambiarTitulo, desde, hasta})
   const loading = !publicHandle.ready();
   const presupuestos = Presupuestos.find({}, { sort: { fecha: 1 } }).fetch();
   const presupuestosExists = !loading && !!presupuestos;
-
-
-
-
   
   const publicHandleMovimientos = Meteor.subscribe(
     'movimientos', cuadernoId, (new Date(desde)).getTime(), (new Date(hasta)).getTime());

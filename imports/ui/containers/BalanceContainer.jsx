@@ -20,11 +20,7 @@ export default withTracker(({cuadernoSeleccionada, cambiarTitulo, desde, hasta})
 
   const publicHandleCategorias = Meteor.subscribe('categorias');
   const loadingCategorias = !publicHandleCategorias.ready();
-  const categoriasColeccion = Categorias.find({}).fetch();
-  const categorias = {}
-  categoriasColeccion.forEach(c => {
-    categorias[c._id] = c.nombre
-  });
+  const categorias = Categorias.find({}).fetch();
   const categoriasExists = !loadingCategorias && !!categorias;
 
   return {

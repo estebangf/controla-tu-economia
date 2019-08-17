@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import SelectDialog from '../components/SelectDialog.jsx'
 
 import { Meteor } from 'meteor/meteor';
 import Fechas from '../components/Fechas';
@@ -29,6 +30,9 @@ const styles = theme => ({
   },
   formControl: {
     width: "100%"
+  },
+  textFieldFirst: {
+    marginTop: 0
   }
 });
 
@@ -65,7 +69,7 @@ class Movimiento extends Component {
           importe: Math.abs(movimiento.importe),
           variaLaGanancia: movimiento.variaLaGanancia,
           fecha: movimiento.fecha,
-          categoria: movimiento.categoria,
+          categoria: movimiento.categoria
         }
       } else {
         return null
@@ -98,7 +102,7 @@ class Movimiento extends Component {
       movimientoExists,
       movimiento,
       cuadernoId,
-      esIngreso
+      esIngreso,
     } = this.props
     const {
       detalle,
@@ -216,7 +220,8 @@ class Movimiento extends Component {
       importe,
       variaLaGanancia,
       fecha,
-      categoria
+      categoria,
+      categoriaOpen
     } = this.state;
 
     return (
@@ -250,12 +255,26 @@ class Movimiento extends Component {
 //            avatar: "circle"
           }}
           onSelect={this.onSelectDetalle}
-          onChange={this.handleChange("detalle")}
+          onChange={this.handleChangeCategoria("detalle")}
           value={detalle}
           disconect={detalle !== "new"}
         />
         */}
+        
+        <SelectDialog
+          title={"Categoria"}
+          imgFolder={"categorias"}
+          items={categorias}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={categoria}
+          openAutomatic={!loading && !!!categoria}
+          onChange={this.handleChange("categoria")}
+        />
 
+{
+        /*
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="categoria">Categoria</InputLabel>
           <Select
@@ -275,6 +294,8 @@ class Movimiento extends Component {
             })}
           </Select>
         </FormControl>
+        */
+}
 
         <TextField
           InputLabelProps={{ shrink: !!detalle && detalle != '' }}
@@ -283,7 +304,7 @@ class Movimiento extends Component {
           label="Detalle"
           value={detalle}
           onChange={this.handleChange('detalle')}
-          className={classes.textField}
+          className={classes.textFieldFirst}
           margin="normal"
         />
         

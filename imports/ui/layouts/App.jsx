@@ -258,8 +258,6 @@ class App extends Component {
   handleCloseAlert = () => {
     this.setState(state => ({
       openAlerta: false,
-      mensajeAlerta: "Warning",
-      variantAlert: "warning"
     }));
   }
 

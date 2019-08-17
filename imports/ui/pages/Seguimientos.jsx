@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { withStyles, List, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Divider, ListSubheader, Paper, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import ListItemMovimiento from '../components/ListItemMovimiento';
-import Autocomplete from '../components/Autocomplete';
+import SelectDialog from '../components/SelectDialog';
 
 const drawerWidth = 240;
 
@@ -187,7 +187,7 @@ class Seguimientos extends Component {
     this.state = {
       showConnectionIssue: false,
       drawerOpen: false,
-      categoriaFiltro: 'sin'
+      categoriaFiltro: ''
     };
   }
 
@@ -201,8 +201,17 @@ class Seguimientos extends Component {
   }
 
   renderItems(movimientos) {
+    const {categorias} = this.props
+    
     return movimientos.map(mov => {
-      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
+      const categoria = categorias.filter((c) => {
+        return c._id == mov.categoria
+      })
+      const movimiento = {
+        ...mov,
+        tipo: mov.importe < 0 ? "egreso" : "ingreso",
+        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria"
+      }
       
       return (
         <ListItemMovimiento movimiento={movimiento} />
@@ -245,7 +254,7 @@ class Seguimientos extends Component {
     } = this.state;
 
     const movimientosFiltrados = movimientos.filter((movimiento) => {
-      return movimiento.categoria == categoriaFiltro || categoriaFiltro == 'sin';
+      return movimiento.categoria == categoriaFiltro || categoriaFiltro == '';
     })
 
     let totales = {
@@ -274,32 +283,16 @@ class Seguimientos extends Component {
         <List dense={true} className={classes.rootList}>
           <ListSubheader className={classes.listaGrafico}>
             {this.renderGrafico(totales, porcentajes)}
-            <div className={classes.filtro}>
-              
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="categoriaFiltro">Categoria</InputLabel>
-              <Select
-                value={categoriaFiltro}
-                fullWidth={true}
-                onChange={this.handleChange('categoriaFiltro')}
-                inputProps={{
-                  name: 'categoriaFiltro',
-                  id: 'categoriaFiltro',
-                }}
-              >
-                <MenuItem value='sin'>Sin filtro</MenuItem>
-                <MenuItem value={''}>Sin Categorizar</MenuItem>
-                {categorias.map(c => {
-                  return (
-                    <MenuItem value={c._id}>{c.nombre}</MenuItem>
-                  )
-                })}
-              </Select>
-            </FormControl>
-
-
-
-            </div>
+            <SelectDialog
+              title={"Categoria"}
+              imgFolder={"categorias"}
+              items={categorias}
+              id={"_id"}
+              text={"nombre"}
+              avatar={"nombre"}
+              value={categoriaFiltro}
+              onChange={this.handleChange("categoriaFiltro")}
+            />
             <Divider />
           </ListSubheader>
           <List dense={false} className={classes.listaItems}>

@@ -23,7 +23,6 @@ export default withTracker(({cuadernoSeleccionada, cambiarTitulo, desde, hasta})
   const categorias = Categorias.find({}).fetch();
   const categoriasExists = !loadingCategorias && !!categorias;
 
-
   return {
     loadingMovimientos,
     movimientosExists,

@@ -127,12 +127,17 @@ class Balance extends Component {
   
   renderItems(movimientos) {
     const { categorias } = this.props
+
     return movimientos.map(mov => {
+      const categoria = categorias.filter((c) => {
+        return c._id == mov.categoria
+      })
       const movimiento = {
         ...mov,
         tipo: mov.importe < 0 ? "egreso" : "ingreso",
-        categoriaNombre: categorias[mov.categoria]
+        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria"
       }
+
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )

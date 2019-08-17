@@ -7,6 +7,7 @@ import { withStyles, Typography, TextField, InputAdornment, Checkbox, FormContro
 import Autocomplete from '../components/Autocomplete'
 import { Meteor } from 'meteor/meteor';
 import Fechas from '../components/Fechas';
+import SelectDialog from '../components/SelectDialog';
 
 const drawerWidth = 240;
 
@@ -25,6 +26,9 @@ const styles = theme => ({
   formControl: {
     width: "100%",
     marginTop: 25
+  },
+  textFieldFirst: {
+    marginTop: 1
   }
 });
 
@@ -33,6 +37,7 @@ class Transferencia extends Component {
     super(props);
     this.state = {
       id: '',
+      categoria: '',
       detalle: '',
       fecha: new Date(),
       descripcion: '',
@@ -63,6 +68,7 @@ class Transferencia extends Component {
         ) {
         return {
           id: transferencia._id,
+          categoria: ingreso.categoria,
           detalle: ingreso.detalle,
           fecha: transferencia.fecha,
           descripcion: ingreso.descripcion,
@@ -109,6 +115,7 @@ class Transferencia extends Component {
     } = this.props
     const {
       id,
+      categoria,
       detalle,
       fecha,
       descripcion,
@@ -124,6 +131,7 @@ class Transferencia extends Component {
     if(transferenciaExists) {
       Meteor.call('transferencia.editar',
         id,
+        categoria,
         detalle,
         fecha,
         descripcion,
@@ -142,6 +150,7 @@ class Transferencia extends Component {
       )
     } else {
       Meteor.call('transferencia.nueva',
+        categoria,
         detalle,
         fecha,
         descripcion,
@@ -171,6 +180,7 @@ class Transferencia extends Component {
 
     if(transferenciaExists && movimientosExists) {
       this.setState({
+        categoria: transferencia.categoria,
         detalle: transferencia.detalle,
         fecha: transferencia.fecha,
         descripcion: transferencia.descripcion,
@@ -182,6 +192,7 @@ class Transferencia extends Component {
       });
     } else {
       this.setState({
+        categoria: '',
         detalle: '',
         fecha: new Date(),
         descripcion: '',
@@ -201,9 +212,11 @@ class Transferencia extends Component {
       transferenciaExists,
       esIngreso,
       cuadernos,
-      cuadernoSeleccionada
+      cuadernoSeleccionada,
+      categorias
     } = this.props;
     const {
+      categoria,
       detalle,
       fecha,
       descripcion,
@@ -215,6 +228,18 @@ class Transferencia extends Component {
     } = this.state;
     return (
       <div className={classes.root}>
+        <SelectDialog
+          title={"Categorias"}
+          imgFolder={"categorias"}
+          items={categorias}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={categoria}
+          openAutomatic={!loading && !!!categoria}
+          onChange={this.handleChange("categoria")}
+        />
+
         <TextField
           InputLabelProps={{ shrink: !!detalle && detalle != '' }}
           id="detalle"
@@ -222,7 +247,7 @@ class Transferencia extends Component {
           label="Detalle"
           value={detalle}
           onChange={this.handleChange('detalle')}
-          className={classes.textField}
+          className={classes.textFieldFirst}
           margin="normal"
         />
         <Fechas
@@ -242,44 +267,26 @@ class Transferencia extends Component {
           handleDateChange={this.handleDateChange}
           inputRoot={classes.inputFechaRoot}
         />
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Cuaderno de egreso</InputLabel>
-          <Select
-            value={cuadernoEgreso}
-            onChange={this.handleChange("cuadernoEgreso")}
-          >
-            <MenuItem value={0}>
-              <em>No seleccionado</em>
-            </MenuItem>
-            {
-              cuadernos.map((cuaderno) => {
-                return (
-                  <MenuItem value={!!cuaderno.cuadernoVinculado ? cuaderno.cuadernoVinculado : cuaderno._id}>{cuaderno.nombre}</MenuItem>
-                )
-              })
-            }
-          </Select>
-          <FormHelperText>Cuaderno donde se realize el EGRESO</FormHelperText>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Destino</InputLabel>
-          <Select
-            value={cuadernoIngreso}
-            onChange={this.handleChange("cuadernoIngreso")}
-          >
-            <MenuItem value={0}>
-              <em>No seleccionado</em>
-            </MenuItem>
-            {
-              cuadernos.map((cuaderno) => {
-                return (
-                  <MenuItem value={!!cuaderno.cuadernoVinculado ? cuaderno.cuadernoVinculado : cuaderno._id}>{cuaderno.nombre}</MenuItem>
-                )
-              })
-            }
-          </Select>
-          <FormHelperText>Cuaderno donde se realize el INGRESO</FormHelperText>
-        </FormControl>
+        <SelectDialog
+          title={"Cuaderno Egreso"}
+          items={cuadernos}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={cuadernoEgreso}
+          openAutomatic={!loading && !!categoria && !!!cuadernoEgreso}
+          onChange={this.handleChange("cuadernoEgreso")}
+        />
+        <SelectDialog
+          title={"Cuaderno Ingreso"}
+          items={cuadernos}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={cuadernoIngreso}
+          openAutomatic={!loading && !!cuadernoEgreso && !!!cuadernoIngreso}
+          onChange={this.handleChange("cuadernoIngreso")}
+        />
 
         <TextField
           InputLabelProps={{ shrink: !!descripcion && descripcion != '' }}
@@ -288,7 +295,7 @@ class Transferencia extends Component {
           label="Descripcion"
           value={descripcion}
           onChange={this.handleChange('descripcion')}
-          className={classes.textField}
+          className={classes.textFieldFirst}
           margin="normal"
         />
         <TextField

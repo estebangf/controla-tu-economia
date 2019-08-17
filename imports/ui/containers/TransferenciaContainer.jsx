@@ -3,6 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import { Transferencias } from '/imports/api/transferencias/transferencias'
 import { Movimientos } from '/imports/api/movimientos/movimientos'
+import { Categorias } from '/imports/api/categorias/categorias'
 import Transferencia from '../pages/Transferencia.jsx';
 
 export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
@@ -38,6 +39,11 @@ export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
     cambiarTitulo("Nueva Transferencia");
   }
 
+  const publicHandleCategorias = Meteor.subscribe('categorias');
+  const loadingCategorias = !publicHandleCategorias.ready();
+  const categorias = Categorias.find({}).fetch();
+  const categoriasExists = !loadingCategorias && !!categorias;
+
   return {
     cuadernoId,
     loading: loading && loadingMovimientos,
@@ -45,6 +51,9 @@ export default withTracker(({match, cuadernoSeleccionada, cambiarTitulo}) => {
     transferencia: transferenciaExists ? transferencia : {},
     movimientosExists,
     egreso: movimientosExists ? egreso : {},
-    ingreso: movimientosExists ? ingreso : {}
+    ingreso: movimientosExists ? ingreso : {},
+    loadingCategorias,
+    categoriasExists,
+    categorias: categoriasExists ? categorias : [],
   };
 })(Transferencia);
