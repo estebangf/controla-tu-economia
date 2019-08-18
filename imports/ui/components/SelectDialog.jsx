@@ -51,6 +51,13 @@ const styles = theme => ({
   root: {
     padding: 0,
     paddingTop: 5,
+  },
+  dialog: {
+    [theme.breakpoints.down('md')]: {
+      minHeight: 'calc(100% - 40px)',
+      minWidth: 'calc(100% - 40px)',
+      margin: 20
+    }
   }
 });
 
@@ -126,7 +133,13 @@ class Alerta extends Component {
             />
           </ListItem>
         </List>
-        <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={open || openAutomatic}>
+        <Dialog
+          onClose={this.handleClose}
+          PaperProps={{
+            className: classes.dialog
+          }}
+          fullWidth={true}
+          open={open || openAutomatic}>
           <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
           <List>
             <ListItem disabled key={''}>
