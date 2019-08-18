@@ -27,6 +27,7 @@ const PAGINAS_CON_ATRAS = [
   "/movimientos/transferencias/nueva",
   "/presupuestos/",
   "/presupuestos/nuevo",
+  "/setings/categorias",
 ]
 const PAGINAS_CON_CALCULADORA = [
   "/movimientos/ingresos/",

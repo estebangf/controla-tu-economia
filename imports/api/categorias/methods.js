@@ -10,14 +10,15 @@ Meteor.methods({
     if (!!this.userId) {
       return Categorias.insert({
         nombre,
-        userId: this.userId,
+//        userId: this.userId,
         creada: new Date()
       });
     } else {
       throw new Meteor.Error('not-authorized');
     }
   },
-  'categoria.editar'(id, nombre) {   
+  'categoria.editar'(id, nombre) {
+    check(id, String);
     check(nombre, String);
     if (!!this.userId) {
       return Categorias.update(id, {

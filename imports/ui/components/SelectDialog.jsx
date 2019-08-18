@@ -54,9 +54,9 @@ const styles = theme => ({
   },
   dialog: {
     [theme.breakpoints.down('md')]: {
-      minHeight: 'calc(100% - 40px)',
-      minWidth: 'calc(100% - 40px)',
-      margin: 20
+      minHeight: 'calc(100% - 60px)',
+      minWidth: 'calc(100% - 60px)',
+      margin: 30
     }
   }
 });

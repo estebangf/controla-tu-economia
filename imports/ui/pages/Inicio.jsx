@@ -468,6 +468,9 @@ class Inicio extends Component {
       <div className={classes.root}>
         {this.renderCuadernoSeleccionado()}
         {this.renderLinksMovimientos()}
+        <Link className={classes.linkSeccion} to={'/setings/categorias'}>
+          <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
+        </Link>
       </div>
     )
   }

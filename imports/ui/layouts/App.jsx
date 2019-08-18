@@ -23,6 +23,7 @@ import CalculadoraContainer from '../containers/CalculadoraContainer';
 
 import CuadernoContainer from '../containers/CuadernoContainer';
 import CuadernosContainer from '../containers/CuadernosContainer';
+import CategoriasContainer from '../containers/CategoriasContainer';
 import EgresoContainer from '../containers/EgresoContainer';
 import IngresoContainer from '../containers/IngresoContainer';
 import TransferenciaContainer from '../containers/TransferenciaContainer';
@@ -465,6 +466,11 @@ class App extends Component {
             exact
             path="/cuadernos/:id"
             render={({match}) => <CuadernoContainer match={match} {...pase} />}
+          />,
+          <Route
+            exact
+            path="/setings/categorias"
+            render={() => <CategoriasContainer {...pase} />}
           />,
         ]
       } else {
