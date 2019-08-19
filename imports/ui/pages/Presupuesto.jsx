@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 
 import { Meteor } from 'meteor/meteor';
 import Fechas from '../components/Fechas';
+import SelectDialog from '../components/SelectDialog';
 
 const HOY_M = new Date()
 HOY_M.setHours(0)
@@ -187,7 +188,8 @@ class Presupuesto extends Component {
     const {
       classes,
       presupuestoExists,
-      cuadernos
+      cuadernos,
+      loading
     } = this.props;
     const categoriasAll = this.props.categorias;
 
@@ -202,6 +204,7 @@ class Presupuesto extends Component {
 
     return (
       <div className={classes.root}>
+        {/*
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="age-helper">Cuaderno del presupuesto</InputLabel>
           <Select
@@ -240,6 +243,36 @@ class Presupuesto extends Component {
             })}
           </Select>
         </FormControl>
+          */}
+
+
+        <SelectDialog
+          color="#337dbf"
+          title={"Cuaderno"}
+          imgFolder={"cuaderno"}
+          items={cuadernos}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={cuadernoId}
+          openAutomatic={!loading && !!!cuadernoId}
+          onChange={this.handleChange("cuadernoId")}
+        />
+
+        <SelectDialog
+          color="#337dbf"
+          title={"Categorias"}
+          imgFolder={"categorias"}
+          items={categoriasAll}
+          id={"_id"}
+          text={"nombre"}
+          avatar={"nombre"}
+          value={categorias}
+          multiple={true}
+          openAutomatic={!loading && !!cuadernoId && !!!categorias.length}
+          onChange={this.handleChange("categorias")}
+        />
+
 
         <TextField
           InputLabelProps={{ shrink: !!nombre && nombre != '' }}

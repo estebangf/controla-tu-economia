@@ -53,11 +53,13 @@ const styles = theme => ({
     paddingTop: 5,
   },
   dialog: {
+    /*
     [theme.breakpoints.down('md')]: {
-      minHeight: 'calc(100% - 60px)',
-      minWidth: 'calc(100% - 60px)',
-      margin: 30
+      maxHeight: 'calc(100% - 80px)',
+      minWidth: 'calc(100% - 80px)',
+      margin: 40
     }
+    */
   }
 });
 
@@ -65,7 +67,8 @@ class Alerta extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      multipleSelect: []
     };
   }
 
@@ -81,11 +84,32 @@ class Alerta extends Component {
   }
   handleListItemClick = (id) => {
     const {
-      onChange
+      onChange,
+      multiple,
+      value
     } = this.props;
-    const event = {target: {value: id}};
-    onChange(event);
-    this.handleClose();
+    var multipleSelect = value
+
+    const event = { target: { value: '' } };
+
+    if(multiple){
+      if(multipleSelect.includes(id)){
+        event.target.value = 
+          multipleSelect.filter((item) => {
+            return item != id
+          })
+        onChange(event);
+        this.handleOpen();
+      } else {
+        event.target.value = [...multipleSelect, id]
+        onChange(event)
+        this.handleOpen();
+      }
+    } else {
+      event.target.value = id
+      onChange(event);
+      this.handleClose();
+    }
   }
 
   render() {
@@ -99,22 +123,33 @@ class Alerta extends Component {
       title,
       imgFolder,
       openAutomatic,
-      color
+      color,
+      multiple
     } = this.props;
 
     const {
       open
     } = this.state
 
-    const selectedItem = items.filter((item) => {
-      return item[id] == value
+    const selectedItems = items.filter((item) => {
+      if(multiple) {
+        return value.includes(item[id])
+      } else {
+        return item[id] == value
+      }
     })
 
     const defaultColor = !!color ? color : "transparent";
 
-    const selectedText = !!selectedItem.length ? selectedItem[0][text] : "Sin "+title
-    const selectedAvatar = !!selectedItem.length ? selectedItem[0][avatar] : "Sin Avatar"
-    const selectedColor = !!selectedItem.length ? selectedItem[0].color : defaultColor
+    const selectedText = !!selectedItems.length ?
+      multiple ? 
+        selectedItems.map((i) => {
+          return i[text]+ ", "
+        })
+        :
+        selectedItems[0][text] : "Sin "+title
+    const selectedAvatar = !!selectedItems.length ? selectedItems[0][avatar] : "Sin Avatar"
+    const selectedColor = !!selectedItems.length ? selectedItems[0].color : defaultColor
 
     return (
       <React.Fragment>
@@ -123,18 +158,20 @@ class Alerta extends Component {
             button
             onClick={this.handleOpen}
           >
-            <ListItemAvatar>
-              <Avatar
-                imgProps={{
-                  onerror: "this.src='/imagenes/imgNotFound.png'"
-                }}
-                style={{
-                  backgroundColor: !!selectedColor ? selectedColor : defaultColor
-                }}
-                size="8" className={classes.avatar}
-                src={"/imagenes/" + imgFolder + "/" + selectedAvatar.replace(" ","_") + ".png"}
-              />
-            </ListItemAvatar>
+            {!multiple ? 
+              <ListItemAvatar>
+                <Avatar
+                  imgProps={{
+                    onerror: "this.src='/imagenes/imgNotFound.png'"
+                  }}
+                  style={{
+                    backgroundColor: !!selectedColor ? selectedColor : defaultColor
+                  }}
+                  size="8" className={classes.avatar}
+                  src={"/imagenes/" + imgFolder + "/" + selectedAvatar.replace(" ","_") + ".png"}
+                />
+              </ListItemAvatar>
+            : ''}
             <ListItemText
               primary={selectedText}
             />
@@ -153,7 +190,7 @@ class Alerta extends Component {
               <ListItemText primary={"Sin "+title} />
             </ListItem>
             {items.map(item => (
-              <ListItem button onClick={() => this.handleListItemClick(item[id])} key={item[id]}>
+              <ListItem selected={multiple ? value.includes(item[id]) : value == item[id]} button onClick={() => this.handleListItemClick(item[id])} key={item[id]}>
                 <ListItemAvatar>
                   <Avatar
                     imgProps={{

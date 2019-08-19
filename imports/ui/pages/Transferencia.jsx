@@ -229,6 +229,7 @@ class Transferencia extends Component {
     return (
       <div className={classes.root}>
         <SelectDialog
+          color="#337dbf"
           title={"Categorias"}
           imgFolder={"categorias"}
           items={categorias}
@@ -268,6 +269,7 @@ class Transferencia extends Component {
           inputRoot={classes.inputFechaRoot}
         />
         <SelectDialog
+          color="#337dbf"
           title={"Cuaderno Egreso"}
           items={cuadernos}
           id={"_id"}
@@ -278,6 +280,7 @@ class Transferencia extends Component {
           onChange={this.handleChange("cuadernoEgreso")}
         />
         <SelectDialog
+          color="#337dbf"
           title={"Cuaderno Ingreso"}
           items={cuadernos}
           id={"_id"}
