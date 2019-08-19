@@ -45,8 +45,8 @@ const variantIcon = {
 
 const styles = theme => ({
   avatar: {
-    width: 30,
-    height: 30
+    width: 40,
+    height: 40,
   },
   root: {
     padding: 0,
@@ -98,7 +98,8 @@ class Alerta extends Component {
       value,
       title,
       imgFolder,
-      openAutomatic
+      openAutomatic,
+      color
     } = this.props;
 
     const {
@@ -109,8 +110,11 @@ class Alerta extends Component {
       return item[id] == value
     })
 
+    const defaultColor = !!color ? color : "transparent";
+
     const selectedText = !!selectedItem.length ? selectedItem[0][text] : "Sin "+title
     const selectedAvatar = !!selectedItem.length ? selectedItem[0][avatar] : "Sin Avatar"
+    const selectedColor = !!selectedItem.length ? selectedItem[0].color : defaultColor
 
     return (
       <React.Fragment>
@@ -123,6 +127,9 @@ class Alerta extends Component {
               <Avatar
                 imgProps={{
                   onerror: "this.src='/imagenes/imgNotFound.png'"
+                }}
+                style={{
+                  backgroundColor: !!selectedColor ? selectedColor : defaultColor
                 }}
                 size="8" className={classes.avatar}
                 src={"/imagenes/" + imgFolder + "/" + selectedAvatar.replace(" ","_") + ".png"}
@@ -151,6 +158,9 @@ class Alerta extends Component {
                   <Avatar
                     imgProps={{
                       onerror: "this.src='/imagenes/imgNotFound.png'"
+                    }}
+                    style={{
+                      backgroundColor: !!item.color ? item.color : defaultColor
                     }}
                     src={"/imagenes/" + imgFolder + "/" + item[text].replace(" ","_") + ".png"}
                     className={classes.avatar}

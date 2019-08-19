@@ -269,6 +269,7 @@ class Movimiento extends Component {
           text={"nombre"}
           avatar={"nombre"}
           value={categoria}
+          color="#5da7ef"
           openAutomatic={!loading && !!!categoria}
           onChange={this.handleChange("categoria")}
         />

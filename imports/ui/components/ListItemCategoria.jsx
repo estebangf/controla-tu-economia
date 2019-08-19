@@ -15,8 +15,25 @@ import SaveIcon from '@material-ui/icons/Save';
 const drawerWidth = 240;
 
 const styles = theme => ({
+  divEditor: {
+    marginRight: 15,
+  },
   textField: {
-    marginRight: 15
+    maxWidth: "calc(100% - 32px)"
+  },
+  inputColor: {
+    border: 0,
+    background: "#FFFFFF",
+    width: 32,
+    height: 30,
+    borderRadius: '100%',
+    ["&::-webkit-color-swatch-wrapper"]: {
+      padding: 2
+    },
+    ["&::-webkit-color-swatch"]: {
+      border: "solid 1px #dcdcdc",
+      borderRadius: "100%"
+    }
   }
 });
 
@@ -49,7 +66,8 @@ class ListItemCategoria extends Component {
     } = this.props
 
     const {
-      nombreEditado
+      nombreEditado,
+      colorEditado
     } = this.state
     
     const self = this
@@ -58,6 +76,7 @@ class ListItemCategoria extends Component {
       Meteor.call('categoria.editar',
         _id,
         nombreEditado,
+        colorEditado,
         (error, result) => {
           if (error){
             console.log(error);
@@ -71,6 +90,7 @@ class ListItemCategoria extends Component {
     } else {
       Meteor.call('categoria.nueva',
         nombreEditado,
+        colorEditado,
         (error, result) => {
           if (error){
             console.log(error);
@@ -87,13 +107,14 @@ class ListItemCategoria extends Component {
   handleEditar = () => {
     this.setState({
       editando: true,
-      nombreEditado: this.props.nombre
+      nombreEditado: this.props.nombre,
+      colorEditado: !!this.props.color ? this.props.color : "#FFFFFF"
     })
   }
 
-  cambiarNombre = (event) => {
+  handleChange = (field) => (event) => {
     this.setState({
-      nombreEditado: event.target.value
+      [field]: event.target.value
     })
   }
 
@@ -101,11 +122,13 @@ class ListItemCategoria extends Component {
     const { 
       classes,
       nombre,
-      _id
+      _id,
+      color
     } = this.props;
     const {
       editando,
-      nombreEditado
+      nombreEditado,
+      colorEditado
     } = this.state;
 
     return (
@@ -115,6 +138,9 @@ class ListItemCategoria extends Component {
             size="8" className={classes.avatar}
             imgProps={{
               onError: "this.src='/imagenes/notFound.png';"
+            }}
+            style={{
+              backgroundColor: !editando ? color : colorEditado
             }}
             src={"/imagenes/categorias/" + nombre.replace(" ","_") + ".png"}
           />
@@ -128,11 +154,19 @@ class ListItemCategoria extends Component {
           }}
           primary={
             !editando && !!_id ? nombre :
-            <TextField 
-              onChange={this.cambiarNombre}
-              className={classes.textField}
-              value={nombreEditado}
-            />
+            <div className={classes.divEditor}>
+              <TextField 
+                onChange={this.handleChange("nombreEditado")}
+                className={classes.textField}
+                value={nombreEditado}
+              />
+              <input
+                className={classes.inputColor}
+                type="color"
+                onChange={this.handleChange("colorEditado")}
+                value={!!colorEditado ? colorEditado : "#FFFFFF"}
+              />
+            </div>
           }
         />
         <ListItemSecondaryAction>

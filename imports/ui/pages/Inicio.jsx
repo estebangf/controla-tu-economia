@@ -35,7 +35,7 @@ const styles = theme => ({
     marginBottom: 30,
     borderRadius: '0px 0px 15px 15px'
   },
-  cardContent:{
+  cardContent: {
     paddingBottom: 0,
     paddingTop: 0
   },
@@ -47,7 +47,7 @@ const styles = theme => ({
   card: {
 
   },
-  cardHeader:{
+  cardHeader: {
     textAlign: "left"
   },
   rootLinks: {
@@ -64,9 +64,9 @@ const styles = theme => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
   },
-  divIconoSeccion:{
+  divIconoSeccion: {
     background: theme.palette.appBar.backgroundColor,
-    "&:hover":{
+    "&:hover": {
       background: "#044580",
     }
     /*
@@ -85,10 +85,10 @@ const styles = theme => ({
     display: 'flex',
     marginBottom: 10
   },
-  link:{
+  link: {
     textDecoration: 'none'
   },
-  linkSeccion:{
+  linkSeccion: {
     textDecoration: 'none',
     margin: "auto",
   },
@@ -188,10 +188,10 @@ const styles = theme => ({
     overflowX: 'hidden',
     overflowY: 'auto',
   },
-  listItemText:{
+  listItemText: {
     color: theme.palette.secondary.contrastText,
   },
-  listaFooter:{
+  listaFooter: {
     flex: '0 0 auto'
   },
   toolbar: theme.mixins.toolbar,
@@ -229,22 +229,22 @@ class Inicio extends Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     const {
       cuadernoSeleccionada,
       hasta
     } = this.props;
 
-    if(!!cuadernoSeleccionada){
-      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ? 
-      cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
+    if (!!cuadernoSeleccionada) {
+      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ?
+        cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
 
       const self = this
       Meteor.call('movimiento.saldoInicial',
         cuadernoId,
         hasta,
         (error, result) => {
-          if (error){
+          if (error) {
             console.log(error);
           } else {
             console.log(result)
@@ -265,12 +265,12 @@ class Inicio extends Component {
 
     if (!!cuadernoSeleccionada) {
       const cuadernoIdPrev = !!prevProps.cuadernoSeleccionada ?
-        !!prevProps.cuadernoSeleccionada.cuadernoVinculado ? 
+        !!prevProps.cuadernoSeleccionada.cuadernoVinculado ?
           prevProps.cuadernoSeleccionada.cuadernoVinculado : prevProps.cuadernoSeleccionada._id
         : '';
-      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ? 
-      cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
-      
+      const cuadernoId = !!cuadernoSeleccionada.cuadernoVinculado ?
+        cuadernoSeleccionada.cuadernoVinculado : cuadernoSeleccionada._id
+
       const self = this
 
       if ((hasta != prevProps.hasta) || (cuadernoId != cuadernoIdPrev)) {
@@ -278,7 +278,7 @@ class Inicio extends Component {
           cuadernoId,
           hasta,
           (error, result) => {
-            if (error){
+            if (error) {
               console.log(error);
             } else {
               console.log(result)
@@ -293,7 +293,7 @@ class Inicio extends Component {
   }
 
   handleExpandClick = () => {
-    this.setState(state => ({expanded: !state.expanded}));
+    this.setState(state => ({ expanded: !state.expanded }));
   }
 
   compartirCuaderno = () => {
@@ -303,29 +303,29 @@ class Inicio extends Component {
     } = this.props
     // Crea un campo de texto "oculto"
     var aux = document.createElement("input");
-    
+
     // Asigna el contenido del elemento especificado al valor del campo
     // aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
     aux.setAttribute("value", cuadernoSeleccionada._id);
-    
+
     // Añade el campo a la página
     document.body.appendChild(aux);
-    
+
     // Selecciona el contenido del campo
     aux.select();
-    
+
     // Copia el texto seleccionado
     document.execCommand("copy");
-    
+
     // Elimina el campo de la página
     document.body.removeChild(aux);
-    
-    console.log(cuadernoSeleccionada._id+" copiado.")
-    handleAlerta("Código de cuaderno copiado.")
-    }
 
-  renderCuadernoSeleccionado(){
-    const {  
+    console.log(cuadernoSeleccionada._id + " copiado.")
+    handleAlerta("Código de cuaderno copiado.")
+  }
+
+  renderCuadernoSeleccionado() {
+    const {
       classes,
       cuadernoSeleccionada
     } = this.props;
@@ -368,7 +368,7 @@ class Inicio extends Component {
               </Collapse>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="Add to favorites" onClick={() => { alert("EN DESARROLLO")}}>
+              <IconButton aria-label="Add to favorites" onClick={() => { alert("EN DESARROLLO") }}>
                 <GradeIcon />
               </IconButton>
               <IconButton aria-label="Share" onClick={this.compartirCuaderno}>
@@ -392,12 +392,12 @@ class Inicio extends Component {
   }
 
   renderLinksMovimientos() {
-    const {  
+    const {
       classes,
       cuadernosExists
     } = this.props;
 
-    if(cuadernosExists) {
+    if (cuadernosExists) {
       return (
         <Grid container className={classes.rootGrid} spacing={2}>
           <Grid item xs={12}>
@@ -405,7 +405,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/balance'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/balanza_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/balanza_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Balance</Typography>
@@ -413,7 +413,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/ganancias'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ganancia_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/ganancia_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ganancias</Typography>
@@ -421,7 +421,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/presupuestos'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/presupuesto_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/presupuesto_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Presupuestos</Typography>
@@ -433,7 +433,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/ingresos'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/ingreso_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/ingreso_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Ingresos</Typography>
@@ -441,7 +441,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/egresos'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/egreso_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/egreso_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Egresos</Typography>
@@ -449,7 +449,7 @@ class Inicio extends Component {
               <Grid item xs={4}>
                 <Link className={classes.linkSeccion} to={'/movimientos/transferencias'}>
                   <Fab className={classes.divIconoSeccion}>
-                    <div className={classes.iconoSeccion} style={{backgroundImage: "url(/transferencia_ib.png)"}} />
+                    <div className={classes.iconoSeccion} style={{ backgroundImage: "url(/transferencia_ib.png)" }} />
                   </Fab>
                 </Link>
                 <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Transferencias</Typography>
@@ -463,14 +463,22 @@ class Inicio extends Component {
 
   render() {
     const { classes, cuadernoSeleccionada } = this.props;
+    const user = Meteor.user();
 
     return (
       <div className={classes.root}>
         {this.renderCuadernoSeleccionado()}
         {this.renderLinksMovimientos()}
-        <Link className={classes.linkSeccion} to={'/setings/categorias'}>
-          <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
-        </Link>
+        {
+          !!user ? (
+            user.emails[0].address == "monofer93@outlook.com.ar" ||
+            user.emails[0].address == "esteban.fernandez93@outlook.com.ar" ? (
+              <Link className={classes.linkSeccion} to={'/setings/categorias'}>
+                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
+              </Link>
+            ) : ""
+          ) : ""
+        }
       </div>
     )
   }
