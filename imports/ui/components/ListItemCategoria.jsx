@@ -131,13 +131,16 @@ class ListItemCategoria extends Component {
       colorEditado
     } = this.state;
 
+    const changeImage = (e) => {
+      e.target.src = '/imagenes/notFound.png'
+    }
     return (
       <ListItem>
         <ListItemAvatar>
           <Avatar
             size="8" className={classes.avatar}
             imgProps={{
-              onError: "this.src='/imagenes/notFound.png';"
+              onError: changeImage
             }}
             style={{
               backgroundColor: !editando ? color : colorEditado

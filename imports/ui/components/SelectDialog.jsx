@@ -151,6 +151,10 @@ class Alerta extends Component {
     const selectedAvatar = !!selectedItems.length ? selectedItems[0][avatar] : "Sin Avatar"
     const selectedColor = !!selectedItems.length ? selectedItems[0].color : defaultColor
 
+    const changeImage = (e) => {
+      e.target.src = '/imagenes/notFound.png'
+    }
+
     return (
       <React.Fragment>
         <List className={classes.root}>
@@ -162,7 +166,7 @@ class Alerta extends Component {
               <ListItemAvatar>
                 <Avatar
                   imgProps={{
-                    onerror: "this.src='/imagenes/imgNotFound.png'"
+                    onError: changeImage
                   }}
                   style={{
                     backgroundColor: !!selectedColor ? selectedColor : defaultColor
@@ -194,7 +198,7 @@ class Alerta extends Component {
                 <ListItemAvatar>
                   <Avatar
                     imgProps={{
-                      onerror: "this.src='/imagenes/imgNotFound.png'"
+                      onError: changeImage
                     }}
                     style={{
                       backgroundColor: !!item.color ? item.color : defaultColor
