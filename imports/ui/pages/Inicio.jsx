@@ -18,6 +18,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { Fab, Grid } from '@material-ui/core';
 
+import Chart from 'react-google-charts';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -321,7 +323,7 @@ class Inicio extends Component {
     document.body.removeChild(aux);
 
     console.log(cuadernoSeleccionada._id + " copiado.")
-    handleAlerta("Código de cuaderno copiado.")
+    handleAlerta("Código de cuaderno copiado.", "success")
   }
 
   renderCuadernoSeleccionado() {

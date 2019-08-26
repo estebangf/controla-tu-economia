@@ -117,6 +117,7 @@ class Alerta extends Component {
       classes,
       items,
       id,
+      idMaestro,
       text,
       avatar,
       value,
@@ -132,10 +133,11 @@ class Alerta extends Component {
     } = this.state
 
     const selectedItems = items.filter((item) => {
+      const idItem = !!item[idMaestro] ? item[idMaestro] : item[id]
       if(multiple) {
-        return value.includes(item[id])
+        return value.includes(idItem)
       } else {
-        return item[id] == value
+        return idItem == value
       }
     })
 
@@ -194,7 +196,14 @@ class Alerta extends Component {
               <ListItemText primary={"Sin "+title} />
             </ListItem>
             {items.map(item => (
-              <ListItem selected={multiple ? value.includes(item[id]) : value == item[id]} button onClick={() => this.handleListItemClick(item[id])} key={item[id]}>
+              <ListItem
+                selected={multiple ? (
+                  !!item[idMaestro] ? value.includes(item[idMaestro]) : value.includes(item[id])
+                ) : (
+                  !!item[idMaestro] ? value == item[idMaestro] : value == item[id]
+                )}
+                button
+                onClick={() => this.handleListItemClick(!!item[idMaestro] ? item[idMaestro] : item[id])} key={item[id]}>
                 <ListItemAvatar>
                   <Avatar
                     imgProps={{
@@ -210,16 +219,6 @@ class Alerta extends Component {
                 <ListItemText primary={item[text]} />
               </ListItem>
             ))}
-{/*
-            <ListItem button onClick={() => handleListItemClick('addAccount')}>
-              <ListItemAvatar>
-                <Avatar>
-                  <AddIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="add account" />
-            </ListItem>
-*/}
           </List>
         </Dialog>
       </React.Fragment>

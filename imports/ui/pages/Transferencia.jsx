@@ -275,6 +275,7 @@ class Transferencia extends Component {
           id={"_id"}
           text={"nombre"}
           avatar={"nombre"}
+          idMaestro={"cuadernoVinculado"}
           value={cuadernoEgreso}
           openAutomatic={!loading && !!categoria && !!!cuadernoEgreso}
           onChange={this.handleChange("cuadernoEgreso")}
@@ -286,6 +287,7 @@ class Transferencia extends Component {
           id={"_id"}
           text={"nombre"}
           avatar={"nombre"}
+          idMaestro={"cuadernoVinculado"}
           value={cuadernoIngreso}
           openAutomatic={!loading && !!cuadernoEgreso && !!!cuadernoIngreso}
           onChange={this.handleChange("cuadernoIngreso")}

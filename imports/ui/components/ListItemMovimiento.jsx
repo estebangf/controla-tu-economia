@@ -118,6 +118,7 @@ class ListItemMovimiento extends Component {
       movimiento.importe,
       !movimiento.variaLaGanancia,
       movimiento.fecha,
+      movimiento.categoria,
       (error, result) => {
         if (error){
           console.log(error);
@@ -137,6 +138,7 @@ class ListItemMovimiento extends Component {
       movimiento.importe * -1,
       !movimiento.variaLaGanancia,
       movimiento.fecha,
+      movimiento.categoria,
       (error, result) => {
         if (error){
           console.log(error);
