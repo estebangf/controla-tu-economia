@@ -129,7 +129,7 @@ class ListItemPresupuesto extends Component {
     secondary += !!presupuesto.descripcion ? presupuesto.descripcion : ''
 
     const porsentajeGastado = sumaGastos * 100 / presupuesto.importe;
-    const porsentajeDias = (presupuesto.hasta - new Date()) * 100 / (presupuesto.hasta - presupuesto.desde);
+    const porsentajeDias = (new Date() - presupuesto.desde) * 100 / (presupuesto.hasta - presupuesto.desde);
 
     const ColorLinearProgressImporte = withStyles({
       colorPrimary: {
@@ -182,7 +182,7 @@ class ListItemPresupuesto extends Component {
                   <ColorLinearProgressImporte
                    variant="determinate" value={porsentajeGastado} />
                   <Typography className={classes.estadoTexto}>
-                    Dias restantes: {((presupuesto.hasta - new Date())/1000/60/60/24).toFixed(0)}
+                    Dias restantes: {((presupuesto.hasta - new Date())/1000/60/60/24).toFixed(0)} de {(presupuesto.hasta - presupuesto.desde)/1000/60/60/24}
                   </Typography>
                   <ColorLinearProgressDias
                   variant="determinate" value={porsentajeDias} />
