@@ -49,23 +49,40 @@ class Inicio extends Component {
       }
     });
 
-    console.log(idsCategorias);
 
     const totales = []
+    var maxDate = 1;
     for (let index = 0; index < nombresCategorias.length; index++) {
       let total = 0;
       movimientos.forEach(m => {
-        console.log(m.categoria);
-        console.log(m.importe);
-        console.log(idsCategorias[index]);
+        if(maxDate < m.fecha.getDate()){
+          maxDate = m.fecha.getDate()
+        }
         if(m.categoria == idsCategorias[index]){
           total -= m.importe
         }
       })
       totales.push(total)
     }
-    console.log(totales);
 
+    const importesPorFecha = []
+    for (let i = 1; i <= maxDate; i++) {
+      const importes = []
+      var importeVerificacion = 0
+      idsCategorias.forEach(idC => {
+        var importe = 0
+        movimientos.map(m => {
+          if(m.categoria == idC && m.fecha.getDate() == i){
+            importe -= m.importe
+          }
+        })
+        importeVerificacion += importe
+        importes.push(importe)
+      })
+      if(importeVerificacion != 0){
+        importesPorFecha.push([i, ...importes])
+      }
+    }
 
     return (
       <div className={classes.root}>
@@ -149,6 +166,27 @@ class Inicio extends Component {
                 subtitle: '',
               },
               pieHole: 0.2,
+            }}
+          />
+        </Paper>
+        <Paper container elevation={3} className={classes.grafico}>
+          <Chart
+            width="calc(100% - 10px)"
+            height="calc(100% - 10px)"
+            chartType="Line"
+            loader={<div>Loading Chart</div>}
+            data={[
+              [" ", ...nombresCategorias],
+              ...importesPorFecha
+            ]}
+            options={{
+              chart: {
+                title: 'Egresos por Categoria',
+                subtitle: '',
+              },
+              series: {
+                1: { curveType: 'function' },
+              },
             }}
           />
         </Paper>
