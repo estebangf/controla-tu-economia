@@ -182,7 +182,7 @@ class ListItemPresupuesto extends Component {
                   <ColorLinearProgressImporte
                    variant="determinate" value={porsentajeGastado} />
                   <Typography className={classes.estadoTexto}>
-                    Dias restantes: {((presupuesto.hasta - new Date())/1000/60/60/24).toFixed(0)} de {(presupuesto.hasta - presupuesto.desde)/1000/60/60/24}
+                    Dias restantes: {((presupuesto.hasta - new Date())/1000/60/60/24).toFixed(0)}}
                   </Typography>
                   <ColorLinearProgressDias
                   variant="determinate" value={porsentajeDias} />
