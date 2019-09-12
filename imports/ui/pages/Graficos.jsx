@@ -37,22 +37,32 @@ class Inicio extends Component {
   }
 
   render() {
-    const { classes, categorias } = this.props;
+    const { classes, categorias, movimientos } = this.props;
 
     const nombresCategorias = []
+    const idsCategorias = []
 
     categorias.forEach((element, index) => {
       if (index < 4){
         nombresCategorias.push(element.nombre)
+        idsCategorias.push(element._id)
       }
     });
 
-    console.log("nombresCategorias");
-    console.log(nombresCategorias);
+    console.log(idsCategorias);
 
     const totales = []
     for (let index = 0; index < nombresCategorias.length; index++) {
-      totales.push( Math.floor((Math.random(1,100)*10000).toFixed(0)) )
+      let total = 0;
+      movimientos.forEach(m => {
+        console.log(m.categoria);
+        console.log(m.importe);
+        console.log(idsCategorias[index]);
+        if(m.categoria == idsCategorias[index]){
+          total -= m.importe
+        }
+      })
+      totales.push(total)
     }
     console.log(totales);
 
