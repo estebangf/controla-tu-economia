@@ -72,14 +72,14 @@ class Inicio extends Component {
       idsCategorias.forEach(idC => {
         var importe = 0
         movimientos.map(m => {
-          if(m.categoria == idC && m.fecha.getDate() == i){
+          if(m.categoria == idC && m.fecha.getDate() <= i){
             importe -= m.importe
           }
         })
         importeVerificacion += importe
         importes.push(importe)
       })
-      if(importeVerificacion != 0){
+      if(importeVerificacion != 0 || i == 1){
         importesPorFecha.push([i, ...importes])
       }
     }
