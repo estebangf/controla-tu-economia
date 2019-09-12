@@ -475,9 +475,14 @@ class Inicio extends Component {
           !!user ? (
             user.emails[0].address == "monofer93@outlook.com.ar" ||
             user.emails[0].address == "esteban.fernandez93@outlook.com.ar" ? (
-              <Link className={classes.linkSeccion} to={'/setings/categorias'}>
-                <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
-              </Link>
+              <div>
+                <Link className={classes.linkSeccion} to={'/setings/categorias'}>
+                  <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
+                </Link>
+                <Link className={classes.linkSeccion} to={'/dev/graficos'}>
+                  <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Graficos</Typography>
+                </Link>
+              </div>
             ) : ""
           ) : ""
         }

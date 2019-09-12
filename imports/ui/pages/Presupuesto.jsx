@@ -252,6 +252,7 @@ class Presupuesto extends Component {
           imgFolder={"cuaderno"}
           items={cuadernos}
           id={"_id"}
+          idMaestro={"cuadernoVinculado"}
           text={"nombre"}
           avatar={"nombre"}
           value={cuadernoId}

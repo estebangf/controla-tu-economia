@@ -64,7 +64,8 @@ class PresupuestosList extends Component {
     return presupuestos.map(presupuesto => {
       var total = 0;
       var movimientosF = movimientos.filter((m) => {
-        return presupuesto.categorias.includes(m.categoria)
+        return presupuesto.categorias.includes(m.categoria) &&
+          (m.fecha >= presupuesto.desde && m.fecha <= presupuesto.hasta)
       })
       movimientosF.forEach((m) => {
         total -= m.importe

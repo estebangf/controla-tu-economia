@@ -10,13 +10,18 @@ import { Categorias } from '/imports/api/categorias/categorias';
 
 const styles = theme => ({
   root: {
-    // padding: 15,
+    paddingTop: 10,
     textAlign: 'center',
     // bottom: 0,
     // position: "absolute",
     width: "100%"
   },
   grafico: {
+    margin: 15,
+    padding: 10,
+  },
+  graficoSP: {
+    margin: 15,
   }
 });
 
@@ -32,30 +37,32 @@ class Inicio extends Component {
   }
 
   render() {
-    const { classes, cuadernoSeleccionada } = this.props;
-    const user = Meteor.user();
+    const { classes, categorias } = this.props;
 
-    Meteor.subscribe('categorias');
-    const categorias = Categorias.find({}).fetch();
-    
+    const nombresCategorias = []
 
-    const nombresCategorias = categorias.map((c, index) => {
-      if(index<5){
-        return c.nombre
+    categorias.forEach((element, index) => {
+      if (index < 4){
+        nombresCategorias.push(element.nombre)
       }
-    })
+    });
 
-    
+    console.log("nombresCategorias");
+    console.log(nombresCategorias);
+
     const totales = []
     for (let index = 0; index < nombresCategorias.length; index++) {
       totales.push( Math.floor((Math.random(1,100)*10000).toFixed(0)) )
     }
+    console.log(totales);
 
 
     return (
       <div className={classes.root}>
-        <Paper container className={classes.grafico}>
+        <Paper container elevation={3} className={classes.grafico}>
           <Chart
+            width="calc(100% - 10px)"
+            height="calc(100% - 10px)"
             chartType="Bar"
             loader={<div>Loading Chart</div>}
             data={[
@@ -74,6 +81,64 @@ class Inicio extends Component {
                   0: { side: 'right' },
                 },
               },
+            }}
+          />
+        </Paper>
+        <Paper container elevation={3} className={classes.graficoSP}>
+          <Chart
+            chartType="PieChart"
+            loader={<div>Loading Chart</div>}
+            data={[
+              ["Categoria", "Monto"],
+              ...nombresCategorias.map((nc, i) => {
+                return [nc, totales[i]]
+              })
+            ]}
+            options={{
+              chart: {
+                title: 'Egresos por Categoria',
+                subtitle: '',
+              },
+              pieHole: 0.2,
+              is3D: true
+            }}
+          />
+        </Paper>
+        <Paper container elevation={3} className={classes.grafico}>
+          <Chart
+            width="calc(100% - 10px)"
+            height="calc(100% - 10px)"
+            chartType="Bar"
+            loader={<div>Loading Chart</div>}
+            data={[
+              [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
+              [' ', ...(!!totales ? totales : [])],
+            ]}
+            options={{
+              // Material design options
+              chart: {
+                title: 'Egresos por Categoria',
+                subtitle: '',
+              },
+            }}
+          />
+        </Paper>
+        <Paper container elevation={3} className={classes.graficoSP}>
+          <Chart
+            chartType="PieChart"
+            loader={<div>Loading Chart</div>}
+            data={[
+              ["Categoria", "Monto"],
+              ...nombresCategorias.map((nc, i) => {
+                return [nc, totales[i]]
+              })
+            ]}
+            options={{
+              chart: {
+                title: 'Egresos por Categoria',
+                subtitle: '',
+              },
+              pieHole: 0.2,
             }}
           />
         </Paper>

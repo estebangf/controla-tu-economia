@@ -37,6 +37,7 @@ import PresupuestoContainer from '../containers/PresupuestoContainer';
 import PresupuestosContainer from '../containers/PresupuestosContainer';
 import { Dialog } from '@material-ui/core';
 import Calculadora from '../components/Calculadora';
+import GraficosContainer from '../containers/GraficosContainer';
 
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
@@ -471,6 +472,11 @@ class App extends Component {
             exact
             path="/setings/categorias"
             render={() => <CategoriasContainer {...pase} />}
+          />,
+          <Route
+            exact
+            path="/dev/graficos"
+            render={() => <GraficosContainer {...pase} />}
           />,
         ]
       } else {
