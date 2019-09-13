@@ -79,10 +79,19 @@ class Inicio extends Component {
 
     const nombresCategorias = []
     const idsCategorias = []
+    const colors = []
+
+    const cfiltradas = []
+    movimientos.map(m => {
+      if(!cfiltradas.includes(m.categoria) && !!!m.transferenciaId){
+        cfiltradas.push(m.categoria)
+      }
+    })
 
     categorias.forEach((element, i) => {
-      if (i < 5){
+      if(cfiltradas.includes(element._id)){
         nombresCategorias.push(element.nombre)
+        colors.push(!!element.color ? element.color : "#e5e4e2")
         idsCategorias.push(element._id)
       }
     });
@@ -141,6 +150,7 @@ class Inicio extends Component {
                   [' ', ...(!!totales ? totales : [])],
                 ]}
                 options={{
+                  colors,
                   // Material design options
                   bars: 'horizontal',
                   axes: {
@@ -164,6 +174,30 @@ class Inicio extends Component {
                 ]}
               />
             </Paper>
+            <Paper container elevation={3} className={classes.grafico}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="100%"
+                height="100%"
+                chartType="BarChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
+                  [' ', ...(!!totales ? totales : [])],
+                ]}
+                options={{
+                  colors,
+                  // Material design options
+                  bars: 'horizontal',
+                  axes: {
+                    y: {
+                      0: { side: 'right' },
+                    },
+                  },
+                  legend: { position: 'top', maxLines: 3 },
+                }}
+              />
+            </Paper>
           </Box>
           <Box index={1} hidden={value !== 1}>
             <Paper container elevation={3} className={classes.graficoSP}>
@@ -180,6 +214,7 @@ class Inicio extends Component {
                   })
                 ]}
                 options={{
+                  colors,
                   pieHole: 0.2,
                   is3D: true
                 }}
@@ -198,7 +233,8 @@ class Inicio extends Component {
                     return [nc, totales[i]]
                   })
                 ]}
-              options={{
+                options={{
+                  colors,
                   pieHole: 0.3,
                 }}
               />
@@ -216,6 +252,26 @@ class Inicio extends Component {
                   [" ", ...nombresCategorias],
                   ...importesPorFecha
                 ]}
+                options={{
+                  colors,
+                }}
+                />
+            </Paper>
+            <Paper container elevation={3} className={classes.grafico}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="100%"
+                height="100%"
+                chartType="LineChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  [" ", ...nombresCategorias],
+                  ...importesPorFecha
+                ]}
+                options={{
+                  colors,
+                  legend: { position: 'top', maxLines: 3 },
+                }}
               />
             </Paper>
           </Box>
