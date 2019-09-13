@@ -55,8 +55,14 @@ class Inicio extends Component {
     };
     
     this.handleChange = this.handleChange.bind(this)
+    this.handleChangeIndex = this.handleChangeIndex.bind(this)
   }
 
+  handleChangeIndex(value){
+    this.setState({
+      value
+    });
+  }
   handleChange(event, value){
     this.setState({
       value
@@ -119,6 +125,7 @@ class Inicio extends Component {
       <div className={classes.root}>
         <SwipeableViews
           index={value}
+          onChangeIndex={this.handleChangeIndex}
         >
           <Box index={0} hidden={value !== 0}>
             <Paper container elevation={3} className={classes.grafico}>
