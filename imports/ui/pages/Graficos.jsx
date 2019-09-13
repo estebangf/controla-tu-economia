@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/styles';
 
-import { Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
+import { useTheme } from '@material-ui/core/styles';
+
+import { Paper, Typography, BottomNavigation, BottomNavigationAction, Box } from '@material-ui/core'
+import SwipeableViews from 'react-swipeable-views';
+
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import Chart from 'react-google-charts';
-import { Categorias } from '/imports/api/categorias/categorias';
 
 const styles = theme => ({
   root: {
     paddingTop: 10,
+    paddingBottom: 50,
     textAlign: 'center',
     // bottom: 0,
     // position: "absolute",
@@ -19,9 +26,19 @@ const styles = theme => ({
   grafico: {
     margin: 15,
     padding: 10,
+    paddingTop: 0,
   },
   graficoSP: {
     margin: 15,
+  },
+  tituloGrafico: {
+    padding: 10,
+    color: "#808080",
+  },
+  bottomNavigation: {
+    position: 'fixed',
+    width: '100%',
+    bottom: 0
   }
 });
 
@@ -32,33 +49,47 @@ class Inicio extends Component {
       showConnectionIssue: false,
       drawerOpen: false,
       expanded: false,
-      saldoCuaderno: 0
+      saldoCuaderno: 0,
+      value: 0,
+      index: 0
     };
+    
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event, value){
+    this.setState({
+      value
+    });
   }
 
   render() {
     const { classes, categorias, movimientos } = this.props;
+    const {
+      value,
+      index
+    } = this.state
 
     const nombresCategorias = []
     const idsCategorias = []
 
-    categorias.forEach((element, index) => {
-      if (index < 4){
+    categorias.forEach((element, i) => {
+      if (i < 5){
         nombresCategorias.push(element.nombre)
         idsCategorias.push(element._id)
       }
     });
-
+    
 
     const totales = []
     var maxDate = 1;
-    for (let index = 0; index < nombresCategorias.length; index++) {
+    for (let i = 0; i < nombresCategorias.length; i++) {
       let total = 0;
       movimientos.forEach(m => {
         if(maxDate < m.fecha.getDate()){
           maxDate = m.fecha.getDate()
         }
-        if(m.categoria == idsCategorias[index]){
+        if(m.categoria == idsCategorias[i]){
           total -= m.importe
         }
       })
@@ -86,110 +117,112 @@ class Inicio extends Component {
 
     return (
       <div className={classes.root}>
-        <Paper container elevation={3} className={classes.grafico}>
-          <Chart
-            width="calc(100% - 10px)"
-            height="calc(100% - 10px)"
-            chartType="Bar"
-            loader={<div>Loading Chart</div>}
-            data={[
-              [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
-              [' ', ...(!!totales ? totales : [])],
-            ]}
-            options={{
-              // Material design options
-              bars: 'horizontal',
-              chart: {
-                title: 'Egresos por Categoria',
-                subtitle: '',
-              },
-              axes: {
-                y: {
-                  0: { side: 'right' },
-                },
-              },
-            }}
-          />
-        </Paper>
-        <Paper container elevation={3} className={classes.graficoSP}>
-          <Chart
-            chartType="PieChart"
-            loader={<div>Loading Chart</div>}
-            data={[
-              ["Categoria", "Monto"],
-              ...nombresCategorias.map((nc, i) => {
-                return [nc, totales[i]]
-              })
-            ]}
-            options={{
-              chart: {
-                title: 'Egresos por Categoria',
-                subtitle: '',
-              },
-              pieHole: 0.2,
-              is3D: true
-            }}
-          />
-        </Paper>
-        <Paper container elevation={3} className={classes.grafico}>
-          <Chart
-            width="calc(100% - 10px)"
-            height="calc(100% - 10px)"
-            chartType="Bar"
-            loader={<div>Loading Chart</div>}
-            data={[
-              [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
-              [' ', ...(!!totales ? totales : [])],
-            ]}
-            options={{
-              // Material design options
-              chart: {
-                title: 'Egresos por Categoria',
-                subtitle: '',
-              },
-            }}
-          />
-        </Paper>
-        <Paper container elevation={3} className={classes.graficoSP}>
-          <Chart
-            chartType="PieChart"
-            loader={<div>Loading Chart</div>}
-            data={[
-              ["Categoria", "Monto"],
-              ...nombresCategorias.map((nc, i) => {
-                return [nc, totales[i]]
-              })
-            ]}
-            options={{
-              chart: {
-                title: 'Egresos por Categoria',
-                subtitle: '',
-              },
-              pieHole: 0.2,
-            }}
-          />
-        </Paper>
-        <Paper container elevation={3} className={classes.grafico}>
-          <Chart
-            width="calc(100% - 10px)"
-            height="calc(100% - 10px)"
-            chartType="Line"
-            loader={<div>Loading Chart</div>}
-            data={[
-              [" ", ...nombresCategorias],
-              ...importesPorFecha
-            ]}
-            options={{
-              chart: {
-                title: 'Egresos por Categoria',
-                subtitle: '',
-              },
-              series: {
-                1: { curveType: 'function' },
-              },
-            }}
-          />
-        </Paper>
+        <SwipeableViews
+          index={value}
+        >
+          <Box index={0} hidden={value !== 0}>
+            <Paper container elevation={3} className={classes.grafico}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="calc(100% - 10px)"
+                height="calc(100% - 10px)"
+                chartType="Bar"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
+                  [' ', ...(!!totales ? totales : [])],
+                ]}
+                options={{
+                  // Material design options
+                  bars: 'horizontal',
+                  axes: {
+                    y: {
+                      0: { side: 'right' },
+                    },
+                  },
+                }}
+              />
+            </Paper>
+            <Paper container elevation={3} className={classes.grafico}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="calc(100% - 10px)"
+                height="calc(100% - 10px)"
+                chartType="Bar"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  [' ', ...(!!nombresCategorias ? nombresCategorias : [])],
+                  [' ', ...(!!totales ? totales : [])],
+                ]}
+              />
+            </Paper>
+          </Box>
+          <Box index={1} hidden={value !== 1}>
+            <Paper container elevation={3} className={classes.graficoSP}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="calc(100% - 10px)"
+                height="calc(100% - 10px)"
+                chartType="PieChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ["Categoria", "Monto"],
+                  ...nombresCategorias.map((nc, i) => {
+                    return [nc, totales[i]]
+                  })
+                ]}
+                options={{
+                  pieHole: 0.2,
+                  is3D: true
+                }}
+              />
+            </Paper>
+            <Paper container elevation={3} className={classes.graficoSP}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="calc(100% - 10px)"
+                height="calc(100% - 10px)"
+                chartType="PieChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ["Categoria", "Monto"],
+                  ...nombresCategorias.map((nc, i) => {
+                    return [nc, totales[i]]
+                  })
+                ]}
+              options={{
+                  pieHole: 0.3,
+                }}
+              />
+            </Paper>
+          </Box>
+          <Box index={2} hidden={value !== 2}>
+            <Paper container elevation={3} className={classes.grafico}>
+              <Typography className={classes.tituloGrafico}>Egresos por categoria</Typography>
+              <Chart
+                width="calc(100% - 10px)"
+                height="calc(100% - 10px)"
+                chartType="Line"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  [" ", ...nombresCategorias],
+                  ...importesPorFecha
+                ]}
+              />
+            </Paper>
+          </Box>
+        </SwipeableViews>
+
+
+        <BottomNavigation
+          value={value}
+          onChange={this.handleChange}
+          className={classes.bottomNavigation}
+        >
+          <BottomNavigationAction label="Barras" value={0} icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Circulos" value={1} icon={<FavoriteIcon />} />
+          <BottomNavigationAction label="Lineas" value={2} icon={<LocationOnIcon />} />
+        </BottomNavigation>
       </div>
     )
   }

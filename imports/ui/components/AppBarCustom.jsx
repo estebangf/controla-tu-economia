@@ -15,6 +15,7 @@ const PAGINAS_CON_FILTRO = [
   "/movimientos/seguimientos",
   "/movimientos/ganancias",
   "/presupuestos",
+  "/dev/graficos",
 ]
 const PAGINAS_CON_ATRAS = [
   "/cuadernos/",
@@ -28,6 +29,7 @@ const PAGINAS_CON_ATRAS = [
   "/presupuestos/",
   "/presupuestos/nuevo",
   "/setings/categorias",
+  "/dev/graficos",
 ]
 const PAGINAS_CON_CALCULADORA = [
   "/movimientos/ingresos/",
