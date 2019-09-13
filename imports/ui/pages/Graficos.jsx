@@ -82,8 +82,12 @@ class Inicio extends Component {
     const colors = []
 
     const cfiltradas = []
-    movimientos.map(m => {
-      if(!cfiltradas.includes(m.categoria) && !!!m.transferenciaId){
+    const movimientosF = movimientos.filter(m => {
+      return !!!m.transferenciaId
+    })
+    
+    movimientosF.map(m => {
+      if(!cfiltradas.includes(m.categoria)){
         cfiltradas.push(m.categoria)
       }
     })
@@ -101,7 +105,7 @@ class Inicio extends Component {
     var maxDate = 1;
     for (let i = 0; i < nombresCategorias.length; i++) {
       let total = 0;
-      movimientos.forEach(m => {
+      movimientosF.forEach(m => {
         if(maxDate < m.fecha.getDate()){
           maxDate = m.fecha.getDate()
         }
@@ -118,7 +122,7 @@ class Inicio extends Component {
       var importeVerificacion = 0
       idsCategorias.forEach(idC => {
         var importe = 0
-        movimientos.map(m => {
+        movimientosF.map(m => {
           if(m.categoria == idC && m.fecha.getDate() <= i){
             importe -= m.importe
           }
