@@ -48,6 +48,18 @@ Meteor.publish('movimientos.egreso', function movimiento(id) {
   })
 });
 
+Meteor.publish('movimientos.egresos.sintransferencias', function movimientos(cuadernoId, desde, hasta) {
+  //  return Movimientos.find({userId: Meteor.userId(), cuadernoId: cuadernoId})
+    return Movimientos.find({cuadernoId: cuadernoId,
+      "$and": [
+        { fecha: { "$gte": new Date(desde) }},
+        { fecha: { "$lte": new Date(hasta) }},
+        { transferenciaId: { "$in": [ "", null, undefined ]} }
+      ],
+      importe: { "$lt": 0 }
+    })
+  });
+
 Meteor.publish('movimientos.transferencia', function transferencia(transferenciaId) {
 //  return Movimientos.find({_id: id, userId: Meteor.userId()})
   return Movimientos.find({

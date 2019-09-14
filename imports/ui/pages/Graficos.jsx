@@ -10,9 +10,11 @@ import SwipeableViews from 'react-swipeable-views';
 
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import Chart from 'react-google-charts';
+import SelectDialog from '../components/SelectDialog';
 
 const styles = theme => ({
   root: {
@@ -52,11 +54,13 @@ class Inicio extends Component {
       expanded: false,
       saldoCuaderno: 0,
       value: 0,
-      index: 0
+      index: 0,
+      categoriasSeleccionadas: []
     };
     
     this.handleChange = this.handleChange.bind(this)
     this.handleChangeIndex = this.handleChangeIndex.bind(this)
+    this.handleChangeCategoria = this.handleChangeCategoria.bind(this)
   }
 
   handleChangeIndex(value){
@@ -69,68 +73,94 @@ class Inicio extends Component {
       value
     });
   }
+  handleChangeCategoria(event){
+    this.setState({
+      categoriasSeleccionadas: event.target.value
+    });
+  }
 
   render() {
-    const { classes, categorias, movimientos } = this.props;
+    const {
+      classes,
+      categorias,
+      movimientos,
+      desde
+    } = this.props;
+
     const {
       value,
-      index
+      categoriasSeleccionadas
     } = this.state
 
-    const nombresCategorias = []
-    const idsCategorias = []
-    const colors = []
-
-    const cfiltradas = []
-    const movimientosF = movimientos.filter(m => {
-      return !!!m.transferenciaId
-    })
+    console.log("categoriasSeleccionadas");
+    console.log(categoriasSeleccionadas);
     
-    movimientosF.map(m => {
-      if(!cfiltradas.includes(m.categoria)){
+    //Filtro categorias usadas
+    const cfiltradas = []
+    movimientos.map(m => {
+      if (!cfiltradas.includes(m.categoria)){
         cfiltradas.push(m.categoria)
       }
     })
+    const categoriasUsadas = categorias.filter(c => {
+      return cfiltradas.includes(c._id) 
+    })
 
-    categorias.forEach((element, i) => {
-      if(cfiltradas.includes(element._id)){
-        nombresCategorias.push(element.nombre)
-        colors.push(!!element.color ? element.color : "#e5e4e2")
-        idsCategorias.push(element._id)
+    //Filtro categorias seleccionadas
+    const categoriasFiltradas = categorias.filter(c => {
+      if ( !!!categoriasSeleccionadas.length){
+        return cfiltradas.includes(c._id) 
+      } else if (categoriasSeleccionadas.includes(c._id)) {
+        return cfiltradas.includes(c._id) 
+      }
+    })
+
+    //preparo objetos de graficos
+    const idsCategorias = []
+    const nombresCategorias = []
+    const colors = []
+    const totales = new Array(categoriasFiltradas.length)
+
+    //defino primeros 3
+    categoriasFiltradas.forEach((c, i) => {
+      idsCategorias.push(c._id)
+      nombresCategorias.push(c.nombre)
+      colors.push(!!c.color ? c.color : "#e5e4e2")
+    });
+    
+    //defino totales y fecha maxima
+    var maxDate = new Date(desde);
+    movimientos.forEach(m => {
+      categoriasFiltradas.forEach((c, i) => {
+        if (m.categoria == c._id) {
+          if (!!totales[i]) {
+            totales[i] -= m.importe
+          } else {
+            totales[i] = 0-m.importe
+          }
+        }
+      })
+      if(maxDate < m.fecha){
+        maxDate = m.fecha
       }
     });
     
-
-    const totales = []
-    var maxDate = 1;
-    for (let i = 0; i < nombresCategorias.length; i++) {
-      let total = 0;
-      movimientosF.forEach(m => {
-        if(maxDate < m.fecha.getDate()){
-          maxDate = m.fecha.getDate()
-        }
-        if(m.categoria == idsCategorias[i]){
-          total -= m.importe
-        }
-      })
-      totales.push(total)
-    }
-
+    //defino importes por fecha para grafico de lineas
     const importesPorFecha = []
-    for (let i = 1; i <= maxDate; i++) {
+    for (let i = new Date(desde); i <= maxDate; i = new Date(i.setDate(i.getDate()+1))) {
       const importes = []
       var importeVerificacion = 0
       idsCategorias.forEach(idC => {
         var importe = 0
-        movimientosF.map(m => {
-          if(m.categoria == idC && m.fecha.getDate() <= i){
+        movimientos.map(m => {
+          if(m.categoria == idC && m.fecha <= i){
             importe -= m.importe
           }
         })
         importeVerificacion += importe
         importes.push(importe)
       })
-      if(importeVerificacion != 0 || i == 1){
+      if(importeVerificacion != 0 || i == new Date(desde)){
         importesPorFecha.push([i, ...importes])
       }
     }
@@ -253,7 +283,7 @@ class Inicio extends Component {
                 chartType="Line"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  [" ", ...nombresCategorias],
+                  [{ type: 'date', label: " "}, ...nombresCategorias],
                   ...importesPorFecha
                 ]}
                 options={{
@@ -279,6 +309,22 @@ class Inicio extends Component {
               />
             </Paper>
           </Box>
+          <Box index={3} hidden={value !== 3}>
+            <Typography className={classes.tituloGrafico}>Seleccione las categorias</Typography>
+            <SelectDialog
+              color="#337dbf"
+              title={"Categorias"}
+              imgFolder={"categorias"}
+              items={categoriasUsadas}
+              id={"_id"}
+              text={"nombre"}
+              avatar={"nombre"}
+              value={categoriasSeleccionadas}
+              multiple={true}
+              openAutomatic={false}
+              onChange={this.handleChangeCategoria}
+            />
+          </Box>
         </SwipeableViews>
 
 
@@ -290,6 +336,7 @@ class Inicio extends Component {
           <BottomNavigationAction label="Barras" value={0} icon={<RestoreIcon />} />
           <BottomNavigationAction label="Circulos" value={1} icon={<FavoriteIcon />} />
           <BottomNavigationAction label="Lineas" value={2} icon={<LocationOnIcon />} />
+          <BottomNavigationAction label="Opciones" value={3} icon={<SettingsApplicationsIcon />} />
         </BottomNavigation>
       </div>
     )
