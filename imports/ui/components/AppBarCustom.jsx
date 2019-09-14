@@ -18,6 +18,14 @@ const PAGINAS_CON_FILTRO = [
   "/dev/graficos",
 ]
 const PAGINAS_CON_ATRAS = [
+  "/cuadernos",
+  "/movimientos/ingresos",
+  "/movimientos/egresos",
+  "/movimientos/transferencias",
+  "/movimientos/balance",
+  "/movimientos/seguimientos",
+  "/movimientos/ganancias",
+  "/presupuestos",
   "/cuadernos/",
   "/cuadernos/nuevo",
   "/movimientos/ingresos/",
@@ -43,14 +51,6 @@ const PAGINAS_CON_CALCULADORA = [
 ]
 const PAGINAS_CON_MENU = [
   "/",
-  "/cuadernos",
-  "/movimientos/ingresos",
-  "/movimientos/egresos",
-  "/movimientos/transferencias",
-  "/movimientos/balance",
-  "/movimientos/seguimientos",
-  "/movimientos/ganancias",
-  "/presupuestos",
 ]
 const styles = theme => ({
   root: {

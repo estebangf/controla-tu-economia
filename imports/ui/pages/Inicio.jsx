@@ -479,13 +479,13 @@ class Inicio extends Component {
                 <Link className={classes.linkSeccion} to={'/setings/categorias'}>
                   <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
                 </Link>
-                <Link className={classes.linkSeccion} to={'/dev/graficos'}>
-                  <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Graficos</Typography>
-                </Link>
               </div>
             ) : ""
           ) : ""
         }
+        <Link className={classes.linkSeccion} to={'/dev/graficos'}>
+          <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Graficos</Typography>
+        </Link>
       </div>
     )
   }
