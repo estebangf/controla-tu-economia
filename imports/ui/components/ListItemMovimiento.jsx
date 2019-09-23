@@ -205,6 +205,10 @@ class ListItemMovimiento extends Component {
       secondary += !!movimiento.categoriaNombre ? movimiento.categoriaNombre : ''
       secondary += ' - '
       secondary += !!movimiento.descripcion ? movimiento.descripcion : ''
+
+      const changeImage = (e) => {
+        e.target.src = '/imagenes/notFound.png'
+      }
       return (
         <div>
           <Link onContextMenu={this.handleClick} to={
@@ -219,9 +223,16 @@ class ListItemMovimiento extends Component {
               button
             >
               <ListItemAvatar>
-                <Avatar className={classes[movimiento.tipo+"Icono"]}>
-                  {this.renderIcon(movimiento)}
-                </Avatar>
+                <Avatar
+                  size="8" className={classes.avatar}
+                  imgProps={{
+                    onError: changeImage
+                  }}
+                  style={{
+                    backgroundColor: movimiento.categoriaColor
+                  }}
+                  src={"/imagenes/categorias/" + movimiento.categoriaNombre.replace(" ","_") + ".png"}
+                />
               </ListItemAvatar>
               <ListItemText
                 primaryTypographyProps={{
