@@ -165,7 +165,7 @@ class ListItemCuaderno extends Component {
             />
             <ListItemSecondaryAction>
               <Typography className={classes.saldoCuaderno}>
-                $ {saldoCuaderno}
+                $ {saldoCuaderno.toFixed(2)}
               </Typography>
               <IconButton
                 className={clsx(classes.radioSelect, {
