@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { Link } from 'react-router-dom';
-import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu, Radio, IconButton } from '@material-ui/core';
+import { withStyles, MenuItem, Typography, ListItemAvatar, Avatar, ListItemText, ListItemSecondaryAction, ListItem, Menu, Radio, IconButton, Divider } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 
 import PersonIcon from '@material-ui/icons/Person';
@@ -48,6 +48,10 @@ const styles = theme => ({
   },
   seleccionada: {
     color: blue[600],
+  },
+  saldoCuaderno: {
+    display: "-webkit-inline-box",
+    verticalAlign: "middle",
   }
 });
 
@@ -56,8 +60,38 @@ class ListItemCuaderno extends Component {
     super(props);
     this.state = {
       anchorEl: undefined,
-      menuVisible: false
+      menuVisible: false,
+      saldoCuaderno: 0
     };
+  }
+
+
+  componentDidMount() {
+    const {
+      cuaderno,
+    } = this.props;
+
+    const hasta = new Date();
+    if (!!cuaderno) {
+      const cuadernoId = !!cuaderno.cuadernoVinculado ?
+        cuaderno.cuadernoVinculado : cuaderno._id
+
+      const self = this
+      Meteor.call('movimiento.saldoInicial',
+        cuadernoId,
+        hasta,
+        (error, result) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(result)
+            self.setState({
+              saldoCuaderno: result
+            })
+          }
+        }
+      )
+    }
   }
   
   handleClick = event => {
@@ -102,7 +136,8 @@ class ListItemCuaderno extends Component {
       seleccionarCuaderno
     } = this.props;
     const {
-      anchorEl
+      anchorEl,
+      saldoCuaderno
     } = this.state;
 
     const cuadernoStyle = "Cuaderno"+(!!cuaderno.cuadernoVinculado ? "Vinculada" : "Normal");
@@ -129,6 +164,9 @@ class ListItemCuaderno extends Component {
               secondary={!!cuaderno.descripcion ? cuaderno.descripcion : null}
             />
             <ListItemSecondaryAction>
+              <Typography className={classes.saldoCuaderno}>
+                $ {saldoCuaderno}
+              </Typography>
               <IconButton
                 className={clsx(classes.radioSelect, {
                   [classes.noSeleccionada]: !seleccionada,

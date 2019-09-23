@@ -286,7 +286,7 @@ class Seguimientos extends Component {
             <SelectDialog
               title={"Categoria"}
               imgFolder={"categorias"}
-              items={categorias}
+              items={[{_id: "", nombre: "Sin filtrar"}, ...categorias]}
               id={"_id"}
               text={"nombre"}
               avatar={"nombre"}
