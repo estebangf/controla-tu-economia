@@ -176,8 +176,19 @@ class Ganancias extends Component {
   }
 
   renderItems(movimientos) {
+    const { categorias } = this.props;
+
     return movimientos.map(mov => {
-      const movimiento = {...mov, tipo: mov.importe < 0 ? "egreso" : "ingreso"}
+      const categoria = categorias.filter((c) => {
+        return c._id == mov.categoria
+      })
+      const movimiento = {
+        ...mov,
+        tipo: mov.importe < 0 ? "egreso" : "ingreso",
+        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria",
+        categoriaColor: !!categoria.length ? categoria[0].color : "#4385d6",
+      }
+
       return (
         <ListItemMovimiento movimiento={movimiento} />
       )

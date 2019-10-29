@@ -68,7 +68,8 @@ class MovimientosList extends Component {
       const movimiento = {
         ...mov,
         tipo: mov.importe < 0 ? "egreso" : "ingreso",
-        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria"
+        categoriaNombre: !!categoria.length ? categoria[0].nombre : "Sin Categoria",
+        categoriaColor: !!categoria.length ? categoria[0].color : "#4385d6",
       }
 
       return (
