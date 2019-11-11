@@ -1,3 +1,4 @@
+/*
 html {
   background: #fff
 }
@@ -5,6 +6,7 @@ body {
   background-color: #fff !important;
   background: #fff
 }
+*/
 div::-webkit-scrollbar {
   width: 6px !important;
 }

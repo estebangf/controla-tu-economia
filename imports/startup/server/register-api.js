@@ -15,3 +15,6 @@ import '../../api/presupuestos/server/publications.js';
 
 import '../../api/seguimientos/seguimientos.js';
 import '../../api/seguimientos/server/publications.js';
+
+import '../../api/perfiles/perfiles.js';
+import '../../api/perfiles/server/publications.js';

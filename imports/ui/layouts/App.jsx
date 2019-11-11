@@ -4,6 +4,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, red, orange, green, teal, indigo, grey, deepOrange, lightBlue } from '@material-ui/core/colors';
+
+import Tema from '../components/Tema'
 
 import InicioContainer from '../containers/InicioContainer'
 
@@ -35,13 +39,195 @@ import GananciasContainer from '../containers/GananciasContainer';
 import SeguimientosContainer from '../containers/SeguimientosContainer';
 import PresupuestoContainer from '../containers/PresupuestoContainer';
 import PresupuestosContainer from '../containers/PresupuestosContainer';
-import { Dialog } from '@material-ui/core';
+import { Dialog, Button, DialogContent, DialogTitle } from '@material-ui/core';
 import Calculadora from '../components/Calculadora';
 import GraficosContainer from '../containers/GraficosContainer';
+import { Meteor } from 'meteor/meteor';
+import Perfil from '../pages/Perfil';
 
 const drawerWidth = 240;
 const pageHeight = window.innerHeight;
 
+
+//////////////////////////////////////////
+
+
+
+
+const themeNormal = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: red,
+    appBar:{
+      backgroundColor: "#337dbf",
+      color: "#FFF"
+    },
+    cuadernos:{
+
+    },
+    saldo:{
+      negativo:{
+        color: red[300]
+      },
+      positivo:{
+        color: blue[300]
+      },
+      peligroso: {
+        color: orange[300]
+      }
+    },
+    egresos: {
+      buttonText: '#FFF',
+      backgroundColor: red[300],
+      buttonHover: red[700],
+    },
+    ingresos: {
+      buttonText: '#FFF',
+      backgroundColor: blue[300],
+      buttonHover: blue[700],
+    },
+    seguimientos: {
+      buttonText: '#FFF',
+      backgroundColor: orange[300],
+      buttonHover: orange[700],
+    },
+    balance: {
+      buttonText: '#FFF',
+      backgroundColor: green[300],
+      buttonHover: green[700],
+    },
+    ganancias: {
+      buttonText: '#FFF',
+      backgroundColor: teal[300],
+      buttonHover: teal[700],
+    },
+    fondoCombinado: "#1263ab",
+    fondoIntermedio: blue[900],
+    fondo: grey[50],
+    fondoGraficos: grey[50],
+    colorTexto: grey[900],
+    text: {
+      primary: grey[900],
+      disabled: grey[900],
+      hint: grey[900],
+      secondary: grey[800],
+    },
+    background: {
+      paper: grey[50],
+      default: grey[50],
+      level2: "#f5f5f5",
+      level1: "#fff",
+    },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    useNextVariants: true,
+    fontSize: 12,
+  },
+});
+
+const themeDark = createMuiTheme({
+  palette: {
+    primary: grey,
+    secondary: deepOrange,
+    appBar:{
+      backgroundColor: grey[900],
+      color: grey[300]
+    },
+    cuadernos:{
+
+    },
+    saldo:{
+      negativo:{
+        color: red[300]
+      },
+      positivo:{
+        color: blue[300]
+      },
+      peligroso: {
+        color: orange[300]
+      }
+    },
+    egresos: {
+      buttonText: grey[300],
+      backgroundColor: red[300],
+      buttonHover: red[700],
+    },
+    ingresos: {
+      buttonText: grey[300],
+      backgroundColor: blue[300],
+      buttonHover: blue[700],
+    },
+    seguimientos: {
+      buttonText: grey[300],
+      backgroundColor: orange[300],
+      buttonHover: orange[700],
+    },
+    balance: {
+      buttonText: grey[300],
+      backgroundColor: green[300],
+      buttonHover: green[700],
+    },
+    ganancias: {
+      buttonText: grey[300],
+      backgroundColor: teal[300],
+      buttonHover: teal[700],
+    },
+    fondoCombinado: grey[900],
+    fondoIntermedio: grey[600],
+    fondo: grey[800],
+    fondoGraficos: grey[900],
+    colorTexto: grey[300],
+    text: {
+      primary: grey[300],
+      disabled: grey[300],
+      hint: grey[300],
+      secondary: grey[100],
+    },
+    background: {
+      paper: grey[800],
+      default: grey[800],
+      level2: "#f5f5f5",
+      level1: "#fff",
+    },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    useNextVariants: true,
+    fontSize: 12,
+  },
+});
+
+const temas = {
+  normal: themeNormal,
+  oscuro: themeDark
+}
+
+
+
+//////////////////////////////////////////
 
 const PAGINAS_CON_MENU_DROWEABLE = [
   "/",
@@ -215,6 +401,10 @@ const styles = theme => ({
     paddingTop: 0,
     overflowY: 'auto'
   },
+  dialogTemaNuevo: {
+    padding: 20,
+    textAlign: 'center'
+  }
 });
 
 
@@ -481,6 +671,11 @@ class App extends Component {
             path="/dev/graficos"
             render={() => <GraficosContainer {...pase} />}
           />,
+          <Route
+            exact
+            path="/perfil"
+            render={() => <Perfil {...pase} />}
+          />,
         ]
       } else {
         return [
@@ -529,12 +724,14 @@ class App extends Component {
     )
   }
 
+
   renderContent(location) {
     const {
       classes,
       user,
       connected,
       loading,
+      perfil
     } = this.props;
     const {
       showConnectionIssue,
@@ -588,6 +785,25 @@ class App extends Component {
             {this.renderNotFoundPage()}
           </Switch>
         </div>
+
+        { !!!perfil ?
+          <Dialog open={true}>
+            <DialogTitle>Elija un tema:</DialogTitle>
+            <DialogContent className={classes.dialogTemaNuevo}>
+              <Tema />
+            </DialogContent>
+          </Dialog>
+          : !!!perfil.tema ?
+            <Dialog open={true}>
+              <DialogTitle>Elija un tema:</DialogTitle>
+              <DialogContent className={classes.dialogTemaNuevo}>
+                <Tema />
+              </DialogContent>
+            </Dialog>
+          : '' }
+
+
+
         { loading ?
           <div className={classes.loadingRoot}>
             <div className={classes.loadingContainer}>
@@ -604,6 +820,10 @@ class App extends Component {
   render() {
     const {
       classes,
+      publicHandlePerfil,
+      loadingPerfil,
+      perfil,
+      perfilExists
     } = this.props;
 
     const {
@@ -619,23 +839,25 @@ class App extends Component {
     };
 
     return (
-      <div className={classes.root}>
-        {
-          /*
-          <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
-          <div className={classes.fondoSuperior} />
-          */
-        }
-        <CssBaseline />
-        <BrowserRouter>
-          <Route
-            render={({ location }) => (
-              this.renderContent(location)
-            )}
-          />
-        </BrowserRouter>
-        <Alerta alerta={alerta} handleClose={() => this.handleCloseAlert()} />
-      </div>
+      <MuiThemeProvider theme={perfilExists ? temas[perfil.tema] : temas["normal"]}>
+        <div className={classes.root}>
+          {
+            /*
+            <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
+            <div className={classes.fondoSuperior} />
+            */
+          }
+          <CssBaseline />
+          <BrowserRouter>
+            <Route
+              render={({ location }) => (
+                this.renderContent(location)
+              )}
+            />
+          </BrowserRouter>
+          <Alerta alerta={alerta} handleClose={() => this.handleCloseAlert()} />
+        </div>
+      </MuiThemeProvider>
     );
   }
 };
