@@ -18,14 +18,15 @@ const drawerWidth = 240;
 const styles = theme => ({
   rootList: {
     paddingTop: 0,
-    paddingBottom: 64
+    paddingBottom: 64,
+    background: theme.palette.fondo,
   },
   titulo: {
     textAlign: 'center',
     paddingTop: 15
   },
   listaGrafico:{
-    background: '#fff',
+    background: theme.palette.fondoGraficos,
     paddingBottom: 0,
     paddingLeft: 10,
     paddingRight: 10,

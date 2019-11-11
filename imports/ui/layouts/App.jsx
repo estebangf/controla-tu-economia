@@ -90,6 +90,8 @@ const styles = theme => ({
     //   bottom: 50,
     //   top: 114,
     // },
+    minHeight: window.innerHeight,
+    background: theme.palette.fondo,
   },
   dialogPaperCalculadora:{
     maxWidth: 64*4,

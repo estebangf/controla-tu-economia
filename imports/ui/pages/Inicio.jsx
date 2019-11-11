@@ -47,7 +47,7 @@ const styles = theme => ({
     margin: 0
   },
   card: {
-
+    background: theme.palette.fondo,
   },
   cardHeader: {
     textAlign: "left"
@@ -93,6 +93,9 @@ const styles = theme => ({
   linkSeccion: {
     textDecoration: 'none',
     margin: "auto",
+  },
+  icon: {
+    color: theme.palette.colorTexto,
   },
   tituloSeccion: {
     marginTop: 5
@@ -346,7 +349,7 @@ class Inicio extends Component {
               action={
                 <Link className={classes.linkSeccion} to={'/cuadernos'}>
                   <IconButton aria-label="Cuadernos">
-                    <LibraryBooksIcon />
+                    <LibraryBooksIcon className={classes.icon} />
                   </IconButton>
                 </Link>
               }
@@ -371,10 +374,10 @@ class Inicio extends Component {
             </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="Add to favorites" onClick={() => { alert("EN DESARROLLO") }}>
-                <GradeIcon />
+                <GradeIcon className={classes.icon} />
               </IconButton>
               <IconButton aria-label="Share" onClick={this.compartirCuaderno}>
-                <ShareIcon />
+                <ShareIcon className={classes.icon} />
               </IconButton>
               <IconButton
                 className={clsx(classes.expand, {
@@ -384,7 +387,7 @@ class Inicio extends Component {
                 onClick={this.handleExpandClick}
                 aria-label="Show more"
               >
-                <ExpandMoreIcon />
+                <ExpandMoreIcon className={classes.icon} />
               </IconButton>
             </CardActions>
           </Card>

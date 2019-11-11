@@ -143,12 +143,11 @@ const styles = theme => ({
     width: drawerWidth,
     flexShrink: 0,
     display: 'flex',
-    ['-webkit-flex-direction']: 'column'
+    ['-webkit-flex-direction']: 'column',
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: theme.palette.appBar.backgroundColor,
-    // backgroundColor: '#FFF',
+    background: theme.palette.fondoCombinado
   },
   link:{
     textDecoration: 'none',
@@ -184,7 +183,6 @@ const styles = theme => ({
     paddingLeft: 0,
   },
   listaMedia: {
-    backgroundColor: '#1263ab',
     position: 'relative',
     display: 'block',
     overflowX: 'hidden',
@@ -210,7 +208,8 @@ const styles = theme => ({
     },
     /* HOVER */
     ["&:hover::-webkit-scrollbar-thumb"]: {
-      background: '#03549c !important',
+      backgroundColor: theme.palette.fondoIntermedio + ' !important',
+      background: theme.palette.fondoIntermedio + ' !important',
       /* border-radius: 4px !important, */
       /* -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5) !important, */
     }
@@ -223,13 +222,15 @@ const styles = theme => ({
     color: '#dbedfd'
   },
   listaMediaCategoria:{
+    backgroundColor: theme.palette.fondoCombinado,
     width: "100%"
   },
   listSubheader:{
+    maxWidth: 'calc(100% - 5px)',
     color: '#dbedfd',
-    backgroundColor: '#1263ab',
   },
   listaFooter:{
+    backgroundColor: theme.palette.appBar.backgroundColor,
     flex: '0 0 auto'
   },
   toolbar: {

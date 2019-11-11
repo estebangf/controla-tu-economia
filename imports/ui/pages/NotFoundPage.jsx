@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 const LinkGo = require('react-router-dom').Link
 
 import Typography from '@material-ui/core/Typography';
-import { Link, withStyles } from '@material-ui/core';
+import { Link, withStyles, Paper } from '@material-ui/core';
 
 const styles = () => ({
   root: {
-    display: 'flex',
+    paddingTop: 16,
+//    display: 'flex',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,6 +18,18 @@ const styles = () => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
+  iframeDiv: {
+    width: "calc(100% - 20px)",
+    padding: 0,
+    margin: 10,
+    height: '100%',
+    background: "#fff"
+  },
+  iframe: {
+    width: '100%',
+    border: 0,
+    height: 200,
+  }
 });
 
 class NotFoundPage extends Component {
@@ -35,6 +48,9 @@ class NotFoundPage extends Component {
             Volver a Atras
           </Link>
         </div>
+        <Paper className={classes.iframeDiv}>
+          <iframe src="https://www.dinogame.net/game/" className={classes.iframe}></iframe>
+        </Paper>
       </div>
     );
   }
