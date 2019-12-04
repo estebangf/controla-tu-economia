@@ -46,7 +46,7 @@ class Perfil extends Component {
           </Link>
         </div>
         <div className={classes.iframeDiv}>
-          <Tema />
+          <Tema handleAlerta={this.props.handleAlerta} />
         </div>
       </div>
     );

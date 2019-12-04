@@ -25,9 +25,9 @@ class Tema extends Component {
       tema,
       (error, result) => {
         if (error){
-          self.handleAlerta(error.toString(), "error")
+          self.props.handleAlerta(error.toString(), "error")
         } else {
-          self.handleAlerta("Tema cambiado", "success")
+          self.props.handleAlerta("Tema cambiado", "success")
         }
       }
     )

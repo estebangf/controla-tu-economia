@@ -786,21 +786,7 @@ class App extends Component {
           </Switch>
         </div>
 
-        { !!!perfil ?
-          <Dialog open={true}>
-            <DialogTitle>Elija un tema:</DialogTitle>
-            <DialogContent className={classes.dialogTemaNuevo}>
-              <Tema />
-            </DialogContent>
-          </Dialog>
-          : !!!perfil.tema ?
-            <Dialog open={true}>
-              <DialogTitle>Elija un tema:</DialogTitle>
-              <DialogContent className={classes.dialogTemaNuevo}>
-                <Tema />
-              </DialogContent>
-            </Dialog>
-          : '' }
+        
 
 
 
@@ -811,7 +797,24 @@ class App extends Component {
               cargando
             </div>
           </div>
-          : ''}
+          : 
+            !!user ? !!!perfil ?
+              <Dialog open={true}>
+                <DialogTitle>Elija un tema:</DialogTitle>
+                <DialogContent className={classes.dialogTemaNuevo}>
+                  <Tema handleAlerta={this.handleAlerta} />
+                </DialogContent>
+              </Dialog>
+              : !!!perfil.tema ?
+              <Dialog open={true}>
+                <DialogTitle>Elija un tema:</DialogTitle>
+                <DialogContent className={classes.dialogTemaNuevo}>
+                  <Tema handleAlerta={this.handleAlerta} />
+                </DialogContent>
+              </Dialog>
+            : ''
+          : ''
+        }
       </div>
     );
   }
