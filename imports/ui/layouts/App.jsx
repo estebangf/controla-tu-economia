@@ -404,6 +404,9 @@ const styles = theme => ({
   dialogTemaNuevo: {
     padding: 20,
     textAlign: 'center'
+  },
+  imgLoading: {
+    width: '50%'
   }
 });
 
@@ -761,6 +764,7 @@ class App extends Component {
       return (
         <div className={classes.loadingRoot}>
           <div className={classes.loadingContainer}>
+            <img src="/cargando_chanchito.gif" className={classes.imgLoading} />
             <div class="loader" id="loader"></div>
             cargando
           </div>
