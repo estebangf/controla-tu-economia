@@ -757,76 +757,76 @@ class App extends Component {
 
     const verMenuDroweable = PAGINAS_CON_MENU_DROWEABLE.includes(location.pathname)
 
-    return (
-      <div className={classes.rootApp}>
-        { !!user ? 
-          <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
-            handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre}
-            handleCalculadora={this.handleCalculadora} />
-        : '' }
-        { verMenuDroweable ? <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} /> : ''}
-        <RangoFechas
-          open={openRangoFechas}
-          handleRangoFechas={this.handleRangoFechas}
-          desde={desde}
-          hasta={hasta}
-          handleDateChange={this.handleDateChange}
-        />
-        <Dialog
-          maxWidth="lg"
-          PaperProps={{
-            className: classes.dialogPaperCalculadora
-          }}
-          onClose={this.handleCalculadora}
-          open={openCalculadora}
-          >
-          <Calculadora />
-        </Dialog>
-{/*
-        <HeaderApp />
-        <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>
-        <Menu toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen}/>
-        <ConnectionNotification mensaje={"Hay problemas en la coneccion"} open={showConnectionIssue && !connected}/>
-*/}
-        <div className={classes.schroleable} id="content">
-          <Switch location={location} >
-            {this.renderOfflinePages()}
-            {this.renderOnlinePages()}
-            {this.renderNotFoundPage()}
-          </Switch>
-        </div>
-
-        
-
-
-
-        { loading ?
-          <div className={classes.loadingRoot}>
-            <div className={classes.loadingContainer}>
-              <div class="loader" id="loader"></div>
-              cargando
-            </div>
+    if (loading) {
+      return (
+        <div className={classes.loadingRoot}>
+          <div className={classes.loadingContainer}>
+            <div class="loader" id="loader"></div>
+            cargando
           </div>
-          : 
+        </div>
+      )
+    } else {
+      return (
+        <div className={classes.rootApp}>
+          { !!user ? 
+            <AppBarCustom titulo={titulo} handleMenu={this.handleMenu}
+              handleRangoFechas={this.handleRangoFechas} cuaderno={!!cuadernoSeleccionada && cuadernoSeleccionada.nombre}
+              handleCalculadora={this.handleCalculadora} />
+          : '' }
+          { verMenuDroweable ? <AppMenuCustom open={openMenu} handleMenu={this.handleMenu} /> : ''}
+          <RangoFechas
+            open={openRangoFechas}
+            handleRangoFechas={this.handleRangoFechas}
+            desde={desde}
+            hasta={hasta}
+            handleDateChange={this.handleDateChange}
+          />
+          <Dialog
+            maxWidth="lg"
+            PaperProps={{
+              className: classes.dialogPaperCalculadora
+            }}
+            onClose={this.handleCalculadora}
+            open={openCalculadora}
+            >
+            <Calculadora />
+          </Dialog>
+  {/*
+          <HeaderApp />
+          <TopBar toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen} user={user} logout={this.logout}/>
+          <Menu toggleDrawer={this.toggleDrawer} drawerOpen={drawerOpen}/>
+          <ConnectionNotification mensaje={"Hay problemas en la coneccion"} open={showConnectionIssue && !connected}/>
+  */}
+          <div className={classes.schroleable} id="content">
+            <Switch location={location} >
+              {this.renderOfflinePages()}
+              {this.renderOnlinePages()}
+              {this.renderNotFoundPage()}
+            </Switch>
+          </div>
+
+          {
             !!user ? !!!perfil ?
-              <Dialog open={true}>
-                <DialogTitle>Elija un tema:</DialogTitle>
-                <DialogContent className={classes.dialogTemaNuevo}>
-                  <Tema handleAlerta={this.handleAlerta} />
-                </DialogContent>
-              </Dialog>
-              : !!!perfil.tema ?
-              <Dialog open={true}>
-                <DialogTitle>Elija un tema:</DialogTitle>
-                <DialogContent className={classes.dialogTemaNuevo}>
-                  <Tema handleAlerta={this.handleAlerta} />
-                </DialogContent>
-              </Dialog>
+                <Dialog open={true}>
+                  <DialogTitle>Elija un tema:</DialogTitle>
+                  <DialogContent className={classes.dialogTemaNuevo}>
+                    <Tema handleAlerta={this.handleAlerta} />
+                  </DialogContent>
+                </Dialog>
+                : !!!perfil.tema ?
+                <Dialog open={true}>
+                  <DialogTitle>Elija un tema:</DialogTitle>
+                  <DialogContent className={classes.dialogTemaNuevo}>
+                    <Tema handleAlerta={this.handleAlerta} />
+                  </DialogContent>
+                </Dialog>
+              : ''
             : ''
-          : ''
-        }
-      </div>
-    );
+          }
+        </div>
+      );
+    }
   }
 
 
@@ -854,12 +854,6 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={perfilExists ? temas[perfil.tema] : temas["normal"]}>
         <div className={classes.root}>
-          {
-            /*
-            <div className={[classes.fondo, window.location.pathname == "/" ? classes.fondoModerno : ''].join(' ')} />
-            <div className={classes.fondoSuperior} />
-            */
-          }
           <CssBaseline />
           <BrowserRouter>
             <Route
