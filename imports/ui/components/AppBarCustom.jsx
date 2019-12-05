@@ -149,7 +149,7 @@ class AppBarCustom extends Component {
       return location.pathname.includes(p)
     }).length
     const verFiltro = PAGINAS_CON_FILTRO.includes(location.pathname)
-    const verMenu = PAGINAS_CON_MENU.includes(location.pathname)
+    const verMenu = PAGINAS_CON_MENU.includes(location.pathname) && !!cuaderno
     const verLogo = location.pathname == "/"
 
     return (

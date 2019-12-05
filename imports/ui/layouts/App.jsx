@@ -504,19 +504,29 @@ class App extends Component {
     if (!loading && cuadernosExists && !!loggued) {
       if (!!!cuadernoSeleccionada || (!!cuadernoSeleccionada && cuadernos.map((c)=> {return c._id}).indexOf(cuadernoSeleccionada._id) == -1) ) {
         if (!!cuadernoSeleccionadaProps) {
+          console.log("RETURN 1")
           return {
             cuadernoSeleccionada: cuadernoSeleccionadaProps
           }
         } else {
+          console.log("RETURN 2")
+          console.log(cuadernos)
           return {
             cuadernoSeleccionada: cuadernos[0]
           }
         }
       } else {
+          console.log("RETURN 3")
         return null
       }
     } else {
-      return null
+      if (!!cuadernoSeleccionada) {
+        return {
+          cuadernoSeleccionada: undefined
+        }
+      } else {
+        return null
+      }
     }
   }
 

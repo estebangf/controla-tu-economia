@@ -10,7 +10,7 @@ export default withTracker(({cambiarTitulo}) => {
   const loading = !publicHandle.ready();
 //  const cuadernos = Cuadernos.find({}, { sort: { createdAt: -1 } }).fetch();
   const cuadernos = Cuadernos.find({}).fetch();
-  const cuadernosExists = !loading && !!cuadernos;
+  const cuadernosExists = !loading && !!cuadernos.length;
 
   return {
     loading,

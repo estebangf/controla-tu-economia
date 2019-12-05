@@ -82,9 +82,10 @@ class Cuaderno extends Component {
       descripcion,
       cuadernoVinculado
     } = this.state;
-    const id = cuaderno._id;
 
+    const self = this
     if(cuadernoExists) {
+      const id = cuaderno._id;
       Meteor.call('cuaderno.editar',
         id,
         cuadernoVinculado,
@@ -151,8 +152,7 @@ class Cuaderno extends Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="h4" className={classes.titulo}>{cuadernoExists ? "Editar Cuaderno" : "Nueva Cuaderno"}</Typography>
-        <Link to={'/'}>Inicio</Link>
+        <Typography variant="h4" className={classes.titulo}>{cuadernoExists ? "Editar Cuaderno" : "Nuevo Cuaderno"}</Typography>
 
         <TextField
           InputLabelProps={{ shrink: !!nombre && nombre != '' }} 

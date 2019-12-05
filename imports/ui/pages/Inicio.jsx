@@ -20,6 +20,8 @@ import { Fab, Grid } from '@material-ui/core';
 
 import Chart from 'react-google-charts';
 
+import CuadernosList from './CuadernosList.jsx'
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -393,6 +395,10 @@ class Inicio extends Component {
           </Card>
         </div>
       )
+    } else {
+      return (
+        <CuadernosList handleAlerta={this.props.handleAlerta}  />
+      )
     }
   }
 
@@ -474,21 +480,24 @@ class Inicio extends Component {
       <div className={classes.root}>
         {this.renderCuadernoSeleccionado()}
         {this.renderLinksMovimientos()}
-        {
-          !!user ? (
-            user.emails[0].address == "monofer93@outlook.com.ar" ||
-            user.emails[0].address == "esteban.fernandez93@outlook.com.ar" ? (
-              <div>
-                <Link className={classes.linkSeccion} to={'/setings/categorias'}>
-                  <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
-                </Link>
-              </div>
+        {!!cuadernoSeleccionada ? 
+          <div>
+          {
+            !!user ? (
+              user.emails[0].address == "monofer93@outlook.com.ar" ||
+              user.emails[0].address == "esteban.fernandez93@outlook.com.ar" ? (
+                <div>
+                  <Link className={classes.linkSeccion} to={'/setings/categorias'}>
+                    <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Categorias</Typography>
+                  </Link>
+                </div>
+              ) : ""
             ) : ""
-          ) : ""
-        }
-        <Link className={classes.linkSeccion} to={'/dev/graficos'}>
-          <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Graficos</Typography>
-        </Link>
+          }
+          <Link className={classes.linkSeccion} to={'/dev/graficos'}>
+            <Typography className={classes.tituloSeccion} variant="subtitle1" display="block" gutterBottom >Graficos</Typography>
+          </Link>
+        </div> : ''}
       </div>
     )
   }

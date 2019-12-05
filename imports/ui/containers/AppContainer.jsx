@@ -17,7 +17,6 @@ export default withTracker(() => {
   const perfil = Perfiles.findOne();
   const perfilExists = !loadingPerfil && !!perfil;
 
-
   return {
     loading,
     cuadernosExists,
